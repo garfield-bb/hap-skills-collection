@@ -1,0 +1,541 @@
+{
+  "post": {
+    "summary": "批量新增行记录",
+    "deprecated": false,
+    "description": "新建行记录",
+    "tags": [],
+    "parameters": [
+      {
+        "name": "worksheet_id",
+        "in": "path",
+        "description": "",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "url",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appid",
+        "in": "header",
+        "description": "当使用Authorization鉴权时，必传",
+        "required": false,
+        "example": "{{appId}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "Authorization",
+        "in": "header",
+        "description": "个人授权 id",
+        "required": false,
+        "example": "{{Authorization}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "rows": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "fields": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "字段ID或别名"
+                          },
+                          "value": {
+                            "nullable": true,
+                            "oneOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "integer"
+                              },
+                              {
+                                "type": "boolean"
+                              },
+                              {
+                                "type": "array"
+                              },
+                              {
+                                "type": "object"
+                              },
+                              {
+                                "type": "number"
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "value"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "fields"
+                  ]
+                }
+              },
+              "triggerWorkflow": {
+                "type": "boolean",
+                "description": "是否触发工作流",
+                "default": true
+              }
+            },
+            "required": [
+              "rows"
+            ],
+            "title": ""
+          },
+          "example": {
+            "rows": [
+              {
+                "fields": [
+                  {
+                    "id": "",
+                    "value": ""
+                  },
+                  {
+                    "id": "",
+                    "value": ""
+                  }
+                ]
+              }
+            ],
+            "triggerWorkflow": true
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "rowIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "description": "行记录 id"
+                      }
+                    }
+                  },
+                  "required": [
+                    "rowIds"
+                  ]
+                },
+                "success": {
+                  "type": "boolean"
+                },
+                "errorCode": {
+                  "type": "string"
+                },
+                "errorMsg": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "data",
+                "success"
+              ]
+            },
+            "example": {
+              "data": {
+                "rows": []
+              },
+              "success": true
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  },
+  "patch": {
+    "summary": "批量更新行记录详情",
+    "deprecated": false,
+    "description": "批量更新行记录",
+    "tags": [],
+    "parameters": [
+      {
+        "name": "worksheet_id",
+        "in": "path",
+        "description": "",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "url",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appid",
+        "in": "header",
+        "description": "当使用Authorization鉴权时，必传",
+        "required": false,
+        "example": "{{appId}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "Authorization",
+        "in": "header",
+        "description": "个人授权 id",
+        "required": false,
+        "example": "{{Authorization}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "rowIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "fields": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "字段 id/别名"
+                    },
+                    "value": {
+                      "nullable": true,
+                      "oneOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "integer"
+                        },
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "array"
+                        },
+                        {
+                          "type": "object"
+                        },
+                        {
+                          "type": "number"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "value"
+                  ]
+                }
+              },
+              "triggerWorkflow": {
+                "type": "boolean",
+                "description": "是否触发工作流",
+                "default": true
+              }
+            },
+            "required": [
+              "fields",
+              "rowIds"
+            ],
+            "title": ""
+          },
+          "example": {
+            "rowIds": [
+              ""
+            ],
+            "fields": [
+              {
+                "id": "",
+                "value": ""
+              }
+            ],
+            "triggerWorkflow": true
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "failedRowIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "succeededRowIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "failedRowIds",
+                    "succeededRowIds"
+                  ]
+                },
+                "success": {
+                  "type": "boolean"
+                },
+                "errorCode": {
+                  "type": "string"
+                },
+                "errorMsg": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "data",
+                "success"
+              ]
+            },
+            "example": {
+              "data": {
+                "failedRowIds": [],
+                "succeededRowIds": []
+              },
+              "success": true
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  },
+  "delete": {
+    "summary": "批量删除行记录",
+    "deprecated": false,
+    "description": "删除行记录",
+    "tags": [],
+    "parameters": [
+      {
+        "name": "worksheet_id",
+        "in": "path",
+        "description": "",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "url",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appid",
+        "in": "header",
+        "description": "当使用Authorization鉴权时，必传",
+        "required": false,
+        "example": "{{appId}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "Authorization",
+        "in": "header",
+        "description": "个人授权 id",
+        "required": false,
+        "example": "{{Authorization}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "triggerWorkflow": {
+                "type": "boolean",
+                "default": true,
+                "description": "是否触发工作流"
+              },
+              "permanent": {
+                "type": "boolean",
+                "description": "是否彻底删除 (true：彻底删除，false：逻辑删除，默认为false)，彻底删除后数据不进入回收站，且不可恢复，请谨慎操作！"
+              },
+              "rowIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "行记录 id"
+                }
+              }
+            },
+            "required": [
+              "rowIds"
+            ]
+          },
+          "example": {
+            "rowIds": [],
+            "triggerWorkflow": false,
+            "permanent": true
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "success": {
+                  "type": "boolean"
+                },
+                "errorCode": {
+                  "type": "string"
+                },
+                "errorMsg": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "data",
+                "success"
+              ]
+            },
+            "example": {
+              "data": {},
+              "success": true
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

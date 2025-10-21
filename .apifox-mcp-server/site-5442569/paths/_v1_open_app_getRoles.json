@@ -1,0 +1,174 @@
+{
+  "get": {
+    "summary": "获取角色列表",
+    "deprecated": false,
+    "description": "",
+    "tags": [],
+    "parameters": [
+      {
+        "name": "appKey",
+        "in": "query",
+        "description": "",
+        "required": false,
+        "example": "401ea5361c510771",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "sign",
+        "in": "query",
+        "description": "",
+        "required": false,
+        "example": "NWE3NTFmYWQzNjJhYTBkMzk4YTQ5YjI2MDVlNDI4MDNkYTgxYzI4MTVlODJhNTI1YTdiNTEyMDRkMTExNDJlOA==",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "roleId": {
+                        "type": "string",
+                        "description": "角色Id"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "角色名称"
+                      },
+                      "roleType": {
+                        "type": "string",
+                        "description": "角色类型"
+                      },
+                      "desc": {
+                        "type": "string",
+                        "description": "角色描述"
+                      },
+                      "users": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "accountId": {
+                              "type": "string",
+                              "description": "账号Id"
+                            },
+                            "name": {
+                              "type": "string",
+                              "description": "名称"
+                            },
+                            "avatar": {
+                              "type": "string",
+                              "description": "头像地址"
+                            }
+                          }
+                        }
+                      },
+                      "departments": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "departmentId": {
+                              "type": "string",
+                              "description": "部门 id"
+                            },
+                            "departmentName": {
+                              "type": "string",
+                              "description": " 部门名称"
+                            }
+                          }
+                        }
+                      },
+                      "jobs": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "jobId": {
+                              "type": "string",
+                              "description": "职位 id"
+                            },
+                            "jobName": {
+                              "type": "string",
+                              "description": " 职位名称"
+                            }
+                          }
+                        }
+                      },
+                      "projectOrganizes": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "description": "组织角色ID"
+                        }
+                      }
+                    }
+                  }
+                },
+                "error_code": {
+                  "type": "integer"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "data",
+                "error_code",
+                "success"
+              ]
+            },
+            "example": {
+              "data": [
+                {
+                  "roleId": "角色Id",
+                  "name": "角色名称",
+                  "roleType": "角色类型",
+                  "desc": "角色描述",
+                  "users": [
+                    {
+                      "accountId": "账号Id",
+                      "name": "用户名",
+                      "avatar": "用户头像链接"
+                    }
+                  ],
+                  "departments": [
+                    {
+                      "departmentId": "部门Id",
+                      "departmentName": "部门名称"
+                    }
+                  ],
+                  "jobs": [
+                    {
+                      "jobId": "职位Id",
+                      "jobName": "职位名称"
+                    }
+                  ],
+                  "projectOrganizes": [
+                    "组织角色ID"
+                  ]
+                }
+              ],
+              "error_code": 1,
+              "success": true
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

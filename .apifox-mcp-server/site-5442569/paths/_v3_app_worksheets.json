@@ -1,0 +1,349 @@
+{
+  "post": {
+    "summary": "新建工作表",
+    "deprecated": false,
+    "description": "创建工作表，目前支持字段类型有Text|Number|SingleSelect|MultipleSelect|Date|DateTime|Collaborator|Relation|Attachment",
+    "tags": [
+      "工作表"
+    ],
+    "parameters": [
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "title": "",
+                "description": "工作表名称"
+              },
+              "alias": {
+                "type": "string",
+                "description": "工作表别名"
+              },
+              "sectionId": {
+                "type": "string",
+                "title": "",
+                "description": "分组 id"
+              },
+              "fields": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "title": "",
+                      "description": "字段名称"
+                    },
+                    "alias": {
+                      "type": "string",
+                      "title": "",
+                      "description": "字段别名"
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "字段类型"
+                    },
+                    "isTitle": {
+                      "type": "boolean",
+                      "description": "是否是标题字段"
+                    },
+                    "required": {
+                      "type": "boolean",
+                      "description": "是否必填"
+                    },
+                    "isHidden": {
+                      "type": "boolean",
+                      "description": "是否隐藏"
+                    },
+                    "isReadOnly": {
+                      "type": "boolean",
+                      "description": "是否只读"
+                    },
+                    "isHiddenOnCreate": {
+                      "type": "boolean",
+                      "description": "是否新增记录时隐藏"
+                    },
+                    "isUnique": {
+                      "type": "boolean",
+                      "description": "是否唯一"
+                    },
+                    "precision": {
+                      "type": "integer",
+                      "description": "type=Number时，表示保留小数位（0-14）\n"
+                    },
+                    "subType": {
+                      "type": "string",
+                      "description": "type=Collaborator时，表示成员数量，填入规则 0：单选,1：多选\ntype=Relation时，表示关联记录数量，填入规则 1：单条 2：多条\ntype=Time时，表示时间1：时.分 ，6：时.分.秒\ntype=Date|DateTime时，表示日期：5：年 4：年月 3：年月日 2：年月日时 1：年月日时分 6：年月日时分秒"
+                    },
+                    "options": {
+                      "type": "array",
+                      "items": {
+                        "properties": {
+                          "value": {
+                            "type": "string",
+                            "description": "选项名称"
+                          },
+                          "index": {
+                            "type": "integer",
+                            "description": "选项排序"
+                          }
+                        },
+                        "required": [
+                          "value",
+                          "index"
+                        ],
+                        "$ref": "#/components/schemas/options"
+                      },
+                      "description": "type=SingleSelect|MultipleSelect时传入， 11:单选,10:多选时填入"
+                    },
+                    "max": {
+                      "type": "integer",
+                      "description": "type=Rating时传入，表示等级最大值，填入规则（0-10）"
+                    },
+                    "dataSource": {
+                      "type": "string",
+                      "description": "type=Relation时传入关联表 id，表示关联表 id"
+                    },
+                    "relation": {
+                      "properties": {
+                        "showFields": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "展示字段"
+                        },
+                        "bidirectional": {
+                          "type": "boolean",
+                          "description": "是否为双向关联 true：双向，false：单向"
+                        }
+                      },
+                      "description": "type=Relation时传入，关联字段字段 配置项\n\n",
+                      "$ref": "#/components/schemas/relation"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "type",
+                    "required"
+                  ]
+                },
+                "title": "",
+                "description": "工作表字段信息"
+              }
+            },
+            "required": [
+              "name",
+              "fields"
+            ],
+            "title": ""
+          },
+          "example": {
+            "name": "测试新建工作表",
+            "sectionId": "",
+            "fields": [
+              {
+                "name": "文本",
+                "alias": "",
+                "type": "Text",
+                "required": true,
+                "isTitle": 1
+              },
+              {
+                "name": "数值",
+                "alias": "",
+                "type": "Number",
+                "precision": 2,
+                "required": true
+              },
+              {
+                "name": "单选",
+                "alias": "",
+                "type": "SingleSelect",
+                "options": [
+                  {
+                    "value": "选项名称1",
+                    "index": 1
+                  },
+                  {
+                    "value": "选项名称2",
+                    "index": 2
+                  }
+                ],
+                "required": true
+              },
+              {
+                "name": "多选",
+                "alias": "",
+                "type": "MultipleSelect",
+                "options": [
+                  {
+                    "value": "选项名称1",
+                    "index": 1
+                  },
+                  {
+                    "value": "选项名称2",
+                    "index": 2
+                  },
+                  {
+                    "value": "选项名称3",
+                    "index": 3
+                  }
+                ],
+                "required": true
+              },
+              {
+                "name": "时间-时分",
+                "alias": "",
+                "type": "Time",
+                "required": true,
+                "subType": 1
+              },
+              {
+                "name": "时间-时分秒",
+                "alias": "",
+                "type": "Time",
+                "required": true,
+                "subType": 6
+              },
+              {
+                "name": "成员-单选",
+                "type": "Collaborator",
+                "alias": "",
+                "subType": 0,
+                "required": true
+              },
+              {
+                "name": "成员-多选",
+                "type": "Collaborator",
+                "alias": "",
+                "subType": 1,
+                "required": true
+              },
+              {
+                "name": "附件",
+                "alias": "",
+                "type": "Attachment",
+                "required": true
+              },
+              {
+                "name": "日期",
+                "alias": "",
+                "type": "Date",
+                "subType": 5,
+                "required": true
+              },
+              {
+                "name": "时间",
+                "alias": "",
+                "type": "Date",
+                "subType": 1,
+                "required": true
+              },
+              {
+                "name": "关联记录",
+                "alias": "",
+                "type": "Relation",
+                "subType": 1,
+                "relation": {
+                  "showFields": [],
+                  "bidirectional": true
+                },
+                "dataSource": "",
+                "required": true
+              }
+            ]
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "worksheetId": {
+                      "type": "string",
+                      "description": "工作表ID"
+                    }
+                  },
+                  "required": [
+                    "worksheetId"
+                  ]
+                },
+                "success": {
+                  "type": "boolean",
+                  "description": "是否调用成功"
+                },
+                "error_code": {
+                  "type": "integer",
+                  "description": "错误代码"
+                },
+                "error_msg": {
+                  "type": "string",
+                  "description": "错误消息"
+                }
+              },
+              "required": [
+                "data",
+                "success"
+              ],
+              "title": "",
+              "type": "object"
+            },
+            "examples": {
+              "1": {
+                "summary": "成功示例",
+                "value": {
+                  "data": {
+                    "worksheetId": ""
+                  },
+                  "success": true
+                }
+              },
+              "2": {
+                "summary": "异常示例",
+                "value": {
+                  "error_msg": "具体错误信息",
+                  "error_code": 10101,
+                  "success": false
+                }
+              }
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

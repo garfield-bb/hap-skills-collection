@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "field": {
+      "description": "字段ID",
+      "type": "string"
+    },
+    "displayName": {
+      "description": "显示名称",
+      "type": "string"
+    },
+    "granularity": {
+      "type": "integer",
+      "description": "日期、地区统计维度\n字段类型是日期或者地区时，通过此参数设置统计归组粒度\n- 日期时间：1-日，2-周，3-月；\n- 地区：1-全国，2-省，3-市。"
+    },
+    "includeEmpty": {
+      "type": "boolean",
+      "description": "是否统计空值，默认为false不统计"
+    }
+  },
+  "required": [
+    "field"
+  ]
+}

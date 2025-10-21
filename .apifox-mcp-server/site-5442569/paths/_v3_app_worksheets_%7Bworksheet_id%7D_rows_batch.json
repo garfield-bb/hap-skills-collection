@@ -1,0 +1,487 @@
+{
+  "post": {
+    "summary": "批量新增行记录",
+    "deprecated": false,
+    "description": "批量新建行记录",
+    "tags": [
+      "工作表行记录"
+    ],
+    "parameters": [
+      {
+        "name": "worksheet_id",
+        "in": "path",
+        "description": "工作表 ID",
+        "required": true,
+        "example": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "rows": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "fields": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "字段ID/别名"
+                          },
+                          "value": {
+                            "description": "字段值",
+                            "oneOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "integer"
+                              },
+                              {
+                                "type": "boolean"
+                              },
+                              {
+                                "type": "array"
+                              },
+                              {
+                                "type": "object"
+                              },
+                              {
+                                "type": "number"
+                              }
+                            ],
+                            "type": "null"
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "SingleSelect/MultipleSelect:1=不增量选项，2=允许增加选项，默认为1\n\nAttachment:0=覆盖，1=新增，默认为 0\n"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "value"
+                        ]
+                      },
+                      "description": "字段列表"
+                    }
+                  },
+                  "required": [
+                    "fields"
+                  ]
+                },
+                "description": "行记录列表"
+              },
+              "triggerWorkflow": {
+                "type": "boolean",
+                "description": "是否触发工作流",
+                "default": true
+              }
+            },
+            "required": [
+              "rows"
+            ],
+            "title": ""
+          },
+          "example": {
+            "rows": [
+              {
+                "fields": [
+                  {
+                    "id": "",
+                    "value": ""
+                  },
+                  {
+                    "id": "",
+                    "value": ""
+                  }
+                ]
+              }
+            ],
+            "triggerWorkflow": true
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "rowIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "description": "行记录 id"
+                      }
+                    }
+                  },
+                  "required": [
+                    "rowIds"
+                  ]
+                },
+                "success": {
+                  "type": "boolean",
+                  "description": "是否调用成功"
+                },
+                "error_code": {
+                  "type": "integer",
+                  "description": "错误代码"
+                },
+                "error_msg": {
+                  "type": "string",
+                  "description": "错误消息"
+                }
+              },
+              "required": [
+                "data",
+                "success"
+              ]
+            },
+            "example": {
+              "data": {
+                "rows": []
+              },
+              "success": true
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  },
+  "patch": {
+    "summary": "批量更新行记录",
+    "deprecated": false,
+    "description": "批量更新行记录",
+    "tags": [
+      "工作表行记录"
+    ],
+    "parameters": [
+      {
+        "name": "worksheet_id",
+        "in": "path",
+        "description": "工作表 ID",
+        "required": true,
+        "example": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "rowIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "fields": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "字段 ID/别名"
+                    },
+                    "value": {
+                      "description": " 字段值",
+                      "oneOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "integer"
+                        },
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "array"
+                        },
+                        {
+                          "type": "object"
+                        },
+                        {
+                          "type": "number"
+                        }
+                      ],
+                      "type": "null"
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "SingleSelect/MultipleSelect:1=不增量选项，2=允许增加选项，默认为1\n\nAttachment:0=覆盖，1=新增，默认为 0\n"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "value"
+                  ]
+                }
+              },
+              "triggerWorkflow": {
+                "type": "boolean",
+                "description": "是否触发工作流",
+                "default": true
+              }
+            },
+            "required": [
+              "fields",
+              "rowIds"
+            ],
+            "title": ""
+          },
+          "example": {
+            "rowIds": [
+              ""
+            ],
+            "fields": [
+              {
+                "id": "",
+                "value": ""
+              }
+            ],
+            "triggerWorkflow": true
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "failedRowIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "successfulRowIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "failedRowIds",
+                    "successfulRowIds"
+                  ]
+                },
+                "success": {
+                  "type": "boolean",
+                  "description": "是否调用成功"
+                },
+                "error_code": {
+                  "type": "integer",
+                  "description": "错误代码"
+                },
+                "error_msg": {
+                  "type": "string",
+                  "description": "错误消息"
+                }
+              },
+              "required": [
+                "data",
+                "success"
+              ]
+            },
+            "example": {
+              "data": {
+                "failedRowIds": [],
+                "successfulRowIds": []
+              },
+              "success": true
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  },
+  "delete": {
+    "summary": "批量删除行记录",
+    "deprecated": false,
+    "description": "批量删除行记录",
+    "tags": [
+      "工作表行记录"
+    ],
+    "parameters": [
+      {
+        "name": "worksheet_id",
+        "in": "path",
+        "description": "工作表 ID",
+        "required": true,
+        "example": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "triggerWorkflow": {
+                "type": "boolean",
+                "default": true,
+                "description": "是否触发工作流"
+              },
+              "permanent": {
+                "type": "boolean",
+                "description": "是否彻底删除 (true：彻底删除，false：逻辑删除，默认为false)，彻底删除后数据不进入回收站，且不可恢复，请谨慎操作！"
+              },
+              "rowIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "行记录 id"
+                }
+              }
+            },
+            "required": [
+              "rowIds"
+            ]
+          },
+          "example": {
+            "rowIds": [],
+            "triggerWorkflow": false,
+            "permanent": true
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "success": {
+                  "type": "boolean",
+                  "description": "是否调用成功"
+                },
+                "error_code": {
+                  "type": "integer",
+                  "description": "错误代码"
+                },
+                "error_msg": {
+                  "type": "string",
+                  "description": "错误消息"
+                }
+              },
+              "required": [
+                "data",
+                "success"
+              ]
+            },
+            "example": {
+              "success": true,
+              "error_code": 1
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

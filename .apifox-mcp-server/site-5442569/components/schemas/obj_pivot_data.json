@@ -1,0 +1,44 @@
+{
+  "type": "object",
+  "properties": {
+    "columns": {
+      "type": "object",
+      "properties": {
+        "field": {
+          "type": "number",
+          "description": "字段ID对应的值"
+        }
+      },
+      "required": [
+        "field"
+      ],
+      "description": "列数据"
+    },
+    "rows": {
+      "type": "object",
+      "properties": {
+        "field": {
+          "type": "number",
+          "description": "字段ID对应的值"
+        }
+      },
+      "required": [
+        "field"
+      ],
+      "description": "行数据"
+    },
+    "values": {
+      "type": "object",
+      "properties": {
+        "field": {
+          "type": "number",
+          "description": "字段ID对应的值"
+        }
+      },
+      "required": [
+        "field"
+      ],
+      "description": "值数据"
+    }
+  }
+}

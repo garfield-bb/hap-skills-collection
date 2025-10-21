@@ -1,0 +1,101 @@
+{
+  "get": {
+    "summary": "获取流程列表",
+    "deprecated": false,
+    "description": "获取应用下工作流列表",
+    "tags": [
+      "工作流"
+    ],
+    "parameters": [
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "processes": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/obj_process"
+                      }
+                    }
+                  },
+                  "required": [
+                    "processes"
+                  ]
+                },
+                "success": {
+                  "type": "boolean",
+                  "description": "是否调用成功"
+                },
+                "error_code": {
+                  "type": "integer",
+                  "description": "错误代码"
+                },
+                "error_msg": {
+                  "type": "string",
+                  "description": "错误消息"
+                }
+              },
+              "required": [
+                "data",
+                "success"
+              ]
+            },
+            "example": {
+              "data": {
+                "processes": [
+                  {
+                    "id": "681b8934ec9191462c08417a",
+                    "name": "新增线索",
+                    "alias": "",
+                    "type": 10,
+                    "description": "新增线索流程",
+                    "status": 0,
+                    "_createdAt": "2025-02-17 17:53:44",
+                    "_updatedAt": "2025-06-17 17:53:44",
+                    "_owner": {
+                      "accountId": "e2453de8-1a6a-4d4f-ba36-87fdff880a20",
+                      "fullname": "卜佳菲",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/fe9c4374-68f1-4f64-88ea-47050dff28bd.jpg?imageView2/1/w/100/h/100/q/90",
+                      "status": 1
+                    }
+                  }
+                ]
+              },
+              "success": true
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

@@ -1,0 +1,211 @@
+{
+  "post": {
+    "summary": "退出应用",
+    "deprecated": false,
+    "description": "",
+    "tags": [
+      "角色"
+    ],
+    "parameters": [],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "appKey": {
+                "type": "string",
+                "title": "AppKey",
+                "description": ""
+              },
+              "sign": {
+                "type": "string",
+                "title": "签名",
+                "description": ""
+              },
+              "operatorId": {
+                "type": "string",
+                "title": "操作者 id",
+                "description": ""
+              }
+            },
+            "required": [
+              "appKey",
+              "sign",
+              "operatorId"
+            ],
+            "x-apifox-orders": [
+              "appKey",
+              "sign",
+              "operatorId"
+            ],
+            "x-apifox-ignore-properties": []
+          },
+          "example": {
+            "appKey": "5004e1f1c103fc82",
+            "sign": "MWQzYWJiNTNlYzZmNjZhNTA1NTExMGZhNzEyMjU3ZTMzM2Q2YWFmZWJkMTZjMWM1NTRjNDZiODUwNjc5OTUzNg==",
+            "operatorId": "085d78b2-2dba-4727-95a7-76dcea882d97"
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "boolean"
+                },
+                "success": {
+                  "type": "boolean"
+                },
+                "error_code": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "data",
+                "success",
+                "error_code"
+              ],
+              "x-apifox-orders": [
+                "data",
+                "success",
+                "error_code"
+              ],
+              "x-apifox-ignore-properties": []
+            },
+            "example": {
+              "data": true,
+              "success": true,
+              "error_code": 1
+            }
+          }
+        },
+        "headers": {},
+        "x-apifox-name": "成功"
+      },
+      "401": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "title": "请求结果"
+                },
+                "code": {
+                  "type": "integer",
+                  "title": "代码"
+                },
+                "msg": {
+                  "type": "string",
+                  "title": "消息"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "title": "返回数据",
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
+                }
+              },
+              "required": [
+                "success",
+                "code",
+                "msg",
+                "data"
+              ],
+              "x-apifox-orders": [
+                "success",
+                "code",
+                "msg",
+                "data"
+              ],
+              "x-apifox-ignore-properties": []
+            }
+          }
+        },
+        "headers": {},
+        "x-apifox-name": "没有权限"
+      },
+      "404": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "title": "请求结果"
+                },
+                "code": {
+                  "type": "integer",
+                  "title": "代码"
+                },
+                "msg": {
+                  "type": "string",
+                  "title": "消息"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "title": "返回数据",
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
+                }
+              },
+              "required": [
+                "success",
+                "code",
+                "msg",
+                "data"
+              ],
+              "title": "",
+              "x-apifox-orders": [
+                "success",
+                "code",
+                "msg",
+                "data"
+              ],
+              "x-apifox-ignore-properties": []
+            },
+            "examples": {
+              "2": {
+                "summary": "异常示例",
+                "value": {
+                  "success": false,
+                  "code": 1001,
+                  "msg": "应用不存在",
+                  "data": {}
+                }
+              },
+              "3": {
+                "summary": "异常示例",
+                "value": {
+                  "success": false,
+                  "code": 1001,
+                  "msg": "应用不存在",
+                  "data": {}
+                }
+              }
+            }
+          }
+        },
+        "headers": {},
+        "x-apifox-name": "记录不存在"
+      }
+    },
+    "security": [],
+    "x-apifox-folder": "角色",
+    "x-apifox-status": "released",
+    "x-run-in-apifox": "https://app.apifox.com/web/project/6133169/apis/api-278479085-run"
+  }
+}

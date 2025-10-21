@@ -1,0 +1,552 @@
+{
+  "post": {
+    "summary": "获取行记录透视数据",
+    "deprecated": false,
+    "description": "获取工作表记录透视表汇总数据",
+    "tags": [],
+    "parameters": [
+      {
+        "name": "worksheet_id",
+        "in": "path",
+        "description": "",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "url",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appid",
+        "in": "header",
+        "description": "当使用Authorization鉴权时，必传",
+        "required": false,
+        "example": "{{appId}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "Authorization",
+        "in": "header",
+        "description": "个人授权 id",
+        "required": false,
+        "example": "{{Authorization}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "pageSize": {
+                "type": "integer",
+                "description": "每页数量，最大为 1000"
+              },
+              "pageIndex": {
+                "type": "integer",
+                "description": "页码"
+              },
+              "viewId": {
+                "type": "string",
+                "description": "视图 ID"
+              },
+              "columns": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "field": {
+                      "description": "字段ID",
+                      "type": "string"
+                    },
+                    "displayName": {
+                      "description": "显示名称",
+                      "type": "string"
+                    },
+                    "granularity": {
+                      "type": "integer",
+                      "description": "日期、地区统计维度\n字段类型是日期或者地区时，通过此参数设置统计归组粒度\n- 日期时间：1-日，2-周，3-月；\n- 地区：1-全国，2-省，3-市。"
+                    },
+                    "includeEmpty": {
+                      "type": "boolean",
+                      "description": "是否统计空值，默认为false不统计"
+                    }
+                  },
+                  "required": [
+                    "field"
+                  ]
+                },
+                "description": "列（维度）字段列表"
+              },
+              "rows": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "field": {
+                      "description": "字段ID",
+                      "type": "string"
+                    },
+                    "displayName": {
+                      "description": "显示名称",
+                      "type": "string"
+                    },
+                    "granularity": {
+                      "type": "integer",
+                      "description": "日期、地区统计维度\n字段类型是日期或者地区时，通过此参数设置统计归组粒度\n- 日期时间：1-日，2-周，3-月；\n- 地区：1-全国，2-省，3-市。"
+                    },
+                    "includeEmpty": {
+                      "type": "boolean",
+                      "description": "是否统计空值，默认为false不统计"
+                    }
+                  },
+                  "required": [
+                    "field"
+                  ]
+                },
+                "description": "行（维度）字段列表"
+              },
+              "values": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "field": {
+                      "description": "字段ID",
+                      "type": "string"
+                    },
+                    "displayName": {
+                      "description": "显示名称",
+                      "type": "string"
+                    },
+                    "aggregation": {
+                      "description": "聚合方式（不区分大小写）\n- COUNT：计数\n- DISTINCTCOUNT：去重计数\n- SUM：求和\n- MIN：最小值\n- MAX：最大值\n- AVG：平均值",
+                      "type": "string"
+                    },
+                    "includeEmpty": {
+                      "type": "boolean",
+                      "description": "是否统计空值，默认为false不统计，空值将显示为0"
+                    }
+                  }
+                },
+                "description": "值字段列表"
+              },
+              "filters": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "description": "'group' | 'condition'。当 type 为 'condition' 时，field/operator/value 为必填；当 type 为 'group' 时，logic 为必填"
+                    },
+                    "field": {
+                      "type": "string",
+                      "description": "字段ID或别名"
+                    },
+                    "operator": {
+                      "type": "string",
+                      "description": "运算符"
+                    },
+                    "value": {
+                      "description": "值（字符串、数值、数组、日期范围DateRange字符串）",
+                      "nullable": true,
+                      "oneOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "integer"
+                        },
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "array"
+                        },
+                        {
+                          "type": "object"
+                        },
+                        {
+                          "type": "number"
+                        }
+                      ]
+                    },
+                    "logic": {
+                      "type": "string",
+                      "description": "'AND' | 'OR'。不区分大小写"
+                    },
+                    "children": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "description": "'group' | 'condition'。当 type 为 'condition' 时，field/operator/value 为必填；当 type 为 'group' 时，logic 为必填"
+                          },
+                          "field": {
+                            "type": "string",
+                            "description": "字段ID或别名"
+                          },
+                          "operator": {
+                            "type": "string",
+                            "description": "运算符"
+                          },
+                          "value": {
+                            "description": "值（字符串、数值、数组、日期范围DateRange字符串）",
+                            "nullable": true,
+                            "oneOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "integer"
+                              },
+                              {
+                                "type": "boolean"
+                              },
+                              {
+                                "type": "array"
+                              },
+                              {
+                                "type": "object"
+                              },
+                              {
+                                "type": "number"
+                              }
+                            ]
+                          },
+                          "logic": {
+                            "type": "string",
+                            "description": "'AND' | 'OR'。不区分大小写"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "children"
+                  ]
+                },
+                "description": "筛选器"
+              },
+              "sorts": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "title": "字段ID"
+                    },
+                    "isAsc": {
+                      "type": "boolean",
+                      "title": "是否升序，默认为降序"
+                    }
+                  },
+                  "required": [
+                    "field",
+                    "isAsc"
+                  ]
+                },
+                "description": "排序字段"
+              },
+              "includeSummary": {
+                "type": "boolean",
+                "description": "返回值是否包含所有行汇总值"
+              }
+            },
+            "required": [
+              "values"
+            ]
+          },
+          "example": {
+            "pageSize": 100,
+            "pageIndex": 1,
+            "viewId": "",
+            "columns": [
+              {
+                "field": "1a2b3c4d",
+                "displayName": "产品类别",
+                "granularity": null
+              },
+              {
+                "field": "2b3c4d5e",
+                "displayName": "产品名称",
+                "granularity": null
+              },
+              {
+                "field": "3c4d5e6f",
+                "displayName": "销售日期",
+                "granularity": 2
+              }
+            ],
+            "rows": [
+              {
+                "field": "4d5e6f7a",
+                "displayName": "国家",
+                "granularity": null
+              },
+              {
+                "field": "5e6f7a8b",
+                "displayName": "地区",
+                "granularity": null
+              }
+            ],
+            "values": [
+              {
+                "field": "6f7a8b9c",
+                "displayName": "总销售数量",
+                "aggregation": "SUM"
+              },
+              {
+                "field": "7a8b9cad",
+                "displayName": "总销售金额",
+                "aggregation": "SUM"
+              }
+            ],
+            "filters": [],
+            "sorts": [],
+            "includeSummary": true
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "meta": {
+                      "description": "透视表元数据",
+                      "$ref": "#/components/schemas/%E9%80%8F%E8%A7%86%E8%A1%A8%E5%85%83%E6%95%B0%E6%8D%AE"
+                    },
+                    "pivot": {
+                      "$ref": "#/components/schemas/%E9%80%8F%E8%A7%86%E8%A1%A8%E8%BF%94%E5%9B%9E%E6%95%B0%E6%8D%AE",
+                      "description": "透视表数据"
+                    },
+                    "summary": {
+                      "type": "object",
+                      "properties": {
+                        "field": {
+                          "type": "string",
+                          "description": "字段ID对应的汇总值"
+                        }
+                      },
+                      "required": [
+                        "field"
+                      ],
+                      "description": "汇总值"
+                    },
+                    "totalPages": {
+                      "type": "integer",
+                      "description": "总页数"
+                    },
+                    "currentPage": {
+                      "type": "integer",
+                      "description": "当前页码"
+                    }
+                  },
+                  "description": "返回透视表数据",
+                  "required": [
+                    "meta",
+                    "pivot",
+                    "totalPages",
+                    "currentPage"
+                  ]
+                },
+                "success": {
+                  "type": "boolean",
+                  "description": "是否调用成功"
+                },
+                "errorCode": {
+                  "type": "integer",
+                  "description": "错误代码"
+                },
+                "errorMsg": {
+                  "type": "string",
+                  "description": "错误消息"
+                }
+              },
+              "required": [
+                "data",
+                "success"
+              ]
+            },
+            "example": {
+              "data": {
+                "meta": {
+                  "columns": [
+                    {
+                      "field": "1a2b3c4d",
+                      "displayName": "产品类别",
+                      "granularity": null
+                    },
+                    {
+                      "field": "2b3c4d5e",
+                      "displayName": "产品名称",
+                      "granularity": null
+                    },
+                    {
+                      "field": "3c4d5e6f",
+                      "displayName": "销售日期",
+                      "granularity": 2
+                    }
+                  ],
+                  "rows": [
+                    {
+                      "field": "4d5e6f7a",
+                      "displayName": "国家",
+                      "granularity": null
+                    },
+                    {
+                      "field": "5e6f7a8b",
+                      "displayName": "地区",
+                      "granularity": null
+                    }
+                  ],
+                  "values": [
+                    {
+                      "field": "6f7a8b9c",
+                      "displayName": "总销售数量",
+                      "aggregation": "SUM"
+                    },
+                    {
+                      "field": "7a8b9cad",
+                      "displayName": "总销售金额",
+                      "aggregation": "SUM"
+                    }
+                  ]
+                },
+                "pivot": [
+                  {
+                    "columns": {
+                      "1a2b3c4d": "电子产品",
+                      "2b3c4d5e": "产品A",
+                      "3c4d5e6f": "2023-01"
+                    },
+                    "rows": {
+                      "4d5e6f7a": "美国",
+                      "5e6f7a8b": "华盛顿"
+                    },
+                    "values": {
+                      "6f7a8b9c": 5000,
+                      "7a8b9cad": 500000
+                    }
+                  },
+                  {
+                    "columns": {
+                      "1a2b3c4d": "电子产品",
+                      "2b3c4d5e": "产品B",
+                      "3c4d5e6f": "2023-02"
+                    },
+                    "rows": {
+                      "4d5e6f7a": "德国",
+                      "5e6f7a8b": "慕尼黑"
+                    },
+                    "values": {
+                      "6f7a8b9c": 3000,
+                      "7a8b9cad": 300000
+                    }
+                  },
+                  {
+                    "columns": {
+                      "1a2b3c4d": "家具",
+                      "2b3c4d5e": "产品C",
+                      "3c4d5e6f": "2023-03"
+                    },
+                    "rows": {
+                      "4d5e6f7a": "中国",
+                      "5e6f7a8b": "深圳"
+                    },
+                    "values": {
+                      "6f7a8b9c": 2000,
+                      "7a8b9cad": 100000
+                    }
+                  },
+                  {
+                    "columns": {
+                      "1a2b3c4d": "家具",
+                      "2b3c4d5e": "产品D",
+                      "3c4d5e6f": "2023-04"
+                    },
+                    "rows": {
+                      "4d5e6f7a": "加拿大",
+                      "5e6f7a8b": "魁北克"
+                    },
+                    "values": {
+                      "6f7a8b9c": 1000,
+                      "7a8b9cad": 50000
+                    }
+                  },
+                  {
+                    "columns": {
+                      "1a2b3c4d": "服装",
+                      "2b3c4d5e": "产品E",
+                      "3c4d5e6f": "2023-05"
+                    },
+                    "rows": {
+                      "4d5e6f7a": "法国",
+                      "5e6f7a8b": "巴黎"
+                    },
+                    "values": {
+                      "6f7a8b9c": 1000,
+                      "7a8b9cad": 50000
+                    }
+                  }
+                ],
+                "summary": {
+                  "6f7a8b9c": 15000,
+                  "7a8b9cad": 1000000
+                },
+                "totalPages": 5,
+                "currentPage": 1
+              },
+              "success": true
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

@@ -1,0 +1,219 @@
+{
+  "get": {
+    "summary": "获取行记录日志",
+    "deprecated": false,
+    "description": "获取行记录日志",
+    "tags": [],
+    "parameters": [
+      {
+        "name": "worksheet_id",
+        "in": "path",
+        "description": "",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "row_id",
+        "in": "path",
+        "description": "",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "opeartorIds",
+        "in": "query",
+        "description": "操作者 id",
+        "required": false,
+        "example": [
+          ""
+        ],
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      {
+        "name": "field",
+        "in": "query",
+        "description": "字段 id/别名",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "pageSize",
+        "in": "query",
+        "description": "",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "pageIndex",
+        "in": "query",
+        "description": "",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "startDate",
+        "in": "query",
+        "description": "开始日期",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "endDate",
+        "in": "query",
+        "description": "结束日期",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "url",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appid",
+        "in": "header",
+        "description": "当使用Authorization鉴权时，必传",
+        "required": false,
+        "example": "{{appId}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "Authorization",
+        "in": "header",
+        "description": "个人授权 id",
+        "required": false,
+        "example": "{{Authorization}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "logs": {
+                      "$ref": "#/components/schemas/%E8%A1%8C%E8%AE%B0%E5%BD%95%E6%97%A5%E5%BF%97"
+                    }
+                  },
+                  "required": [
+                    "logs"
+                  ]
+                },
+                "success": {
+                  "type": "boolean"
+                },
+                "errorCode": {
+                  "type": "string"
+                },
+                "errorMsg": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "data",
+                "success"
+              ]
+            },
+            "example": {
+              "data": {
+                "logs": [
+                  {
+                    "opeartor": {
+                      "accountId": "操作者ID",
+                      "fullname": "名称",
+                      "avatar": "头像地址",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "content": {
+                      "worksheetId": "工作表ID",
+                      "objectId": "操作对象ID",
+                      "uniqueId": "操作唯一标识",
+                      "objectType": "日志对象类型 1:工作表 2:行记录 3:视图 4:按钮 5:业务规则 99:其他",
+                      "type": 2,
+                      "requestType": "日志操作类型 1:手动 2:工作流 3:按钮",
+                      "createdAt": "操作创建的时间戳",
+                      "logData": [
+                        {
+                          "id": "操作项ID",
+                          "name": "操作项名称",
+                          "editType": 1,
+                          "type": 26,
+                          "oldValue": "操作前的值",
+                          "oldText": "操作后的描述",
+                          "newValue": "操作后的值",
+                          "newText": "操作后的描述",
+                          "isDeleted": false
+                        }
+                      ],
+                      "extendParams": [
+                        "string"
+                      ]
+                    }
+                  }
+                ]
+              },
+              "lastMark": "最后一次更新的时间",
+              "flag": false,
+              "success": true
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

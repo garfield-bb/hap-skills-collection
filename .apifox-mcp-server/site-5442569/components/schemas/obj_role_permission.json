@@ -1,0 +1,296 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "角色名称"
+    },
+    "description": {
+      "type": "string",
+      "description": "角色描述"
+    },
+    "permissionScope": {
+      "type": "integer",
+      "description": "分发所有应用项, 80：可查看、编辑、删除所有记录; 60：可查看所有记录，但只能编辑、删除自己拥有的记录; 30：可查看加入的，只能编辑、删除自己拥有的记录; 20：对所有记录只有查看权限; 0：分发有权限应用项"
+    },
+    "type": {
+      "type": "integer",
+      "title": "角色类型",
+      "description": "角色类型 0：自定义角色"
+    },
+    "hideAppForMembers": {
+      "type": "boolean",
+      "description": "是否对成员隐藏应用,true：隐藏，false：不隐藏"
+    },
+    "globalPermissions": {
+      "type": "object",
+      "properties": {
+        "addRecord": {
+          "type": "boolean",
+          "description": "添加记录权限，true 有权限，false 无权限"
+        },
+        "share": {
+          "type": "boolean",
+          "description": "视图和记录的公开分享权限，true 有权限，false 无权限"
+        },
+        "import": {
+          "type": "boolean",
+          "description": "导入权限，true 有权限，false 无权限"
+        },
+        "export": {
+          "type": "boolean",
+          "description": "导出权限，true 有权限，false 无权限"
+        },
+        "discuss": {
+          "type": "boolean",
+          "description": "讨论权限，true 有权限，false 无权限"
+        },
+        "systemPrint": {
+          "type": "boolean",
+          "description": "系统打印，true 有权限，false 无权限"
+        },
+        "attachmentDownload": {
+          "type": "boolean",
+          "description": "附件下载，true 有权限，false 无权限"
+        },
+        "log": {
+          "type": "boolean",
+          "description": "日志，true 有权限，false 无权限"
+        }
+      },
+      "required": [
+        "addRecord",
+        "share",
+        "systemPrint",
+        "log",
+        "discuss",
+        "export",
+        "import",
+        "attachmentDownload"
+      ],
+      "description": "应用全局权限，仅在permissionScope大于0时生效"
+    },
+    "worksheetPermissions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "工作表Id"
+          },
+          "recordPermissionInViews": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "viewId": {
+                  "type": "string",
+                  "description": "视图ID"
+                },
+                "read": {
+                  "type": "boolean",
+                  "description": "查看行记录权限"
+                },
+                "edit": {
+                  "type": "boolean",
+                  "description": "编辑行记录权限"
+                },
+                "delete": {
+                  "type": "boolean",
+                  "description": "删除行记录权限"
+                }
+              },
+              "required": [
+                "viewId",
+                "read",
+                "edit",
+                "delete"
+              ]
+            },
+            "description": "在视图下的行记录权限"
+          },
+          "recordDataScope": {
+            "type": "object",
+            "properties": {
+              "read": {
+                "type": "integer",
+                "description": "查看权限范围 0：未授权 20：仅我拥有的 30：我的及下属的 100：全部的"
+              },
+              "edit": {
+                "type": "integer",
+                "description": "编辑权限范围 0：未授权 20：仅我拥有的 30：我的及下属的 100：全部的"
+              },
+              "delete": {
+                "type": "integer",
+                "description": "删除权限范围 0：未授权 20：仅我拥有的 30：我的及下属的 100：全部的"
+              }
+            },
+            "required": [
+              "read",
+              "delete",
+              "edit"
+            ],
+            "description": "行记录的数据权限范围"
+          },
+          "worksheetActions": {
+            "type": "object",
+            "properties": {
+              "shareView": {
+                "type": "boolean",
+                "description": "公开分享视图权限"
+              },
+              "import": {
+                "type": "boolean",
+                "description": "工作表导入权限"
+              },
+              "export": {
+                "type": "boolean",
+                "description": "工作表导出权限"
+              },
+              "discuss": {
+                "type": "boolean",
+                "description": "工作表讨论权限"
+              },
+              "batchOperation": {
+                "type": "boolean",
+                "description": "工作表批量操作权限"
+              }
+            },
+            "required": [
+              "shareView",
+              "import",
+              "export",
+              "discuss",
+              "batchOperation"
+            ],
+            "description": "工作表动作权限"
+          },
+          "recordActions": {
+            "type": "object",
+            "properties": {
+              "add": {
+                "type": "boolean",
+                "description": "添加记录权限"
+              },
+              "share": {
+                "type": "boolean",
+                "description": "公开分享记录权限"
+              },
+              "discuss": {
+                "type": "boolean",
+                "description": "记录讨论权限"
+              },
+              "systemPrint": {
+                "type": "boolean",
+                "description": "记录系统打印权限"
+              },
+              "attachmentDownload": {
+                "type": "boolean",
+                "description": "记录附件下载权限"
+              },
+              "log": {
+                "type": "boolean",
+                "description": "记录日志权限"
+              }
+            },
+            "required": [
+              "share",
+              "discuss",
+              "systemPrint",
+              "attachmentDownload",
+              "log",
+              "add"
+            ],
+            "description": "行记录动作权限"
+          },
+          "paymentActions": {
+            "type": "object",
+            "properties": {
+              "pay": {
+                "type": "boolean",
+                "description": "工作表中付款权限"
+              }
+            },
+            "description": "支付权限",
+            "required": [
+              "pay"
+            ]
+          },
+          "fieldPermissions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "字段 id"
+                },
+                "add": {
+                  "type": "boolean",
+                  "description": "新增字段权限"
+                },
+                "read": {
+                  "type": "boolean",
+                  "description": "查看字段权限"
+                },
+                "edit": {
+                  "type": "boolean",
+                  "description": "编辑字段权限"
+                },
+                "decrypt": {
+                  "type": "boolean",
+                  "description": "解密字段权限"
+                }
+              },
+              "required": [
+                "id",
+                "add",
+                "read",
+                "edit"
+              ]
+            },
+            "description": "字段权限"
+          }
+        },
+        "required": [
+          "recordDataScope",
+          "worksheetActions",
+          "recordActions",
+          "paymentActions",
+          "recordPermissionInViews",
+          "id",
+          "fieldPermissions"
+        ]
+      },
+      "description": "工作表权限明细，仅在permissionScope为0时生效"
+    },
+    "pagePermissions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "自定义页面ID"
+          },
+          "enable": {
+            "type": "boolean",
+            "description": "是否可以查看自定义页面"
+          }
+        },
+        "required": [
+          "id",
+          "enable"
+        ]
+      },
+      "description": "自定义页面权限明细，仅在permissionScope为0时生效"
+    }
+  },
+  "required": [
+    "name",
+    "description",
+    "permissionScope",
+    "type"
+  ]
+}

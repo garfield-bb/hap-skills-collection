@@ -1,0 +1,377 @@
+{
+  "post": {
+    "summary": "获取工作表结构信息",
+    "deprecated": false,
+    "description": "获取工作表配置及其控件信息",
+    "tags": [
+      "工作表"
+    ],
+    "parameters": [],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "appKey": {
+                "type": "string",
+                "title": "AppKey"
+              },
+              "sign": {
+                "type": "string",
+                "title": "签名"
+              },
+              "worksheetId": {
+                "type": "string",
+                "title": "工作表 id"
+              }
+            },
+            "required": [
+              "appKey",
+              "sign",
+              "worksheetId",
+              "01JQQQTJRXYR0M0Z587ARN53X2"
+            ],
+            "x-apifox-orders": [
+              "appKey",
+              "sign",
+              "worksheetId",
+              "01JQQQTJRXYR0M0Z587ARN53X2"
+            ],
+            "x-apifox-ignore-properties": []
+          },
+          "example": {
+            "appKey": "4fa7cd2c37b8444e",
+            "sign": "YjE5YTg4YTg2MmY2ZjQ4ZjUxMDcxNjk4YTI1MDRmYjQ0N2NkOGExYTJhODdkMDEzYWE3ZTFmMTIwODBlODk4Yg==",
+            "worksheetId": "65dda1a5a608a40050774c72"
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                },
+                "code": {
+                  "type": "integer"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "projectId": {
+                      "type": "string",
+                      "description": "组织ID"
+                    },
+                    "appid": {
+                      "type": "string",
+                      "description": "应用ID"
+                    },
+                    "worksheetId": {
+                      "type": "string",
+                      "description": "工作表ID"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "工作表名称"
+                    },
+                    "alias": {
+                      "type": "string",
+                      "description": "工作表别名"
+                    },
+                    "createTime": {
+                      "type": "string",
+                      "description": "创建时间"
+                    },
+                    "caid": {
+                      "type": "string",
+                      "description": "创建人账号Id"
+                    },
+                    "desc": {
+                      "type": "string",
+                      "description": "说明"
+                    },
+                    "entityName": {
+                      "type": "string",
+                      "description": "记录实体名称"
+                    },
+                    "groupId": {
+                      "type": "string",
+                      "description": "分组ID"
+                    },
+                    "shareRange": {
+                      "type": "string",
+                      "description": "分享范围 1：关闭分享 2：完全公开 3：成员可见"
+                    },
+                    "controls": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "controlId": {
+                            "type": "string",
+                            "description": "字段ID"
+                          },
+                          "controlName": {
+                            "type": "string",
+                            "description": "字段名称"
+                          },
+                          "alias": {
+                            "type": "string",
+                            "description": "字段别名"
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "控件类型"
+                          },
+                          "value": {
+                            "type": "string",
+                            "description": "默认值"
+                          }
+                        },
+                        "required": [
+                          "controlId",
+                          "value",
+                          "type",
+                          "alias",
+                          "controlName"
+                        ],
+                        "x-apifox-orders": [
+                          "controlId",
+                          "controlName",
+                          "alias",
+                          "type",
+                          "value"
+                        ],
+                        "x-apifox-ignore-properties": []
+                      },
+                      "description": "控件列表"
+                    }
+                  },
+                  "required": [
+                    "projectId",
+                    "appid",
+                    "worksheetId",
+                    "name",
+                    "desc",
+                    "createTime",
+                    "alias",
+                    "shareRange",
+                    "groupId",
+                    "entityName",
+                    "controls",
+                    "caid"
+                  ],
+                  "x-apifox-orders": [
+                    "projectId",
+                    "appid",
+                    "worksheetId",
+                    "name",
+                    "alias",
+                    "createTime",
+                    "caid",
+                    "desc",
+                    "entityName",
+                    "groupId",
+                    "shareRange",
+                    "controls"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              },
+              "required": [
+                "success",
+                "code",
+                "msg",
+                "data"
+              ],
+              "x-apifox-orders": [
+                "success",
+                "code",
+                "msg",
+                "data"
+              ],
+              "x-apifox-ignore-properties": []
+            },
+            "examples": {
+              "1": {
+                "summary": "成功示例",
+                "value": {
+                  "success": true,
+                  "code": 1,
+                  "msg": "ok",
+                  "data": {
+                    "projectId": "faa2f6b1-f706-4084-9a8d-XXXXXXXXX",
+                    "appId": "f553c2a3-aa0b-47a3-94d2-XXXXXXXXX",
+                    "worksheetId": "62a7058cfe536211a3aac4fb",
+                    "name": "工作表demo",
+                    "alias": "gzbdemo",
+                    "createTime": "2014-07-19 18:18:06",
+                    "caid": "e2453de8-1a6a-4d4f-ba36-87fdff880a20",
+                    "desc": "工作表描述说明",
+                    "entityName": "记录",
+                    "groupId": "62a70572030e06b46c007ca5",
+                    "shareRange": 2,
+                    "controls": [
+                      {
+                        "controlId": "262a7058cfe536211a3aac4fc",
+                        "controlName": "名称",
+                        "type": "2",
+                        "value": "默认值",
+                        "alias": "别名"
+                      },
+                      {
+                        "controlId": "21222344fe536211a3abc4fb",
+                        "controlName": "名称",
+                        "type": "3",
+                        "value": "默认值",
+                        "alias": "别名"
+                      }
+                    ]
+                  }
+                }
+              },
+              "2": {
+                "summary": "异常示例",
+                "value": {
+                  "success": false,
+                  "code": 10001,
+                  "msg": "具体错误信息",
+                  "data": {}
+                }
+              }
+            }
+          }
+        },
+        "headers": {},
+        "x-apifox-name": "成功"
+      },
+      "401": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "title": "请求结果"
+                },
+                "code": {
+                  "type": "integer",
+                  "title": "代码"
+                },
+                "msg": {
+                  "type": "string",
+                  "title": "消息"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "title": "返回数据",
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
+                }
+              },
+              "required": [
+                "success",
+                "code",
+                "msg",
+                "data"
+              ],
+              "x-apifox-orders": [
+                "success",
+                "code",
+                "msg",
+                "data"
+              ],
+              "x-apifox-ignore-properties": []
+            }
+          }
+        },
+        "headers": {},
+        "x-apifox-name": "没有权限"
+      },
+      "404": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "title": "请求结果"
+                },
+                "code": {
+                  "type": "integer",
+                  "title": "代码"
+                },
+                "msg": {
+                  "type": "string",
+                  "title": "消息"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "title": "返回数据",
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
+                }
+              },
+              "required": [
+                "success",
+                "code",
+                "msg",
+                "data"
+              ],
+              "title": "",
+              "x-apifox-orders": [
+                "success",
+                "code",
+                "msg",
+                "data"
+              ],
+              "x-apifox-ignore-properties": []
+            },
+            "examples": {
+              "3": {
+                "summary": "异常示例",
+                "value": {
+                  "success": false,
+                  "code": 1001,
+                  "msg": "应用不存在",
+                  "data": {}
+                }
+              },
+              "4": {
+                "summary": "异常示例",
+                "value": {
+                  "success": false,
+                  "code": 1001,
+                  "msg": "应用不存在",
+                  "data": {}
+                }
+              }
+            }
+          }
+        },
+        "headers": {},
+        "x-apifox-name": "记录不存在"
+      }
+    },
+    "security": [],
+    "x-apifox-folder": "工作表",
+    "x-apifox-status": "released",
+    "x-run-in-apifox": "https://app.apifox.com/web/project/6133169/apis/api-278479052-run"
+  }
+}

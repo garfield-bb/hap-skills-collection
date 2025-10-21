@@ -1,0 +1,100 @@
+{
+  "get": {
+    "summary": "查找成员",
+    "deprecated": false,
+    "description": "根据输入的人员名称匹配用户，返回用户 ID、姓名、已脱敏的手机号和邮箱。",
+    "tags": [
+      "公共查询"
+    ],
+    "parameters": [
+      {
+        "name": "name",
+        "in": "query",
+        "description": "人员名称（精准匹配）",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "users": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/obj_user_desensitized"
+                      }
+                    }
+                  },
+                  "required": [
+                    "users"
+                  ]
+                },
+                "success": {
+                  "type": "boolean",
+                  "description": "是否调用成功"
+                },
+                "error_code": {
+                  "type": "integer",
+                  "description": "错误代码"
+                },
+                "error_msg": {
+                  "type": "string",
+                  "description": "错误消息"
+                }
+              },
+              "required": [
+                "data",
+                "success"
+              ]
+            },
+            "example": {
+              "data": {
+                "users": [
+                  {
+                    "id": "user_001",
+                    "name": "Alice",
+                    "mobile": "138****5678",
+                    "email": "ali****@mail.com"
+                  }
+                ]
+              },
+              "success": true
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "角色Id"
+    },
+    "name": {
+      "type": "string",
+      "description": "角色名称"
+    },
+    "roleType": {
+      "type": "string",
+      "description": "角色类型"
+    },
+    "description": {
+      "type": "string",
+      "description": "角色描述"
+    },
+    "accounts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/%E4%BA%BA%E5%91%98%E5%AF%B9%E8%B1%A1"
+      }
+    },
+    "departments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "部门 id"
+          },
+          "name": {
+            "type": "string",
+            "description": " 部门名称"
+          }
+        }
+      }
+    },
+    "jobs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "职位 id"
+          },
+          "name": {
+            "type": "string",
+            "description": " 职位名称"
+          }
+        }
+      }
+    },
+    "orgRoleIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "组织角色ID"
+      }
+    }
+  }
+}

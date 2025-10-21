@@ -1,0 +1,62 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "行记录 ID"
+    },
+    "{field}": {
+      "description": "字段和对应的值",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "integer"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "array"
+        },
+        {
+          "type": "object"
+        },
+        {
+          "type": "number"
+        }
+      ],
+      "type": "null"
+    },
+    "_createdAt": {
+      "type": "string",
+      "description": "创建时间"
+    },
+    "_createdBy": {
+      "$ref": "#/components/schemas/obj_user",
+      "description": "创建人信息"
+    },
+    "_updatedAt": {
+      "type": "string",
+      "description": "更新时间"
+    },
+    "_updatedBy": {
+      "$ref": "#/components/schemas/obj_user",
+      "description": "更新人信息"
+    },
+    "_owner": {
+      "$ref": "#/components/schemas/obj_user",
+      "description": "拥有者信息"
+    }
+  },
+  "required": [
+    "id",
+    "_createdAt",
+    "_createdBy",
+    "_updatedAt",
+    "_updatedBy",
+    "_owner",
+    "{field}"
+  ]
+}

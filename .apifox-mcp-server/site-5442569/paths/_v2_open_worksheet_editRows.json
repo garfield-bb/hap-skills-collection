@@ -1,0 +1,155 @@
+{
+  "post": {
+    "summary": "批量更新行记录详情",
+    "deprecated": false,
+    "description": "批量更新行记录",
+    "tags": [],
+    "parameters": [],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "appkey": {
+                "type": "string",
+                "description": "AppKey"
+              },
+              "sign": {
+                "type": "string",
+                "description": "签名"
+              },
+              "worksheetId": {
+                "type": "string",
+                "title": "",
+                "description": "工作表ID"
+              },
+              "rowIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "title": "行记录列表"
+              },
+              "control": {
+                "type": "object",
+                "properties": {
+                  "controid": {
+                    "type": "string",
+                    "title": "控件ID",
+                    "description": ""
+                  },
+                  "value": {
+                    "type": "string",
+                    "title": " 控件值"
+                  }
+                },
+                "title": "控件信息",
+                "description": "旧字段，用于单个字段更新",
+                "required": [
+                  "controid",
+                  "value"
+                ]
+              },
+              "controls": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "controlId": {
+                      "type": "string",
+                      "title": "",
+                      "description": "控件 ID"
+                    },
+                    "value": {
+                      "type": "string",
+                      "title": "",
+                      "description": "控件值"
+                    }
+                  },
+                  "required": [
+                    "controlId",
+                    "value"
+                  ]
+                },
+                "title": "控件列表数据",
+                "description": "用于多个字段更新"
+              },
+              "triggerWorkflow": {
+                "type": "boolean",
+                "description": "是否触发工作流",
+                "default": true
+              }
+            },
+            "required": [
+              "worksheetId",
+              "controls",
+              "appkey",
+              "sign",
+              "rowIds",
+              "control"
+            ],
+            "title": ""
+          },
+          "example": {
+            "appKey": "5004e1f1c103fc82",
+            "sign": "MWQzYWJiNTNlYzZmNjZhNTA1NTExMGZhNzEyMjU3ZTMzM2Q2YWFmZWJkMTZjMWM1NTRjNDZiODUwNjc5OTUzNg==",
+            "worksheetId": "6773abdab945df4389d21c17",
+            "rowIds": [
+              "0142c26c-144d-490b-8f58-7dd3b2221dfe",
+              "0772e57d-1832-4ab9-9487-658c5e6e0ea1"
+            ],
+            "control": "",
+            "triggerWorkflow": true,
+            "controls": [
+              {
+                "controlId": "60d42c197766e73dc71929a2",
+                "value": "昆明长水国际机场"
+              },
+              {
+                "controlId": "60d42c197766e73dc71929a3",
+                "value": "KMG"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "boolean",
+                  "description": "true成功"
+                },
+                "error_code": {
+                  "type": "integer"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "data",
+                "error_code",
+                "success"
+              ]
+            },
+            "example": {
+              "data": true,
+              "error_code": 1,
+              "success": true
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

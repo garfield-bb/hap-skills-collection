@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "流程 id"
+    },
+    "alias": {
+      "type": "string",
+      "description": "流程别名"
+    },
+    "name": {
+      "type": "string",
+      "description": "流程名称"
+    },
+    "type": {
+      "type": "integer",
+      "description": "流程类型，6:webhook，10:pbp"
+    },
+    "description": {
+      "type": "string",
+      "description": "流程描述"
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "创建时间"
+    },
+    "updatedAt": {
+      "type": "string",
+      "description": "更新时间"
+    },
+    "owner": {
+      "$ref": "#/components/schemas/%E4%BA%BA%E5%91%98%E5%AF%B9%E8%B1%A1",
+      "description": "拥有者信息"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "description",
+    "createdAt",
+    "updatedAt",
+    "owner",
+    "type",
+    "alias"
+  ]
+}

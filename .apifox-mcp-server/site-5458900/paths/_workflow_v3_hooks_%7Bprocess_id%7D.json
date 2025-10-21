@@ -1,0 +1,155 @@
+{
+  "post": {
+    "summary": "触发流程",
+    "deprecated": false,
+    "description": "包含流程请求参数，响应参数",
+    "tags": [],
+    "parameters": [
+      {
+        "name": "process_id",
+        "in": "path",
+        "description": "",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "url",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appid",
+        "in": "header",
+        "description": "当使用Authorization鉴权时，必传",
+        "required": false,
+        "example": "{{appId}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "Authorization",
+        "in": "header",
+        "description": "个人授权 id",
+        "required": false,
+        "example": "{{Authorization}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "{field}": {
+                "type": "string",
+                "description": "工作表字段ID或别名以及该字段的值\n"
+              }
+            },
+            "required": [
+              "{field}"
+            ]
+          },
+          "example": {
+            "text_field": "日报",
+            "number_field": 100,
+            "checkbox_field": 1,
+            "datetime_field": "2025-07-16 15:20",
+            "radio_field": "选项B",
+            "array_field": [
+              "item1",
+              "item2"
+            ],
+            "object_array_field": [
+              {
+                "key": "A",
+                "value": 1
+              },
+              {
+                "key": "B",
+                "value": 2
+              }
+            ],
+            "user_field": [
+              "user_001"
+            ],
+            "department_field": [
+              "dept_001"
+            ],
+            "role_field": [
+              "role_leader"
+            ],
+            "file_field": [
+              "https://example.com/input/file1.pdf"
+            ]
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "success": {
+                  "type": "boolean"
+                },
+                "errorCode": {
+                  "type": "string"
+                },
+                "errorMsg": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "success",
+                "data"
+              ]
+            },
+            "example": {
+              "data": {},
+              "success": true
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

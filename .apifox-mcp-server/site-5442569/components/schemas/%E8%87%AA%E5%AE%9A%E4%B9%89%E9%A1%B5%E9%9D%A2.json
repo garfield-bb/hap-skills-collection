@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "pageId": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "checked": {
+      "type": "boolean"
+    },
+    "navigateHide": {
+      "type": "boolean"
+    },
+    "sortIndex": {
+      "type": "integer"
+    },
+    "iconUrl": {
+      "type": "string"
+    }
+  }
+}

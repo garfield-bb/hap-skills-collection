@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "accountId": {
+      "type": "string"
+    },
+    "fullname": {
+      "type": "string"
+    },
+    "avatar": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "accountId",
+    "fullname",
+    "avatar",
+    "status"
+  ]
+}

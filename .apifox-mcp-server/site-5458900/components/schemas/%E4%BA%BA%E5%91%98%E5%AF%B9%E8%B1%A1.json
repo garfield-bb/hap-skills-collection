@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "properties": {
+    "accountId": {
+      "type": "string",
+      "description": "人员 id"
+    },
+    "fullname": {
+      "type": "string",
+      "description": " 名称"
+    },
+    "avatar": {
+      "type": "string",
+      "description": "头像地址"
+    },
+    "status": {
+      "type": "string",
+      "description": "状态"
+    }
+  },
+  "required": [
+    "accountId",
+    "fullname",
+    "avatar",
+    "status"
+  ]
+}

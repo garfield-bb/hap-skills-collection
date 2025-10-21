@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "accountId": {
+      "type": "string",
+      "description": "操作者ID"
+    },
+    "fullname": {
+      "type": "string",
+      "description": "名称"
+    },
+    "avatar": {
+      "type": "string",
+      "description": "头像地址"
+    },
+    "isPortal": {
+      "type": "boolean"
+    },
+    "status": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "accountId",
+    "fullname",
+    "avatar",
+    "isPortal",
+    "status"
+  ],
+  "description": "创建人信息"
+}

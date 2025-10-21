@@ -1,0 +1,94 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "角色Id"
+    },
+    "name": {
+      "type": "string",
+      "description": "角色名称"
+    },
+    "roleType": {
+      "type": "string",
+      "description": "角色类型"
+    },
+    "description": {
+      "type": "string",
+      "description": "角色描述"
+    },
+    "accounts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/obj_user"
+      },
+      "description": "用户列表"
+    },
+    "departmentTrees": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "部门 id"
+          },
+          "name": {
+            "type": "string",
+            "description": " 部门名称"
+          }
+        }
+      },
+      "description": "部门树列表"
+    },
+    "departments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "部门 id"
+          },
+          "name": {
+            "type": "string",
+            "description": " 部门名称"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ]
+      },
+      "description": "部门列表"
+    },
+    "jobs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "职位 id"
+          },
+          "name": {
+            "type": "string",
+            "description": " 职位名称"
+          }
+        }
+      },
+      "description": "职位列表"
+    },
+    "orgRoleIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "组织角色ID"
+      },
+      "description": "组织角色列表"
+    }
+  },
+  "required": [
+    "departments"
+  ]
+}

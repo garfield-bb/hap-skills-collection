@@ -1,0 +1,374 @@
+{
+  "post": {
+    "summary": "新建工作表",
+    "deprecated": false,
+    "description": "创建工作表，目前支持控件类型有文本、数值、单选、多选、时间、日期、成员、附件、关联记录",
+    "tags": [
+      "工作表"
+    ],
+    "parameters": [],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "appkey": {
+                "type": "string",
+                "description": "AppKey"
+              },
+              "sign": {
+                "type": "string",
+                "description": "签名"
+              },
+              "name": {
+                "type": "string",
+                "title": "",
+                "description": "工作表名称"
+              },
+              "alias": {
+                "type": "string",
+                "description": "工作表别名"
+              },
+              "sectionId": {
+                "type": "string",
+                "title": "",
+                "description": "分组 id"
+              },
+              "controls": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "controlName": {
+                      "type": "string",
+                      "title": "",
+                      "description": "控件名称"
+                    },
+                    "alias": {
+                      "type": "string",
+                      "title": "",
+                      "description": "控件别名"
+                    },
+                    "type": {
+                      "type": "integer",
+                      "title": "",
+                      "description": "控件类型"
+                    },
+                    "staticValue": {
+                      "type": "string",
+                      "title": "",
+                      "description": "默认值"
+                    },
+                    "required": {
+                      "type": "string",
+                      "title": "",
+                      "description": "是否必选"
+                    },
+                    "dot": {
+                      "type": "integer",
+                      "description": "保留小数位（0-14），控件类型为6:数值,8:金额时填入"
+                    },
+                    "enumDefault": {
+                      "type": "string",
+                      "description": "类型为26成员时，表示成员数量，填入规则 0：单选,1：多选\n类型为29关联记录时，表示关联记录数量，填入规则 1：单条 2：多条\n"
+                    },
+                    "options": {
+                      "type": "object",
+                      "properties": {
+                        "value": {
+                          "type": "string",
+                          "description": "选项名称"
+                        },
+                        "index": {
+                          "description": "选项排序",
+                          "type": "integer"
+                        }
+                      },
+                      "description": "选项信息，控件类型为 11:单选,10:多选时填入",
+                      "x-apifox-orders": [
+                        "value",
+                        "index"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    },
+                    "max": {
+                      "type": "integer",
+                      "description": "控件类型为28等级时，表示等级最大值，填入规则（0-10）"
+                    },
+                    "dataSource": {
+                      "type": "string",
+                      "description": "数据源 id，类型为 29 （关联记录）时传入关联表 id"
+                    }
+                  },
+                  "required": [
+                    "controlName",
+                    "type",
+                    "staticValue",
+                    "required",
+                    "dataSource"
+                  ],
+                  "x-apifox-orders": [
+                    "controlName",
+                    "alias",
+                    "type",
+                    "staticValue",
+                    "required",
+                    "dot",
+                    "enumDefault",
+                    "options",
+                    "max",
+                    "dataSource"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "title": "",
+                "description": "工作表控件信息"
+              }
+            },
+            "required": [
+              "name",
+              "controls",
+              "appkey",
+              "sign",
+              "alias"
+            ],
+            "title": "",
+            "x-apifox-orders": [
+              "appkey",
+              "sign",
+              "name",
+              "alias",
+              "sectionId",
+              "controls"
+            ],
+            "x-apifox-ignore-properties": []
+          },
+          "example": {
+            "appKey": "4fa7cd2c37b8444e",
+            "sign": "YjE5YTg4YTg2MmY2ZjQ4ZjUxMDcxNjk4YTI1MDRmYjQ0N2NkOGExYTJhODdkMDEzYWE3ZTFmMTIwODBlODk4Yg==",
+            "name": "中国机场代码",
+            "sectionId": "",
+            "controls": [
+              {
+                "controlName": "文本",
+                "alias": "",
+                "type": 2,
+                "required": true
+              },
+              {
+                "controlName": "数值",
+                "alias": "",
+                "type": 6,
+                "dot": 2,
+                "required": true
+              },
+              {
+                "controlName": "单选",
+                "alias": "",
+                "type": 11,
+                "options": [
+                  {
+                    "value": "选项名称1",
+                    "index": 1
+                  },
+                  {
+                    "value": "选项名称2",
+                    "index": 2
+                  }
+                ],
+                "required": true
+              },
+              {
+                "controlName": "多选",
+                "alias": "",
+                "type": 10,
+                "options": [
+                  {
+                    "value": "选项名称1",
+                    "index": 1
+                  },
+                  {
+                    "value": "选项名称2",
+                    "index": 2
+                  },
+                  {
+                    "value": "选项名称3",
+                    "index": 3
+                  }
+                ],
+                "required": true
+              },
+              {
+                "controlName": "时间-时分",
+                "alias": "",
+                "type": 46,
+                "required": true,
+                "unit": 1
+              },
+              {
+                "controlName": "时间-时分秒",
+                "alias": "",
+                "type": 46,
+                "required": true,
+                "unit": 6
+              },
+              {
+                "controlName": "成员-单选",
+                "type": 26,
+                "alias": "",
+                "enumDefault": 0,
+                "required": true
+              },
+              {
+                "controlName": "成员-多选",
+                "type": 26,
+                "alias": "",
+                "enumDefault": 1,
+                "required": true
+              },
+              {
+                "controlName": "附件",
+                "alias": "",
+                "type": 14,
+                "required": true
+              },
+              {
+                "controlName": "日期",
+                "alias": "",
+                "type": 15,
+                "required": true
+              },
+              {
+                "controlName": "日期时间",
+                "alias": "",
+                "type": 16,
+                "required": true
+              },
+              {
+                "controlName": "关联记录",
+                "alias": "",
+                "type": 29,
+                "enumDefault": 1,
+                "dataSource": "676910ad8d09d8a189da06a0",
+                "required": true
+              }
+            ]
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                },
+                "code": {
+                  "type": "integer"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "string",
+                  "description": "工作表ID"
+                }
+              },
+              "required": [
+                "success",
+                "code",
+                "msg",
+                "data"
+              ],
+              "title": "",
+              "x-apifox-orders": [
+                "success",
+                "code",
+                "msg",
+                "data"
+              ],
+              "x-apifox-ignore-properties": []
+            },
+            "examples": {
+              "1": {
+                "summary": "成功示例",
+                "value": {
+                  "data": "67eb801bbb2af284541ae54c",
+                  "success": true,
+                  "error_code": 1
+                }
+              },
+              "2": {
+                "summary": "异常示例",
+                "value": {
+                  "error_msg": "具体错误信息",
+                  "error_code": 10101,
+                  "success": false
+                }
+              }
+            }
+          }
+        },
+        "headers": {},
+        "x-apifox-name": "成功"
+      },
+      "401": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "title": "请求结果"
+                },
+                "code": {
+                  "type": "integer",
+                  "title": "代码"
+                },
+                "msg": {
+                  "type": "string",
+                  "title": "消息"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "title": "返回数据",
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
+                }
+              },
+              "required": [
+                "success",
+                "code",
+                "msg",
+                "data"
+              ],
+              "x-apifox-orders": [
+                "success",
+                "code",
+                "msg",
+                "data"
+              ],
+              "x-apifox-ignore-properties": []
+            }
+          }
+        },
+        "headers": {},
+        "x-apifox-name": "没有权限"
+      }
+    },
+    "security": [],
+    "x-apifox-folder": "工作表",
+    "x-apifox-status": "released",
+    "x-apifox-maintainer": "hap",
+    "x-run-in-apifox": "https://app.apifox.com/web/project/6133169/apis/api-278479051-run"
+  }
+}

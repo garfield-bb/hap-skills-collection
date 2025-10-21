@@ -1,0 +1,100 @@
+{
+  "post": {
+    "summary": "删除行记录",
+    "deprecated": false,
+    "description": "删除行记录",
+    "tags": [],
+    "parameters": [],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "appKey": {
+                "type": "string",
+                "title": "AppKey",
+                "description": ""
+              },
+              "sign": {
+                "type": "string",
+                "title": "签名",
+                "description": ""
+              },
+              "worksheetId": {
+                "type": "string",
+                "title": "工作表ID",
+                "description": ""
+              },
+              "rowId": {
+                "type": "string",
+                "title": "行记录ID",
+                "description": ""
+              },
+              "triggerWorkflow": {
+                "type": "boolean",
+                "title": "是否触发工作流",
+                "default": true
+              },
+              "ThoroughDelete": {
+                "type": "boolean",
+                "title": "是否彻底删除",
+                "description": "(true：彻底删除，false：逻辑删除，默认为false)，彻底删除后数据不进入回收站，且不可恢复，请谨慎操作！"
+              }
+            },
+            "required": [
+              "appKey",
+              "sign",
+              "worksheetId",
+              "rowId"
+            ]
+          },
+          "example": {
+            "appKey": "5004e1f1c103fc82",
+            "sign": "MWQzYWJiNTNlYzZmNjZhNTA1NTExMGZhNzEyMjU3ZTMzM2Q2YWFmZWJkMTZjMWM1NTRjNDZiODUwNjc5OTUzNg==",
+            "worksheetId": "6773abdab945df4389d21c17",
+            "rowId": "0772e57d-1832-4ab9-9487-658c5e6e0ea1",
+            "ReturnRowIds": false,
+            "triggerWorkflow": true
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "boolean",
+                  "description": "true成功"
+                },
+                "error_code": {
+                  "type": "integer"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "data",
+                "error_code",
+                "success"
+              ]
+            },
+            "example": {
+              "data": true,
+              "error_code": 1,
+              "success": true
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

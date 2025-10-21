@@ -1,0 +1,281 @@
+{
+  "post": {
+    "summary": "添加角色成员",
+    "deprecated": false,
+    "description": "添加角色成员信息\n数据包括：添加用户、职位、部门",
+    "tags": [
+      "角色"
+    ],
+    "parameters": [
+      {
+        "name": "role_id",
+        "in": "path",
+        "description": "角色 ID",
+        "required": true,
+        "example": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "userIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "用户Id合集"
+              },
+              "departmentIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "部门集合"
+              },
+              "departmentTreeIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "部门树集合"
+              },
+              "jobIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "职位 id 集合"
+              },
+              "orgRoleIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "组织角色id集合"
+              }
+            }
+          },
+          "example": {
+            "operatorId": "e2453de8-1a6a-4d4f-ba36-87fdff880a20",
+            "accountIds": [
+              "e2453de8-1a6a-4d4f-ba36-87fdff880a20"
+            ],
+            "departmentIds": [],
+            "departmentTreeIds": [],
+            "jobIds": [],
+            "orgRoleIds": []
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "success": {
+                  "type": "boolean",
+                  "description": "是否调用成功"
+                },
+                "error_code": {
+                  "type": "integer",
+                  "description": "错误代码"
+                },
+                "error_msg": {
+                  "type": "string",
+                  "description": "错误消息"
+                }
+              },
+              "required": [
+                "data",
+                "success"
+              ]
+            },
+            "example": {
+              "success": true,
+              "error_code": 1
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  },
+  "delete": {
+    "summary": "移除角色成员",
+    "deprecated": false,
+    "description": "移出角色下成员",
+    "tags": [
+      "角色"
+    ],
+    "parameters": [
+      {
+        "name": "role_id",
+        "in": "path",
+        "description": "角色 ID",
+        "required": true,
+        "example": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "operatorId": {
+                "type": "string",
+                "description": "操作者ID"
+              },
+              "userIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": " 用户账号 ID 列表"
+              },
+              "departmentIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": " 部门 ID 列表"
+              },
+              "departmentTreeIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "部门树 ID 列表"
+              },
+              "jobIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "职位 ID 列表"
+              },
+              "orgRoleIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "组织角色 ID 列表"
+              }
+            },
+            "required": [
+              "operatorId"
+            ]
+          },
+          "example": {
+            "operatorId": "e2453de8-1a6a-4d4f-ba36-87fdff880a20",
+            "accountIds": [
+              "e2453de8-1a6a-4d4f-ba36-87fdff880a20"
+            ],
+            "departmentIds": [],
+            "departmentTreeIds": [],
+            "jobIds": [],
+            "orgRoleIds": []
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "success": {
+                  "type": "boolean",
+                  "description": "是否调用成功"
+                },
+                "error_code": {
+                  "type": "integer",
+                  "description": "错误代码"
+                },
+                "error_msg": {
+                  "type": "string",
+                  "description": "错误消息"
+                }
+              },
+              "required": [
+                "data",
+                "success"
+              ]
+            },
+            "example": {
+              "success": true,
+              "error_code": 1
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

@@ -1,0 +1,154 @@
+{
+  "get": {
+    "summary": "获取流程详情",
+    "deprecated": false,
+    "description": "包含流程请求参数，响应参数",
+    "tags": [],
+    "parameters": [
+      {
+        "name": "process_id",
+        "in": "path",
+        "description": "",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "url",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appid",
+        "in": "header",
+        "description": "当使用Authorization鉴权时，必传",
+        "required": false,
+        "example": "{{appId}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "Authorization",
+        "in": "header",
+        "description": "个人授权 id",
+        "required": false,
+        "example": "{{Authorization}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "processes": {
+                      "$ref": "#/components/schemas/processes"
+                    }
+                  },
+                  "required": [
+                    "processes"
+                  ]
+                },
+                "success": {
+                  "type": "boolean"
+                },
+                "errorCode": {
+                  "type": "string"
+                },
+                "errorMsg": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "data",
+                "success"
+              ]
+            },
+            "example": {
+              "data": [
+                {
+                  "id": "681b8934ec9191462c08417a",
+                  "name": "新增线索",
+                  "description": "新增线索的描述",
+                  "inputParameters": [
+                    {
+                      "field": "681b8190ec9191462c08283b",
+                      "fieldname": "名称",
+                      "alias": "",
+                      "description": "",
+                      "type": 2,
+                      "required": false
+                    },
+                    {
+                      "field": "681b8190ec9191462c08111",
+                      "fieldname": "渠道",
+                      "description": "",
+                      "alias": "",
+                      "type": 9,
+                      "options": [
+                        {
+                          "key": "1",
+                          "value": "a"
+                        },
+                        {
+                          "key": "2",
+                          "value": "b"
+                        }
+                      ],
+                      "required": false
+                    }
+                  ],
+                  "outputParameters": [
+                    {
+                      "field": "681b8190ec9191462c082222",
+                      "fieldname": "id",
+                      "alias": "",
+                      "description": "",
+                      "type": 2
+                    }
+                  ]
+                }
+              ],
+              "success": true
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "post": {
+    "summary": "获取工作表列表",
+    "deprecated": false,
+    "description": "编辑工作表",
+    "tags": [
+      "工作表"
+    ],
+    "parameters": [
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "responseFormat": {
+                "type": "string",
+                "description": "json：返回 JSON，md：返回 md 文本(更省 token)。默认为 json"
+              },
+              "worksheets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "指定返回工作表 id，填入后返回数据中只包含这些工作表信息"
+              }
+            }
+          },
+          "example": {
+            "responseFormat": "json",
+            "worksheets": []
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "error_code": {
+                  "type": "integer",
+                  "description": "错误代码"
+                },
+                "error_msg": {
+                  "type": "string",
+                  "description": "错误消息"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "工作表 id"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": " 工作表名称"
+                      },
+                      "remark": {
+                        "type": "string",
+                        "description": "描述"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                      "remark"
+                    ]
+                  }
+                }
+              },
+              "title": "",
+              "type": "object",
+              "required": [
+                "data"
+              ]
+            },
+            "examples": {
+              "1": {
+                "summary": "异常示例",
+                "value": {
+                  "error_msg": "具体错误信息",
+                  "error_code": 10101,
+                  "success": false
+                }
+              },
+              "2": {
+                "summary": "成功示例",
+                "value": {
+                  "data": "id｜name｜remark\n6883397c0c26576e1a2accd7｜客户公司｜\n6875f09d1a73acd324077832｜联系人｜\n6875f09d1a73acd324077837｜中国机场代码｜\n6875f09d1a73acd32407783b｜全部订单｜\n68b7fffaed001044ae006aba｜产品分类｜\n68b80005e76c74bb5fd449a4｜产品规格｜\n68b80012e76c74bb5fd449ae｜产品配置｜\n68b8001ee76c74bb5fd449b9｜库存管理｜\n68b8002ae76c74bb5fd449c3｜产品生命周期｜\n68b80036e76c74bb5fd449ed｜产品文档｜\n68e7225ab72077a14c4db157｜测试新建工作表｜\n68e72266e718b6850b8fc4be｜测试新建工作表1009｜\n6875f09d1a73acd324077831｜线索｜\n6875f09d1a73acd324077830｜成交机会｜\n6875f09d1a73acd32407782f｜报价｜\n6875f09d1a73acd324077829｜报价明细｜\n6875f09d1a73acd324077825｜订单｜\n6875f09d1a73acd324077826｜订单明细｜\n6875f09d1a73acd32407782b｜行动｜\n6875f09d1a73acd32407782c｜日志｜\n6875f09d1a73acd324077834｜市场活动｜\n6875f09d1a73acd32407783c｜全部订单｜\n6875f09d1a73acd32407782e｜产品｜\n6875f09d1a73acd324077824｜发票｜\n6875f09d1a73acd324077823｜发票明细｜\n6875f09d1a73acd324077836｜款项登记｜\n6875f09d1a73acd32407782d｜价目表｜\n6875f09d1a73acd32407782a｜价目表明细｜\n6875f09d1a73acd324077828｜计价单位组｜\n6875f09d1a73acd324077827｜计价单位｜\n",
+                  "success": true,
+                  "error_code": 1
+                }
+              }
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

@@ -1,0 +1,700 @@
+{
+  "post": {
+    "summary": "创建角色",
+    "deprecated": false,
+    "description": "创建角色\n信息包含：角色名称、描述、权限信息",
+    "tags": [],
+    "parameters": [],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "角色名称"
+              },
+              "description": {
+                "type": "string",
+                "description": "角色描述"
+              },
+              "permissionWay": {
+                "type": "string",
+                "description": "分发所有应用项, 80：可查看、编辑、删除所有记录; 60：可查看所有记录，但只能编辑、删除自己拥有的记录; 30：可查看加入的，只能编辑、删除自己拥有的记录; 20：对所有记录只有查看权限; 0：分发有权限应用项"
+              },
+              "roleType": {
+                "type": "string",
+                "title": "角色类型",
+                "description": "角色类型 0：自定义角色"
+              },
+              "hideAppForMembers": {
+                "type": "string",
+                "description": "是否对成员隐藏应用,true：隐藏，false：不隐藏"
+              },
+              "generalAdd": {
+                "type": "object",
+                "properties": {
+                  "enable": {
+                    "type": "boolean"
+                  }
+                },
+                "description": "添加权限，true 有权限，false 无权限"
+              },
+              "gneralShare": {
+                "type": "object",
+                "properties": {
+                  "enable": {
+                    "type": "boolean"
+                  }
+                },
+                "description": "分享权限，true 有权限，false 无权限"
+              },
+              "generalImport": {
+                "type": "object",
+                "properties": {
+                  "enable": {
+                    "type": "boolean"
+                  }
+                },
+                "description": "导入权限，true 有权限，false 无权限"
+              },
+              "generalExport": {
+                "type": "object",
+                "properties": {
+                  "enable": {
+                    "type": "boolean"
+                  }
+                },
+                "description": "导出权限，true 有权限，false 无权限"
+              },
+              "generalDiscussion": {
+                "type": "object",
+                "properties": {
+                  "enable": {
+                    "type": "boolean"
+                  }
+                },
+                "description": "讨论权限，true 有权限，false 无权限"
+              },
+              "generalLogging": {
+                "type": "object",
+                "properties": {
+                  "enable": {
+                    "type": "boolean"
+                  }
+                },
+                "description": "日志，true 有权限，false 无权限"
+              },
+              "generalSystemPrinting": {
+                "type": "object",
+                "properties": {
+                  "enable": {
+                    "type": "boolean"
+                  }
+                },
+                "description": "系统打印，true 有权限，false 无权限"
+              },
+              "recordShare": {
+                "type": "object",
+                "properties": {
+                  "enable": {
+                    "description": "记录分享",
+                    "type": "boolean"
+                  }
+                },
+                "description": "记录分享，true 有权限，false 无权限"
+              },
+              "payment": {
+                "type": "object",
+                "properties": {
+                  "enable": {
+                    "description": "支付",
+                    "type": "boolean"
+                  }
+                },
+                "description": "支付，true 有权限，false 无权限"
+              },
+              "optionalControls": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "可选控件"
+              },
+              "sheets": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "sheetId": {
+                      "type": "string",
+                      "description": "工作表Id"
+                    },
+                    "canAdd": {
+                      "type": "boolean",
+                      "description": "是否可添加"
+                    },
+                    "readLevelId": {
+                      "type": "string",
+                      "description": "查看权限级别 0：未授权 20：仅我拥有的 30：我的及下属的 100：全部的"
+                    },
+                    "editLevelId": {
+                      "type": "string",
+                      "description": "编辑权限级别 0：未授权 20：仅我拥有的 30：我的及下属的 100：全部的"
+                    },
+                    "removeLevel": {
+                      "type": "string",
+                      "description": "删除权限级别 0：未授权 20：仅我拥有的 30：我的及下属的 100：全部的"
+                    },
+                    "worksheetAddRecord": {
+                      "type": "object",
+                      "properties": {
+                        "enable": {
+                          "type": "boolean",
+                          "description": "工作表添，true 有权限，false 无权限加记录"
+                        }
+                      }
+                    },
+                    "worksheetShareView": {
+                      "type": "object",
+                      "properties": {
+                        "enable": {
+                          "type": "boolean",
+                          "description": "工作表分享，true 有权限，false 无权限"
+                        }
+                      }
+                    },
+                    "worksheetImport": {
+                      "type": "object",
+                      "properties": {
+                        "enable": {
+                          "type": "boolean",
+                          "description": "工作表导入，true 有权限，false 无权限"
+                        }
+                      }
+                    },
+                    "worksheetExport": {
+                      "type": "object",
+                      "properties": {
+                        "enable": {
+                          "type": "boolean",
+                          "description": "工作表导出，true 有权限，false 无权限"
+                        }
+                      }
+                    },
+                    "worksheetDiscuss": {
+                      "type": "object",
+                      "properties": {
+                        "enable": {
+                          "type": "boolean",
+                          "description": "工作表讨论，true 有权限，false 无权限"
+                        }
+                      }
+                    },
+                    "worksheetLogging": {
+                      "type": "object",
+                      "properties": {
+                        "enable": {
+                          "type": "boolean",
+                          "description": "工作表日志，true 有权限，false 无权限"
+                        }
+                      }
+                    },
+                    "worksheetBatchOperation": {
+                      "type": "object",
+                      "properties": {
+                        "enable": {
+                          "type": "boolean",
+                          "description": "工作表批量操作，true 有权限，false 无权限"
+                        }
+                      }
+                    },
+                    "recordAttachmentDownload": {
+                      "type": "object",
+                      "properties": {
+                        "enable": {
+                          "type": "boolean",
+                          "description": "附件下载，true 有权限，false 无权限"
+                        }
+                      }
+                    },
+                    "recordSystemPrinting": {
+                      "type": "object",
+                      "properties": {
+                        "enable": {
+                          "type": "boolean",
+                          "description": "系统打印，true 有权限，false 无权限"
+                        }
+                      }
+                    },
+                    "generalAttachmentDownload": {
+                      "type": "object",
+                      "properties": {
+                        "enable": {
+                          "type": "boolean",
+                          "description": "附件下载，true 有权限，false 无权限"
+                        }
+                      }
+                    },
+                    "recordLogging": {
+                      "type": "object",
+                      "properties": {
+                        "enable": {
+                          "type": "boolean",
+                          "description": "日志，true 有权限，false 无权限"
+                        }
+                      }
+                    },
+                    "recordDiscussion": {
+                      "type": "object",
+                      "properties": {
+                        "enable": {
+                          "type": "boolean",
+                          "description": "记录讨论，true 有权限，false 无权限"
+                        }
+                      }
+                    },
+                    "views": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "viewId": {
+                            "type": "string"
+                          },
+                          "viewName": {
+                            "type": "string"
+                          },
+                          "canRead": {
+                            "type": "boolean"
+                          },
+                          "canEdit": {
+                            "type": "boolean"
+                          },
+                          "canRemove": {
+                            "type": "boolean"
+                          },
+                          "type": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "fields": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "fieldId": {
+                            "type": "string",
+                            "description": "字段 id"
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": " 字段类型"
+                          },
+                          "fieldName": {
+                            "type": "string",
+                            "description": "字段名称"
+                          },
+                          "notRead": {
+                            "type": "boolean",
+                            "description": "查看权限"
+                          },
+                          "notEdit": {
+                            "type": "boolean",
+                            "description": "编辑权限"
+                          },
+                          "notAdd": {
+                            "type": "boolean",
+                            "description": "新增权限"
+                          },
+                          "isDecrypt": {
+                            "type": "boolean"
+                          },
+                          "hideWhenAdded": {
+                            "type": "boolean"
+                          },
+                          "isHide": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "pages": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "pageId": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "checked": {
+                      "type": "boolean"
+                    },
+                    "navigateHide": {
+                      "type": "boolean"
+                    },
+                    "sortIndex": {
+                      "type": "integer"
+                    },
+                    "iconUrl": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "自定义页面Id集"
+              }
+            },
+            "required": [
+              "name",
+              "description",
+              "permissionWay",
+              "roleType",
+              "generalAdd",
+              "gneralShare",
+              "generalImport",
+              "generalExport",
+              "generalDiscussion",
+              "generalLogging",
+              "generalSystemPrinting",
+              "recordShare",
+              "payment"
+            ]
+          },
+          "example": {
+            "appKey": "422e5a5d0e570105",
+            "sign": "MzkzMDY3Mzk1NjM0YjkyNjE1YzI2N2ZhNDEzZGE3ZTQwMzQ3ZWJkNzI1ZDc2NjcxYTdkY2ViMzVhZGJlNTI0Yg==",
+            "appId": "bd75405e-4c8e-4dba-8b43-9820c0b53ec2",
+            "projectId": "28447959-cf7f-4ae9-9074-8977ce48e2a0",
+            "hideAppForMembers": false,
+            "roleType": 0,
+            "permissionWay": 0,
+            "sheets": [
+              {
+                "sheetId": "67cff5821131169abf7ef611",
+                "sheetName": "组织管理",
+                "canAdd": true,
+                "readLevel": 100,
+                "editLevel": 100,
+                "removeLevel": 100,
+                "views": [
+                  {
+                    "viewId": "67cff5821131169abf7ef615",
+                    "viewName": "全部",
+                    "canRead": true,
+                    "canEdit": true,
+                    "canRemove": true,
+                    "type": 0
+                  }
+                ],
+                "fields": [
+                  {
+                    "fieldId": "ownerid",
+                    "type": 26,
+                    "fieldName": "拥有者",
+                    "notRead": false,
+                    "notEdit": false,
+                    "notAdd": false,
+                    "isDecrypt": false,
+                    "isReadField": false,
+                    "hideWhenAdded": true,
+                    "isHide": false
+                  }
+                ],
+                "worksheetAddRecord": {
+                  "enable": true
+                },
+                "worksheetShareView": {
+                  "enable": true
+                },
+                "worksheetImport": {
+                  "enable": true
+                },
+                "worksheetExport": {
+                  "enable": true
+                },
+                "worksheetDiscuss": {
+                  "enable": true
+                },
+                "worksheetLogging": {
+                  "enable": true
+                },
+                "worksheetBatchOperation": {
+                  "enable": true
+                },
+                "recordShare": {
+                  "enable": true
+                },
+                "recordDiscussion": {
+                  "enable": true
+                },
+                "recordSystemPrinting": {
+                  "enable": true
+                },
+                "recordAttachmentDownload": {
+                  "enable": true
+                },
+                "recordLogging": {
+                  "enable": true
+                },
+                "payment": {
+                  "enable": true
+                }
+              }
+            ],
+            "extendAttrs": [],
+            "optionalControls": [],
+            "pages": [
+              {
+                "pageId": "67617eef1657b7ae33be5ae2",
+                "name": "0",
+                "checked": true,
+                "navigateHide": false,
+                "sortIndex": 8,
+                "iconUrl": "https://fp1.mingdaoyun.cn/customIcon/dashboard.svg"
+              }
+            ],
+            "roleCategory": 0,
+            "generalAdd": {
+              "enable": true
+            },
+            "gneralShare": {
+              "enable": true
+            },
+            "generalImport": {
+              "enable": true
+            },
+            "generalExport": {
+              "enable": true
+            },
+            "generalDiscussion": {
+              "enable": true
+            },
+            "generalSystemPrinting": {
+              "enable": true
+            },
+            "generalAttachmentDownload": {
+              "enable": true
+            },
+            "generalLogging": {
+              "enable": true
+            },
+            "description": "",
+            "name": "新角色40"
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "roleId": {
+                      "type": "string",
+                      "title": "角色 id",
+                      "description": ""
+                    },
+                    "name": {
+                      "type": "string",
+                      "title": "角色名称"
+                    },
+                    "roleType": {
+                      "type": "integer",
+                      "title": "角色类型"
+                    },
+                    "desc": {
+                      "type": "string",
+                      "title": "描述"
+                    },
+                    "users": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "title": "用户信息"
+                    },
+                    "departments": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "title": "部门"
+                    },
+                    "departmentTrees": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "title": "部门树"
+                    },
+                    "projectOrganizes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "title": "组织角色"
+                    },
+                    "jobs": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "title": "职位"
+                    }
+                  },
+                  "required": [
+                    "roleId",
+                    "name",
+                    "roleType",
+                    "desc",
+                    "users",
+                    "departments",
+                    "departmentTrees",
+                    "projectOrganizes",
+                    "jobs"
+                  ]
+                },
+                "success": {
+                  "type": "boolean"
+                },
+                "error_code": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "data",
+                "success",
+                "error_code"
+              ]
+            },
+            "example": {
+              "data": {
+                "roleId": "6825715d-92cc-4e15-83ce-8e39d1a667bc",
+                "name": "新角色40",
+                "roleType": 0,
+                "desc": "",
+                "users": [],
+                "departments": [],
+                "departmentTrees": [],
+                "projectOrganizes": [],
+                "jobs": []
+              },
+              "success": true,
+              "error_code": 1
+            }
+          }
+        },
+        "headers": {}
+      },
+      "401": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "title": "请求结果"
+                },
+                "code": {
+                  "type": "integer",
+                  "title": "代码"
+                },
+                "msg": {
+                  "type": "string",
+                  "title": "消息"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "title": "返回数据"
+                }
+              },
+              "required": [
+                "success",
+                "code",
+                "msg",
+                "data"
+              ]
+            }
+          }
+        },
+        "headers": {}
+      },
+      "404": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "title": "请求结果"
+                },
+                "code": {
+                  "type": "integer",
+                  "title": "代码"
+                },
+                "msg": {
+                  "type": "string",
+                  "title": "消息"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "title": "返回数据"
+                }
+              },
+              "required": [
+                "success",
+                "code",
+                "msg",
+                "data"
+              ],
+              "title": ""
+            },
+            "examples": {
+              "2": {
+                "summary": "异常示例",
+                "value": {
+                  "success": false,
+                  "code": 1001,
+                  "msg": "应用不存在",
+                  "data": {}
+                }
+              },
+              "3": {
+                "summary": "异常示例",
+                "value": {
+                  "success": false,
+                  "code": 1001,
+                  "msg": "应用不存在",
+                  "data": {}
+                }
+              }
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

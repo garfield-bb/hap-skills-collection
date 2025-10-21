@@ -1,0 +1,69 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "选项集ID"
+    },
+    "name": {
+      "type": "string",
+      "description": "选项集名称"
+    },
+    "accountId": {
+      "type": "string"
+    },
+    "worksheetIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "引用选项集的工作表列表"
+    },
+    "options": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "选项id"
+          },
+          "value": {
+            "type": "string",
+            "title": "选项值，不允许重复"
+          },
+          "index": {
+            "type": "integer",
+            "title": "选项排序值: 必须为整数，越小越靠前"
+          },
+          "isDeleted": {
+            "type": "boolean",
+            "title": "该选项是否已被删除"
+          },
+          "color": {
+            "type": "string",
+            "title": "颜色值"
+          },
+          "score": {
+            "type": "integer",
+            "title": "选项分值"
+          }
+        },
+        "required": [
+          "key",
+          "value",
+          "index",
+          "isDeleted",
+          "color",
+          "score"
+        ]
+      }
+    },
+    "enableColor": {
+      "type": "boolean"
+    },
+    "enableScore": {
+      "type": "boolean"
+    }
+  }
+}

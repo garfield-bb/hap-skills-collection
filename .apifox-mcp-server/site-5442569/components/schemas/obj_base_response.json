@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "success": {
+      "type": "boolean",
+      "description": "是否调用成功"
+    },
+    "error_code": {
+      "type": "integer",
+      "description": "错误代码"
+    },
+    "error_msg": {
+      "type": "string",
+      "description": "错误消息"
+    }
+  },
+  "required": [
+    "success"
+  ],
+  "title": ""
+}

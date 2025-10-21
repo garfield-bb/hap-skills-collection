@@ -1,0 +1,107 @@
+{
+  "post": {
+    "summary": "新建行记录",
+    "deprecated": false,
+    "description": "新建行记录",
+    "tags": [
+      "工作表"
+    ],
+    "parameters": [],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "appkey": {
+                "type": "string",
+                "description": "AppKey"
+              },
+              "sign": {
+                "type": "string",
+                "description": "签名"
+              },
+              "worksheetId": {
+                "type": "string",
+                "title": "",
+                "description": "工作表ID"
+              },
+              "controls": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "controlId": {
+                      "type": "string",
+                      "title": "",
+                      "description": "控件 id"
+                    },
+                    "value": {
+                      "type": "string",
+                      "title": "",
+                      "description": "控件值"
+                    }
+                  },
+                  "required": [
+                    "controlId",
+                    "value"
+                  ],
+                  "x-apifox-orders": [
+                    "controlId",
+                    "value"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "title": "",
+                "description": "控件数据"
+              },
+              "triggerWorkflow": {
+                "type": "boolean",
+                "description": "是否触发工作流",
+                "default": true
+              }
+            },
+            "required": [
+              "worksheetId",
+              "controls",
+              "appkey",
+              "sign"
+            ],
+            "title": "",
+            "x-apifox-orders": [
+              "appkey",
+              "sign",
+              "worksheetId",
+              "controls",
+              "triggerWorkflow"
+            ],
+            "x-apifox-ignore-properties": []
+          },
+          "example": "{\n  \"appKey\": \"5004e1f1c103fc82\",\n  \"sign\": \"MWQzYWJiNTNlYzZmNjZhNTA1NTExMGZhNzEyMjU3ZTMzM2Q2YWFmZWJkMTZjMWM1NTRjNDZiODUwNjc5OTUzNg==\",\n  \"worksheetId\": \"6773abdab945df4389d21c17\",\n  \"triggerWorkflow\": true,\n  \"controls\": [\n    {\n      \"controlId\": \"60d42c197766e73dc71929a2\",\n      \"value\": \"HHHH\"\n    },\n    {\n      \"controlId\": \"60d42c197766e73dc71929a3\",\n      \"value\": \"KMG\"\n    },\n   \n  ]\n}"
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {},
+              "x-apifox-ignore-properties": [],
+              "x-apifox-orders": []
+            }
+          }
+        },
+        "headers": {},
+        "x-apifox-name": "成功"
+      }
+    },
+    "security": [],
+    "x-apifox-folder": "工作表",
+    "x-apifox-status": "released",
+    "x-apifox-maintainer": "hap",
+    "x-run-in-apifox": "https://app.apifox.com/web/project/6133169/apis/api-278875430-run"
+  }
+}

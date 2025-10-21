@@ -1,0 +1,133 @@
+{
+  "post": {
+    "summary": "获取记录分享链接",
+    "deprecated": false,
+    "description": "获取记录分享链接",
+    "tags": [
+      "工作表行记录"
+    ],
+    "parameters": [
+      {
+        "name": "worksheet_id",
+        "in": "path",
+        "description": "工作表 ID",
+        "required": true,
+        "example": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "row_id",
+        "in": "path",
+        "description": " 行记录 ID",
+        "required": true,
+        "example": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "visibleFields": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "title": "可见字段ID集合"
+              },
+              "expiredIn": {
+                "type": "integer",
+                "title": "单位s,不传或传0表示永久有效"
+              },
+              "password": {
+                "type": "string",
+                "title": "为空表示不需要密码"
+              }
+            }
+          },
+          "example": {
+            "visibleFields": [],
+            "expiredIn": 7200,
+            "password": ""
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "description": "分享链接地址"
+                    }
+                  },
+                  "required": [
+                    "url"
+                  ]
+                },
+                "success": {
+                  "type": "boolean",
+                  "description": "是否调用成功"
+                },
+                "error_code": {
+                  "type": "integer",
+                  "description": "错误代码"
+                },
+                "error_msg": {
+                  "type": "string",
+                  "description": "错误消息"
+                }
+              },
+              "required": [
+                "data",
+                "success"
+              ]
+            },
+            "example": {
+              "data": {
+                "url": "链接地址"
+              },
+              "success": true
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

@@ -1,0 +1,271 @@
+{
+  "post": {
+    "summary": "获取行记录日志",
+    "deprecated": false,
+    "description": "获取行记录日志",
+    "tags": [],
+    "parameters": [],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "appKey": {
+                "type": "string",
+                "title": "AppKey",
+                "description": ""
+              },
+              "sign": {
+                "type": "string",
+                "title": "签名",
+                "description": ""
+              },
+              "worksheetId": {
+                "type": "string",
+                "title": "工作表ID",
+                "description": ""
+              },
+              "opeartorId": {
+                "type": "string",
+                "title": "按操作者ID筛选"
+              },
+              "controlId": {
+                "type": "string",
+                "title": "按控件ID筛选"
+              },
+              "pageSize": {
+                "type": "integer",
+                "title": "行数",
+                "description": ""
+              },
+              "rowId": {
+                "type": "string",
+                "title": "行记录ID",
+                "description": ""
+              },
+              "lastMark": {
+                "type": "string",
+                "title": "上一次更新的时间"
+              }
+            },
+            "required": [
+              "appKey",
+              "sign",
+              "worksheetId",
+              "opeartorId"
+            ]
+          },
+          "example": {
+            "appKey": "4fa7cd2c37b8444e",
+            "sign": "YjE5YTg4YTg2MmY2ZjQ4ZjUxMDcxNjk4YTI1MDRmYjQ0N2NkOGExYTJhODdkMDEzYWE3ZTFmMTIwODBlODk4Yg==",
+            "worksheetId": "65dda1a5a608a40050774c78",
+            "opeartorId": "",
+            "controlId": "",
+            "pageSize": 20,
+            "rowId": "0bc19fb7-4100-43ad-8f0e-7d2879427677",
+            "lastMark": ""
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "logs": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "opeartorInfo": {
+                        "type": "object",
+                        "properties": {
+                          "accountId": {
+                            "type": "string"
+                          },
+                          "fullname": {
+                            "type": "string"
+                          },
+                          "avatar": {
+                            "type": "string"
+                          },
+                          "isPortal": {
+                            "type": "boolean"
+                          },
+                          "status": {
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "accountId",
+                          "fullname",
+                          "avatar",
+                          "isPortal",
+                          "status"
+                        ],
+                        "description": "操作者信息"
+                      },
+                      "operatContent": {
+                        "type": "object",
+                        "properties": {
+                          "worksheetId": {
+                            "type": "string",
+                            "description": "工作表ID"
+                          },
+                          "objectId": {
+                            "type": "string",
+                            "description": "操作对象ID"
+                          },
+                          "uniqueId": {
+                            "type": "string",
+                            "description": "操作唯一标识"
+                          },
+                          "objectType": {
+                            "type": "string",
+                            "description": "日志对象类型 1:工作表 2:行记录 3:视图 4:按钮 5:业务规则 99:其他"
+                          },
+                          "type": {
+                            "type": "integer",
+                            "description": "日志操作类型 1:手动 2:工作流 3:按钮"
+                          },
+                          "requestType": {
+                            "type": "string"
+                          },
+                          "createTime": {
+                            "type": "string",
+                            "description": "日志操作类型 1:手动 2:工作流 3:按"
+                          },
+                          "logData": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "description": "操作项ID"
+                                },
+                                "name": {
+                                  "type": "string",
+                                  "description": "操作项名称"
+                                },
+                                "editType": {
+                                  "type": "integer"
+                                },
+                                "type": {
+                                  "type": "integer"
+                                },
+                                "oldValue": {
+                                  "type": "string",
+                                  "description": "操作前的值"
+                                },
+                                "oldText": {
+                                  "type": "string",
+                                  "description": "操作前的描述"
+                                },
+                                "newValue": {
+                                  "type": "string",
+                                  "description": "操作后的值"
+                                },
+                                "newText": {
+                                  "type": "string",
+                                  "description": "操作后的描述"
+                                },
+                                "isDeleted": {
+                                  "type": "boolean",
+                                  "description": "是否删除"
+                                }
+                              },
+                              "description": "日志日期"
+                            },
+                            "description": "操作创建的时间戳"
+                          },
+                          "extendParams": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "required": [
+                          "worksheetId",
+                          "objectId",
+                          "uniqueId",
+                          "objectType",
+                          "type",
+                          "requestType",
+                          "createTime",
+                          "logData",
+                          "extendParams"
+                        ],
+                        "description": "操作控件\n"
+                      }
+                    }
+                  }
+                },
+                "lastMark": {
+                  "type": "string",
+                  "description": "最后一次更新的时间"
+                },
+                "flag": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "logs",
+                "lastMark",
+                "flag"
+              ]
+            },
+            "example": {
+              "logs": [
+                {
+                  "opeartorInfo": {
+                    "accountId": "操作者ID",
+                    "fullname": "名称",
+                    "avatar": "头像地址",
+                    "isPortal": false,
+                    "status": 1
+                  },
+                  "operatContent": {
+                    "worksheetId": "工作表ID",
+                    "objectId": "操作对象ID",
+                    "uniqueId": "操作唯一标识",
+                    "objectType": "日志对象类型 1:工作表 2:行记录 3:视图 4:按钮 5:业务规则 99:其他",
+                    "type": 2,
+                    "requestType": "日志操作类型 1:手动 2:工作流 3:按钮",
+                    "createTime": "操作创建的时间戳",
+                    "logData": [
+                      {
+                        "id": "操作项ID",
+                        "name": "操作项名称",
+                        "editType": 1,
+                        "type": 26,
+                        "oldValue": "操作前的值",
+                        "oldText": "操作后的描述",
+                        "newValue": "操作后的值",
+                        "newText": "操作后的描述",
+                        "isDeleted": false
+                      }
+                    ],
+                    "extendParams": [
+                      "string"
+                    ]
+                  }
+                }
+              ],
+              "lastMark": "最后一次更新的时间",
+              "flag": false
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

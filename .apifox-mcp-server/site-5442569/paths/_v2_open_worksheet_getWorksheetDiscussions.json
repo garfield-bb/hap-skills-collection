@@ -1,0 +1,489 @@
+{
+  "post": {
+    "summary": "获取行记录讨论",
+    "deprecated": false,
+    "description": "获取行记录日志",
+    "tags": [],
+    "parameters": [],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "appKey": {
+                "type": "string",
+                "title": "AppKey",
+                "description": ""
+              },
+              "sign": {
+                "type": "string",
+                "title": "签名",
+                "description": ""
+              },
+              "worksheetId": {
+                "type": "string",
+                "title": "工作表ID",
+                "description": ""
+              },
+              "opeartorId": {
+                "type": "string",
+                "title": "按操作者ID筛选"
+              },
+              "controlId": {
+                "type": "string",
+                "title": "按控件ID筛选"
+              },
+              "pageSize": {
+                "type": "integer",
+                "title": "行数",
+                "description": ""
+              },
+              "rowId": {
+                "type": "string",
+                "title": "行记录ID",
+                "description": ""
+              },
+              "lastMark": {
+                "type": "string",
+                "title": "上一次更新的时间"
+              }
+            },
+            "required": [
+              "appKey",
+              "sign",
+              "worksheetId",
+              "opeartorId"
+            ]
+          },
+          "example": {
+            "appKey": "a32e1b5f3d33bacc",
+            "sign": "ZjMzMDU2MjE0MGJiN2ZkZGU3ZWMwMWJhMmUwZWEzMjViNTVlNzAxOWI1MTI3NmQ5OWUwNWU1YTY3Yjc2MmIyOQ==",
+            "worksheetId": "6870e5a3b6326442354f6f27",
+            "pageSize": "20",
+            "pageIndex": 1,
+            "rowId": "f037859c-b564-4e80-a7b4-1ee97943b365",
+            "keywords": "",
+            "containAttachment": "false"
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "sourceType": {
+                        "type": "integer",
+                        "description": "type 类型"
+                      },
+                      "discussionId": {
+                        "type": "string",
+                        "description": "讨论 id"
+                      },
+                      "sourceId": {
+                        "type": "string",
+                        "description": "工作表 id|行记录 id"
+                      },
+                      "message": {
+                        "type": "string",
+                        "description": "讨论内容"
+                      },
+                      "createTime": {
+                        "type": "string",
+                        "description": "创建时间"
+                      },
+                      "createAccount": {
+                        "type": "object",
+                        "properties": {
+                          "accountId": {
+                            "type": "string"
+                          },
+                          "fullname": {
+                            "type": "string"
+                          },
+                          "avatar": {
+                            "type": "string"
+                          },
+                          "isPortal": {
+                            "type": "boolean"
+                          },
+                          "status": {
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "accountId",
+                          "fullname",
+                          "avatar",
+                          "isPortal",
+                          "status"
+                        ],
+                        "description": "创建人信息"
+                      },
+                      "replyAccount": {
+                        "type": "object",
+                        "properties": {
+                          "accountId": {
+                            "type": "string"
+                          },
+                          "fullname": {
+                            "type": "string"
+                          },
+                          "avatar": {
+                            "type": "string"
+                          },
+                          "isPortal": {
+                            "type": "boolean"
+                          },
+                          "status": {
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "accountId",
+                          "fullname",
+                          "avatar",
+                          "isPortal",
+                          "status"
+                        ],
+                        "description": "回复人信息"
+                      },
+                      "replyId": {
+                        "type": "string",
+                        "description": "回复的讨论 id"
+                      },
+                      "projectId": {
+                        "type": "string",
+                        "description": "组织 id"
+                      },
+                      "appName": {
+                        "type": "string",
+                        "description": "应用名称"
+                      },
+                      "accountsInMessage": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "newAccounts": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "location": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "address": {
+                            "type": "string"
+                          },
+                          "longitude": {
+                            "type": "integer"
+                          },
+                          "latitude": {
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "name",
+                          "address",
+                          "longitude",
+                          "latitude"
+                        ],
+                        "description": "地址信息"
+                      },
+                      "attachments": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "attachmentType": {
+                              "type": "integer"
+                            },
+                            "fromType": {
+                              "type": "integer"
+                            },
+                            "fileID": {
+                              "type": "string"
+                            },
+                            "sourceID": {
+                              "type": "string"
+                            },
+                            "commentID": {
+                              "type": "string"
+                            },
+                            "docVersionID": {
+                              "type": "string"
+                            },
+                            "accountId": {
+                              "type": "string"
+                            },
+                            "createUserName": {
+                              "type": "string"
+                            },
+                            "createUserAvatar": {
+                              "type": "string"
+                            },
+                            "originalFilename": {
+                              "type": "string"
+                            },
+                            "ext": {
+                              "type": "string"
+                            },
+                            "filesize": {
+                              "type": "integer"
+                            },
+                            "appID": {
+                              "type": "string"
+                            },
+                            "createTime": {
+                              "type": "string"
+                            },
+                            "updateTime": {
+                              "type": "string"
+                            },
+                            "thumbnailName": {
+                              "type": "string"
+                            },
+                            "thumbnailPath": {
+                              "type": "string"
+                            },
+                            "middleName": {
+                              "type": "string"
+                            },
+                            "middlePath": {
+                              "type": "string"
+                            },
+                            "largeThumbnailName": {
+                              "type": "string"
+                            },
+                            "largeThumbnailPath": {
+                              "type": "string"
+                            },
+                            "filename": {
+                              "type": "string"
+                            },
+                            "filepath": {
+                              "type": "string"
+                            },
+                            "viewUrl": {
+                              "type": "string"
+                            },
+                            "previewUrl": {
+                              "type": "string"
+                            },
+                            "viewType": {
+                              "type": "integer"
+                            },
+                            "allowDown": {
+                              "type": "string"
+                            },
+                            "downloadUrl": {
+                              "type": "string"
+                            },
+                            "waterMarkInfo": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "description": "附件信息"
+                      },
+                      "isDeleted": {
+                        "type": "boolean",
+                        "description": "是否删除"
+                      },
+                      "extendsId": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "sourceType",
+                      "discussionId",
+                      "sourceId",
+                      "message",
+                      "createTime",
+                      "createAccount",
+                      "replyAccount",
+                      "replyId",
+                      "projectId",
+                      "appName",
+                      "accountsInMessage",
+                      "newAccounts",
+                      "location",
+                      "attachments",
+                      "isDeleted",
+                      "extendsId"
+                    ]
+                  }
+                },
+                "success": {
+                  "type": "boolean"
+                },
+                "error_code": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "data",
+                "success",
+                "error_code"
+              ]
+            },
+            "example": {
+              "data": [
+                {
+                  "sourceType": 8,
+                  "discussionId": "187f3fd4-411d-42fe-8bd0-2af79d35807b",
+                  "sourceId": "6870e5a3b6326442354f6f27|f037859c-b564-4e80-a7b4-1ee97943b365",
+                  "message": "？",
+                  "createTime": "2025-07-15 22:28:21",
+                  "createAccount": {
+                    "accountId": "085d5a93-ab61-407a-9243-4f99be3b6869",
+                    "fullname": "明道云",
+                    "avatar": "https://dn-mdpic.mingdao.com/UserAvatar/fUdk9QeS4D2QcJ3edmfrdP6ydYadd4fy8ZdDaJbNdr8Sdq151MbW7oeZ8ld7194Z.png?imageView2/1/w/48/h/48/q/90",
+                    "isPortal": false,
+                    "status": 1
+                  },
+                  "replyAccount": {
+                    "accountId": "085d5a93-ab61-407a-9243-4f99be3b6869",
+                    "fullname": "明道云",
+                    "avatar": "https://dn-mdpic.mingdao.com/UserAvatar/fUdk9QeS4D2QcJ3edmfrdP6ydYadd4fy8ZdDaJbNdr8Sdq151MbW7oeZ8ld7194Z.png?imageView2/1/w/48/h/48/q/90",
+                    "isPortal": false,
+                    "status": 1
+                  },
+                  "replyId": "fbf1ff76-5a4a-49b5-b51f-e879d058142d",
+                  "projectId": "fe288386-3d26-4eab-b5d2-51eeab82a7f9",
+                  "appName": "网页端",
+                  "accountsInMessage": [],
+                  "newAccounts": [],
+                  "location": {
+                    "name": "",
+                    "address": "",
+                    "longitude": 0,
+                    "latitude": 0
+                  },
+                  "attachments": [
+                    {
+                      "attachmentType": 1,
+                      "fromType": 8,
+                      "fileID": "497f3ebb-12cc-483c-940d-a9030eab8828",
+                      "sourceID": "6870e5a3b6326442354f6f27|f037859c-b564-4e80-a7b4-1ee97943b365",
+                      "commentID": "187f3fd4-411d-42fe-8bd0-2af79d35807b",
+                      "docVersionID": "497f3ebb-12cc-483c-940d-a9030eab8828",
+                      "accountId": "085d5a93-ab61-407a-9243-4f99be3b6869",
+                      "createUserName": "明道云",
+                      "createUserAvatar": "https://dn-mdpic.mingdao.com/UserAvatar/fUdk9QeS4D2QcJ3edmfrdP6ydYadd4fy8ZdDaJbNdr8Sdq151MbW7oeZ8ld7194Z.png?imageView2/1/w/48/h/48/q/90",
+                      "originalFilename": "image",
+                      "ext": ".png",
+                      "filesize": 7463,
+                      "appID": "c8bc1b25-2bbe-4334-b1e3-be1b207f3126",
+                      "createTime": "2025-07-15 22:28:21",
+                      "updateTime": "2025-07-15 22:28:21",
+                      "thumbnailName": "421Gedax6b8Ab3bV680Naq0R1o9i6X3l8KeZ1Q061O7wdD2Rd18O7td3f81s9Va6.png?imageView2/1/w/200/h/118",
+                      "thumbnailPath": "https://p1.mingdaoyun.cn/fe288386-3d26-4eab-b5d2-51eeab82a7f9/43a2d339-2511-4d96-8a7f-179c4bf1cb19/6870e5a3b6326442354f6f27/20250715/",
+                      "middleName": "421Gedax6b8Ab3bV680Naq0R1o9i6X3l8KeZ1Q061O7wdD2Rd18O7td3f81s9Va6.png?imageView2/1/w/470/h/312",
+                      "middlePath": "https://p1.mingdaoyun.cn/fe288386-3d26-4eab-b5d2-51eeab82a7f9/43a2d339-2511-4d96-8a7f-179c4bf1cb19/6870e5a3b6326442354f6f27/20250715/",
+                      "largeThumbnailName": "421Gedax6b8Ab3bV680Naq0R1o9i6X3l8KeZ1Q061O7wdD2Rd18O7td3f81s9Va6.png?imageView2/2/w/1280/h/800",
+                      "largeThumbnailPath": "https://p1.mingdaoyun.cn/fe288386-3d26-4eab-b5d2-51eeab82a7f9/43a2d339-2511-4d96-8a7f-179c4bf1cb19/6870e5a3b6326442354f6f27/20250715/",
+                      "filename": "421Gedax6b8Ab3bV680Naq0R1o9i6X3l8KeZ1Q061O7wdD2Rd18O7td3f81s9Va6.png",
+                      "filepath": "https://p1.mingdaoyun.cn/fe288386-3d26-4eab-b5d2-51eeab82a7f9/43a2d339-2511-4d96-8a7f-179c4bf1cb19/6870e5a3b6326442354f6f27/20250715/",
+                      "viewUrl": "https://p1.mingdaoyun.cn/fe288386-3d26-4eab-b5d2-51eeab82a7f9/43a2d339-2511-4d96-8a7f-179c4bf1cb19/6870e5a3b6326442354f6f27/20250715/421Gedax6b8Ab3bV680Naq0R1o9i6X3l8KeZ1Q061O7wdD2Rd18O7td3f81s9Va6.png?e=1752676138&token=PGtAPYyCYxCQ1zckbL-ecATOk42z8P3jdPahEnzt:qjFT0nIfQHT0Jy4nQXTboeWO4Ho=",
+                      "previewUrl": "https://p1.mingdaoyun.cn/fe288386-3d26-4eab-b5d2-51eeab82a7f9/43a2d339-2511-4d96-8a7f-179c4bf1cb19/6870e5a3b6326442354f6f27/20250715/421Gedax6b8Ab3bV680Naq0R1o9i6X3l8KeZ1Q061O7wdD2Rd18O7td3f81s9Va6.png?e=1752676138&token=PGtAPYyCYxCQ1zckbL-ecATOk42z8P3jdPahEnzt:qjFT0nIfQHT0Jy4nQXTboeWO4Ho=&imageView2/1/w/200/h/140/q/90",
+                      "viewType": 1,
+                      "allowDown": "ok",
+                      "downloadUrl": "https://sandbox.mingdao.com/api/file/downDocument?fileID=497f3ebb-12cc-483c-940d-a9030eab8828",
+                      "waterMarkInfo": ""
+                    }
+                  ],
+                  "isDeleted": false,
+                  "extendsId": "43a2d339-2511-4d96-8a7f-179c4bf1cb19|6870e5a3b6326442354f6f61"
+                },
+                {
+                  "sourceType": 8,
+                  "discussionId": "fbf1ff76-5a4a-49b5-b51f-e879d058142d",
+                  "sourceId": "6870e5a3b6326442354f6f27|f037859c-b564-4e80-a7b4-1ee97943b365",
+                  "message": "你猜？",
+                  "createTime": "2025-07-15 22:20:11",
+                  "createAccount": {
+                    "accountId": "085d5a93-ab61-407a-9243-4f99be3b6869",
+                    "fullname": "明道云",
+                    "avatar": "https://dn-mdpic.mingdao.com/UserAvatar/fUdk9QeS4D2QcJ3edmfrdP6ydYadd4fy8ZdDaJbNdr8Sdq151MbW7oeZ8ld7194Z.png?imageView2/1/w/48/h/48/q/90",
+                    "isPortal": false,
+                    "status": 1
+                  },
+                  "replyAccount": {
+                    "accountId": "085d5a93-ab61-407a-9243-4f99be3b6869",
+                    "fullname": "明道云",
+                    "avatar": "https://dn-mdpic.mingdao.com/UserAvatar/fUdk9QeS4D2QcJ3edmfrdP6ydYadd4fy8ZdDaJbNdr8Sdq151MbW7oeZ8ld7194Z.png?imageView2/1/w/48/h/48/q/90",
+                    "isPortal": false,
+                    "status": 1
+                  },
+                  "replyId": "cc331e33-9362-4982-a239-e1f7c8e4482b",
+                  "projectId": "fe288386-3d26-4eab-b5d2-51eeab82a7f9",
+                  "appName": "网页端",
+                  "accountsInMessage": [],
+                  "newAccounts": [],
+                  "location": {
+                    "name": "",
+                    "address": "",
+                    "longitude": 0,
+                    "latitude": 0
+                  },
+                  "attachments": [],
+                  "isDeleted": false,
+                  "extendsId": "43a2d339-2511-4d96-8a7f-179c4bf1cb19|6870e5a3b6326442354f6f61"
+                },
+                {
+                  "sourceType": 8,
+                  "discussionId": "cc331e33-9362-4982-a239-e1f7c8e4482b",
+                  "sourceId": "6870e5a3b6326442354f6f27|f037859c-b564-4e80-a7b4-1ee97943b365",
+                  "message": "不知道啥，说啥话",
+                  "createTime": "2025-07-15 22:09:40",
+                  "createAccount": {
+                    "accountId": "085d5a93-ab61-407a-9243-4f99be3b6869",
+                    "fullname": "明道云",
+                    "avatar": "https://dn-mdpic.mingdao.com/UserAvatar/fUdk9QeS4D2QcJ3edmfrdP6ydYadd4fy8ZdDaJbNdr8Sdq151MbW7oeZ8ld7194Z.png?imageView2/1/w/48/h/48/q/90",
+                    "isPortal": false,
+                    "status": 1
+                  },
+                  "replyId": "",
+                  "projectId": "fe288386-3d26-4eab-b5d2-51eeab82a7f9",
+                  "appName": "网页端",
+                  "accountsInMessage": [],
+                  "newAccounts": [],
+                  "location": {
+                    "name": "",
+                    "address": "",
+                    "longitude": 0,
+                    "latitude": 0
+                  },
+                  "attachments": [],
+                  "isDeleted": false,
+                  "extendsId": "43a2d339-2511-4d96-8a7f-179c4bf1cb19|6870e5a3b6326442354f6f61"
+                }
+              ],
+              "success": true,
+              "error_code": 1
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

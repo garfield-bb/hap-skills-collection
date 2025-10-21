@@ -1,0 +1,45 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "'group' | 'condition'。当 type 为 'condition' 时，field/operator/value 为必填；当 type 为 'group' 时，logic 为必填"
+    },
+    "field": {
+      "type": "string",
+      "description": "字段ID或别名"
+    },
+    "operator": {
+      "type": "string",
+      "description": "运算符"
+    },
+    "value": {
+      "description": "值（字符串、数值、数组、日期范围DateRange字符串）",
+      "nullable": true,
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "integer"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "array"
+        },
+        {
+          "type": "object"
+        },
+        {
+          "type": "number"
+        }
+      ]
+    },
+    "logic": {
+      "type": "string",
+      "description": "'AND' | 'OR'。不区分大小写"
+    }
+  }
+}

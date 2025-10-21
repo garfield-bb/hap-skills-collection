@@ -1,0 +1,168 @@
+{
+  "post": {
+    "summary": "新建行记录",
+    "deprecated": false,
+    "description": "新建行记录",
+    "tags": [],
+    "parameters": [
+      {
+        "name": "worksheet_id",
+        "in": "path",
+        "description": "",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "url",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appid",
+        "in": "header",
+        "description": "当使用Authorization鉴权时，必传",
+        "required": false,
+        "example": "{{appId}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "Authorization",
+        "in": "header",
+        "description": "个人授权 id",
+        "required": false,
+        "example": "{{Authorization}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "fields": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "title": "",
+                      "description": "控件 id"
+                    },
+                    "value": {
+                      "type": "string",
+                      "title": "",
+                      "description": "控件值"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "value"
+                  ]
+                },
+                "title": "",
+                "description": "控件数据"
+              },
+              "triggerWorkflow": {
+                "type": "boolean",
+                "description": "是否触发工作流",
+                "default": true
+              }
+            },
+            "required": [
+              "fields"
+            ],
+            "title": ""
+          },
+          "example": {
+            "triggerWorkflow": true,
+            "fields": [
+              {
+                "id": "6847f2a1e66b4b2aa67b1467",
+                "value": "HHHH"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "行记录 ID"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                },
+                "success": {
+                  "type": "boolean"
+                },
+                "errorCode": {
+                  "type": "string"
+                },
+                "errorMsg": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "data",
+                "success",
+                "errorMsg"
+              ]
+            },
+            "example": {
+              "data": {
+                "id": ""
+              },
+              "success": true
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

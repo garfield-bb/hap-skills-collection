@@ -1,0 +1,564 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "角色名称"
+    },
+    "description": {
+      "type": "string",
+      "description": "角色描述"
+    },
+    "permissionWay": {
+      "type": "string",
+      "description": "分发所有应用项, 80：可查看、编辑、删除所有记录; 60：可查看所有记录，但只能编辑、删除自己拥有的记录; 30：可查看加入的，只能编辑、删除自己拥有的记录; 20：对所有记录只有查看权限; 0：分发有权限应用项"
+    },
+    "hideAppForMembers": {
+      "type": "string",
+      "description": "是否对成员隐藏应用,true：隐藏，false：不隐藏"
+    },
+    "generalAdd": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "x-apifox-orders": [
+        "enable"
+      ],
+      "description": "添加权限",
+      "x-apifox-ignore-properties": []
+    },
+    "gneralShare": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "x-apifox-orders": [
+        "enable"
+      ],
+      "description": "分享权限",
+      "x-apifox-ignore-properties": []
+    },
+    "generalImport": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "x-apifox-orders": [
+        "enable"
+      ],
+      "description": "导入权限",
+      "x-apifox-ignore-properties": []
+    },
+    "generalExport": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "x-apifox-orders": [
+        "enable"
+      ],
+      "description": "导出权限",
+      "x-apifox-ignore-properties": []
+    },
+    "generalDiscussion": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "x-apifox-orders": [
+        "enable"
+      ],
+      "description": "讨论权限",
+      "x-apifox-ignore-properties": []
+    },
+    "generalSystemPrinting": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "x-apifox-orders": [
+        "enable"
+      ],
+      "description": "系统打印",
+      "x-apifox-ignore-properties": []
+    },
+    "generalAttachmentDownload": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "x-apifox-orders": [
+        "enable"
+      ],
+      "description": "附件下载",
+      "x-apifox-ignore-properties": []
+    },
+    "generalLogging": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "x-apifox-orders": [
+        "enable"
+      ],
+      "description": "日志",
+      "x-apifox-ignore-properties": []
+    },
+    "worksheetAddRecord": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "description": "工作表添加记录",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "description": "工作表添加记录",
+      "x-apifox-orders": [
+        "enable"
+      ],
+      "x-apifox-ignore-properties": []
+    },
+    "worksheetShareView": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "description": "工作表分享",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "description": "工作表分享",
+      "x-apifox-orders": [
+        "enable"
+      ],
+      "x-apifox-ignore-properties": []
+    },
+    "worksheetImport": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "description": "工作表导入",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "description": "工作表导入",
+      "x-apifox-orders": [
+        "enable"
+      ],
+      "x-apifox-ignore-properties": []
+    },
+    "worksheetExport": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "description": "工作表导出",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "x-apifox-orders": [
+        "enable"
+      ],
+      "description": "工作表导出",
+      "x-apifox-ignore-properties": []
+    },
+    "worksheetDiscuss": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "description": "工作表讨论",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "x-apifox-orders": [
+        "enable"
+      ],
+      "description": "工作表讨论",
+      "x-apifox-ignore-properties": []
+    },
+    "worksheetLogging": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "description": "工作表日志",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "x-apifox-orders": [
+        "enable"
+      ],
+      "description": "工作表日志",
+      "x-apifox-ignore-properties": []
+    },
+    "worksheetBatchOperation": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "description": "工作表批量操作",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "x-apifox-orders": [
+        "enable"
+      ],
+      "description": "工作表批量操作",
+      "x-apifox-ignore-properties": []
+    },
+    "recordShare": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "description": "记录分享",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "x-apifox-orders": [
+        "enable"
+      ],
+      "description": "记录分享",
+      "x-apifox-ignore-properties": []
+    },
+    "recordDiscussion": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "description": "记录讨论",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "x-apifox-orders": [
+        "enable"
+      ],
+      "description": "记录讨论",
+      "x-apifox-ignore-properties": []
+    },
+    "recordSystemPrinting": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "description": "系统打印",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "x-apifox-orders": [
+        "enable"
+      ],
+      "description": "系统打印",
+      "x-apifox-ignore-properties": []
+    },
+    "recordAttachmentDownload": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "description": "附件下载",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "x-apifox-orders": [
+        "enable"
+      ],
+      "description": "附件下载",
+      "x-apifox-ignore-properties": []
+    },
+    "recordLogging": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "description": "日志",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "x-apifox-orders": [
+        "enable"
+      ],
+      "description": "日志",
+      "x-apifox-ignore-properties": []
+    },
+    "payment": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "description": "支付",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "x-apifox-orders": [
+        "enable"
+      ],
+      "description": "支付",
+      "x-apifox-ignore-properties": []
+    },
+    "extendAttrs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "扩展属性"
+    },
+    "optionalControls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "可选控件"
+    },
+    "sheets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "sheetId": {
+            "type": "string",
+            "description": "工作表Id"
+          },
+          "canAdd": {
+            "type": "string",
+            "description": "是否可添加"
+          },
+          "readLevelId": {
+            "type": "string",
+            "description": "查看权限级别 0：未授权 20：仅我拥有的 30：我的及下属的 100：全部的"
+          },
+          "editLevelId": {
+            "type": "string",
+            "description": "编辑权限级别 0：未授权 20：仅我拥有的 30：我的及下属的 100：全部的"
+          },
+          "removeLevel": {
+            "type": "string",
+            "description": "删除权限级别 0：未授权 20：仅我拥有的 30：我的及下属的 100：全部的"
+          },
+          "removeLevelId": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "viewId": {
+                  "type": "string",
+                  "title": "视图 ID",
+                  "description": ""
+                },
+                "viewName": {
+                  "type": "string"
+                },
+                "canRead": {
+                  "type": "string"
+                },
+                "canEdit": {
+                  "type": "string"
+                },
+                "canRemove": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                }
+              },
+              "x-apifox-orders": [
+                "viewId",
+                "viewName",
+                "canRead",
+                "canEdit",
+                "canRemove",
+                "type"
+              ],
+              "required": [
+                "viewId",
+                "viewName",
+                "canRead",
+                "canEdit",
+                "canRemove",
+                "type"
+              ],
+              "x-apifox-ignore-properties": []
+            },
+            "description": "删除权限级别 0：未授权 20：仅我拥有的 30：我的及下属的 100：全部的"
+          },
+          "navigateHide": {
+            "type": "string",
+            "description": "是否导航隐藏"
+          }
+        },
+        "required": [
+          "sheetId",
+          "canAdd",
+          "readLevelId",
+          "editLevelId",
+          "removeLevelId",
+          "navigateHide",
+          "removeLevel"
+        ],
+        "x-apifox-orders": [
+          "sheetId",
+          "canAdd",
+          "readLevelId",
+          "editLevelId",
+          "removeLevel",
+          "removeLevelId",
+          "navigateHide"
+        ],
+        "x-apifox-ignore-properties": []
+      }
+    },
+    "pages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "pageId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "checked": {
+            "type": "boolean"
+          },
+          "navigateHide": {
+            "type": "boolean"
+          },
+          "sortIndex": {
+            "type": "integer"
+          },
+          "iconUrl": {
+            "type": "string"
+          }
+        },
+        "x-apifox-orders": [
+          "01JQRBZD5PXVQJGVRTVCQD83DW"
+        ],
+        "x-apifox-refs": {
+          "01JQRBZD5PXVQJGVRTVCQD83DW": {
+            "$ref": "#/components/schemas/%E8%87%AA%E5%AE%9A%E4%B9%89%E9%A1%B5%E9%9D%A2"
+          }
+        },
+        "x-apifox-ignore-properties": [
+          "pageId",
+          "name",
+          "checked",
+          "navigateHide",
+          "sortIndex",
+          "iconUrl"
+        ]
+      },
+      "description": "自定义页面Id集"
+    }
+  },
+  "required": [
+    "name",
+    "description",
+    "permissionWay",
+    "pages",
+    "hideAppForMembers"
+  ],
+  "x-apifox-orders": [
+    "name",
+    "description",
+    "permissionWay",
+    "hideAppForMembers",
+    "generalAdd",
+    "gneralShare",
+    "generalImport",
+    "generalExport",
+    "generalDiscussion",
+    "generalSystemPrinting",
+    "generalAttachmentDownload",
+    "generalLogging",
+    "worksheetAddRecord",
+    "worksheetShareView",
+    "worksheetImport",
+    "worksheetExport",
+    "worksheetDiscuss",
+    "worksheetLogging",
+    "worksheetBatchOperation",
+    "recordShare",
+    "recordDiscussion",
+    "recordSystemPrinting",
+    "recordAttachmentDownload",
+    "recordLogging",
+    "payment",
+    "extendAttrs",
+    "optionalControls",
+    "sheets",
+    "pages"
+  ],
+  "x-apifox-ignore-properties": [],
+  "x-apifox-folder": ""
+}

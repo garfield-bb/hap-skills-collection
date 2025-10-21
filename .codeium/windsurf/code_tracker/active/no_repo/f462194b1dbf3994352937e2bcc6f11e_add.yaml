@@ -1,0 +1,226 @@
+
+2/Users/yxzuji/Documents/明道云/MDY_API/add.yaml�Eopenapi: 3.0.0
+info:
+  title: 企业授权开放接口
+  version: "2.0.0"
+  description: |
+    HAP 企业授权开放接口为每家企业提供一套独立的密钥信息（AppKey 和 SecretKey），企业可通过此密钥信息安全调用 HAP 平台开放的各类接口，包括人员组织管理、汇报关系管理、应用管理、流程待办等数据接口。该授权体系具备较高的数据读取权限，密钥信息仅限企业管理员查看与管理，确保数据安全与访问合规。
+
+    # 企业授权签名
+
+    - 进入 HAP 系统，依次进入 **组织管理** 》 **集成** 》 **其他** 》 **组织密钥**，获取企业授权开放接口的密钥对信息
+    - 获取当前 Unix 时间戳（单位：毫秒），此时间戳将在调用数据接口时作为必需参数传递
+    - 将密钥对中的 AppKey、SecretKey 和获取的 Unix 时间戳以键值对的形式拼接成字符串，格式为：`AppKey=value1&SecretKey=value2&Timestamp=value3`
+    - 使用 SHA256 算法对拼接的字符串进行加密，随后将加密结果进行 BASE64 编码，即可生成最终签名
+
+    **签名算法参考**
+
+    - <a href="https://github.com/mingdaocom/enterprise_signature/blob/master/Signature.cs" target="_blank">C#</a>
+    - <a href="https://github.com/mingdaocom/enterprise_signature/blob/master/Signature.java" target="_blank">Java</a>
+    - <a href="https://github.com/mingdaocom/enterprise_signature/bl≠≠–ob/master/Signature.go" target="_blank">Go</a>
+    - <a href="https://github.com/mingdaocom/enterprise_signature/blob/master/Signature.py" target="_blank">Python</a>
+    - <a href="https://github.com/mingdaocom/enterprise_signature/blob/master/Signature.php" target="_blank">PHP</a>
+    - <a href="https://github.com/mingdaocom/enterprise_signature/blob/master/Signature.js" target="_blank">Nodejs</a>
+
+    # 基础参数说明
+
+    **基础地址**
+
+    - 用户/部门/职位/组织角色
+      - `host_generalintegrateapi`
+    - 汇报关系/应用/流程待办/使用分析/日志
+      - `host_api`
+
+    **基础参数**
+
+    |参数名|必选|类型|说明|
+    |:----    |:---|:----- |-----   |
+    |appKey|是|string|AppKey|
+    |sign|是|string|签名，参考[企业授权签名](#section/企业授权签名)|
+    |timestamp|是|long|Unix时间戳（与签名所用时间戳一致，精度为毫秒）|
+    |projectId|是|string|组织编号|
+
+# 导航标签
+tags:
+  - name: user
+    x-displayName: 用户
+  - name: department
+    x-displayName: 部门
+  - name: position
+    x-displayName: 职位
+  - name: orgRole
+    x-displayName: 组织角色
+  - name: structure
+    x-displayName: 汇报关系
+  - name: app
+    x-displayName: 应用
+  - name: todo
+    x-displayName: 流程待办
+  - name: usage
+    x-displayName: 使用分析
+  - name: log
+    x-displayName: 日志
+
+# 接口
+paths:
+  # 用户
+  /v2/user/upsertUsers:
+    $ref: './paths/user/upsertUsers.yaml'
+  /v2/user/upsertUser:
+    $ref: './paths/user/upsertUser.yaml'
+  /v2/user/removeUser:
+    $ref: './paths/user/removeUser.yaml'
+  /v2/user/addUserRelation:
+    $ref: './paths/user/addUserRelation.yaml'
+  /v2/user/getUserRelation:
+    $ref: './paths/user/getUserRelation.yaml'
+  /v2/user/getUserRelations:
+    $ref: './paths/user/getUserRelations.yaml'
+  /v2/user/getUserInfoByCorpUserId:
+    $ref: './paths/user/getUserInfoByCorpUserId.yaml'
+  /v2/user/getUser:
+    $ref: './paths/user/getUser.yaml'
+  /v2/user/getUsers:
+    $ref: './paths/user/getUsers.yaml' 
+  /v2/user/getUserRelationByAccountId:
+    $ref: './paths/user/getUserRelationByAccountId.yaml' 
+  /v2/user/getUserRelationByAccountIds:
+    $ref: './paths/user/getUserRelationByAccountIds.yaml' 
+  /v2/user/removeUserRelations:
+    $ref: './paths/user/removeUserRelations.yaml' 
+  /v2/user/removeUserRelationByAccountIds:
+    $ref: './paths/user/removeUserRelationByAccountIds.yaml' 
+
+  # 部门
+  /v2/department/syncAllDepartments:
+    $ref: './paths/department/syncAllDepartments.yaml' 
+  /v2/department/upsertDepartment:
+    $ref: './paths/department/upsertDepartment.yaml' 
+  /v2/department/removeDepartment:
+    $ref: './paths/department/removeDepartment.yaml' 
+  /v2/department/editDepartmentCharger:
+    $ref: './paths/department/editDepartmentCharger.yaml' 
+  /v2/department/addDepartmentRelation:
+    $ref: './paths/department/addDepartmentRelation.yaml' 
+  /v2/department/getDepartmentByCorpDepartmentId:
+    $ref: './paths/department/getDepartmentByCorpDepartmentId.yaml' 
+  /v2/department/getDepartmentRelationByDepartmentId:
+    $ref: './paths/department/getDepartmentRelationByDepartmentId.yaml' 
+  /v2/department/getDepartmentRelationByDepartmentIds:
+    $ref: './paths/department/getDepartmentRelationByDepartmentIds.yaml' 
+  /v2/department/getDepartmentRelation:
+    $ref: './paths/department/getDepartmentRelation.yaml' 
+  /v2/department/getDepartmentRelations:
+    $ref: './paths/department/getDepartmentRelations.yaml' 
+  /v2/department/removeDepartmentRelations:
+    $ref: './paths/department/removeDepartmentRelations.yaml' 
+  /v2/department/removeDepartmentRelationByDepartmentIds:
+    $ref: './paths/department/removeDepartmentRelationByDepartmentIds.yaml' 
+
+  # 职位
+  /v2/position/upsertPositions:
+    $ref: './paths/position/upsertPositions.yaml' 
+  /v2/position/removePositions:
+    $ref: './paths/position/removePositions.yaml' 
+  /v2/position/editPositionByJobId:
+    $ref: './paths/position/editPositionByJobId.yaml' 
+  /v2/position/getPositions:
+    $ref: './paths/position/getPositions.yaml' 
+  /v2/position/getPositionRelation:
+    $ref: './paths/position/getPositionRelation.yaml' 
+  /v2/position/getPositionRelations:
+    $ref: './paths/position/getPositionRelations.yaml' 
+
+  # 组织角色
+  /v2/OrgRole/SyncOrgRoles:
+    $ref: './paths/orgRole/syncOrgRoles.yaml' 
+  /v2/OrgRole/RemoveOrgRoles:
+    $ref: './paths/orgRole/removeOrgRoles.yaml' 
+  /v2/OrgRole/GetOrgRoleRelations:
+    $ref: './paths/orgRole/getOrgRoleRelations.yaml' 
+  /v2/OrgRole/SyncOrgRoleUserRelations:
+    $ref: './paths/orgRole/syncOrgRoleUserRelations.yaml'
+  /v2/OrgRole/GetOrgRoles:
+    $ref: './paths/orgRole/getOrgRoles.yaml'
+  /v2/OrgRole/GetOrgRoleAccounts:
+    $ref: './paths/orgRole/getOrgRoleAccounts.yaml'
+
+  # 汇报关系
+  /v2/open/structure/GetSubordinateIds:
+    $ref: './paths/structure/getSubordinateIds.yaml'
+  /v2/open/structure/addStructures:
+    $ref: './paths/structure/addStructures.yaml'
+  /v2/open/structure/removeStructures:
+    $ref: './paths/structure/removeStructures.yaml'
+  /v2/open/structure/replaceStructure:
+    $ref: './paths/structure/replaceStructure.yaml'
+  /v2/open/structure/addStructuresByAccountId:
+    $ref: './paths/structure/addStructuresByAccountId.yaml'
+  /v2/open/structure/removeStructuresByAccountId:
+    $ref: './paths/structure/removeStructuresByAccountId.yaml'
+  /v2/open/structure/replaceStructureByAccountId:
+    $ref: './paths/structure/replaceStructureByAccountId.yaml'
+  
+  # 应用
+  /v1/open/app/create:
+    $ref: './paths/app/create.yaml'
+  /v1/open/app/createLink:
+    $ref: './paths/app/createLink.yaml'
+  /v1/open/app/edit:
+    $ref: './paths/app/edit.yaml'
+  /v1/open/app/delete:
+    $ref: './paths/app/delete.yaml'
+  /v1/open/app/getByProject:
+    $ref: './paths/app/getByProject.yaml'
+  /v1/open/app/getAppAuthorize:
+    $ref: './paths/app/getAppAuthorize.yaml'
+  /v1/open/app/copy:
+    $ref: './paths/app/copy.yaml'
+  /v1/open/App/ProjectGroups:
+    $ref: './paths/app/projectGroups.yaml'
+  /v1/open/app/AddGroup:
+    $ref: './paths/app/addGroup.yaml'
+  /v1/open/App/EditGroup:
+    $ref: './paths/app/editGroup.yaml'
+  /v1/open/App/DeleteGroup:
+    $ref: './paths/app/deleteGroup.yaml'
+  /v1/open/App/AddToGroup:
+    $ref: './paths/app/addToGroup.yaml'
+  /v1/open/App/Upload:
+    $ref: './paths/app/upload.yaml'
+  /v1/open/app/Import:
+    $ref: './paths/app/import.yaml'
+  /v1/open/App/ImportUpgrade:
+    $ref: './paths/app/importUpgrade.yaml'
+  /v1/open/App/Transmit:
+    $ref: './paths/app/transmit.yaml'
+
+  # 流程待办
+  /workflow/v1/instance/getTodoCount:
+    $ref: './paths/todo/getTodoCount.yaml'
+  /workflow/v1/instance/getTodoList:
+    $ref: './paths/todo/getTodoList.yaml'
+  /workflow/v1/instance/batch:
+    $ref: './paths/todo/batchApproval.yaml'
+  /workflow/delegation/getList:
+    $ref: './paths/todo/getDelegationList.yaml'
+  /workflow/delegation/add:
+    $ref: './paths/todo/addDelegation.yaml'
+  /delegation/update:
+    $ref: './paths/todo/updateDelegation.yaml'
+  /workflow/v1/instance/get:
+    $ref: './paths/todo/getInstance.yaml'
+
+  # 使用分析
+  /v1/open/App/AllUsageOverviewStatistics:
+    $ref: './paths/usage/appStatistics.yaml'
+  /v1/open/App/AppUsageOverviewStatistics:
+    $ref: './paths/usage/appOverview.yaml'
+
+  # 日志
+  /v1/open/app/GetGlobalLogs:
+    $ref: './paths/log/getGlobalLogs.yaml'
+  /v1/open/ActionLog/GetLoginLogs:
+    $ref: './paths/log/getLoginLogs.yaml'
+� ��
+��E 2Kfile:///Users/yxzuji/Documents/%E6%98%8E%E9%81%93%E4%BA%91/MDY_API/add.yaml

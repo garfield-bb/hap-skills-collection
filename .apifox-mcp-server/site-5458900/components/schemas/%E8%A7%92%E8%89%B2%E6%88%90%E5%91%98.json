@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "userIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "用户ID集合"
+    },
+    "departmentIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "部门ID集合"
+    },
+    "departmentTreeIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "部门树ID集合"
+    },
+    "jobIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "职位ID集合"
+    },
+    "orgRoleIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "组织角色ID集合"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "appKey": {
+      "type": "string",
+      "description": "AppKey",
+      "title": "AppKey"
+    },
+    "sign": {
+      "type": "string",
+      "description": "签名\n",
+      "title": "签名"
+    }
+  },
+  "required": [
+    "appKey",
+    "sign"
+  ]
+}

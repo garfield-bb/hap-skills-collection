@@ -1,0 +1,243 @@
+{
+  "post": {
+    "summary": "批量新建行记录",
+    "deprecated": false,
+    "description": "批量新建行记录",
+    "tags": [
+      "工作表"
+    ],
+    "parameters": [],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "appkey": {
+                "type": "string",
+                "description": "AppKey"
+              },
+              "sign": {
+                "type": "string",
+                "description": "签名"
+              },
+              "worksheetId": {
+                "type": "string",
+                "title": "",
+                "description": "工作表ID"
+              },
+              "rows": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "controlId": {
+                      "type": "string",
+                      "description": "控件名称"
+                    },
+                    "value": {
+                      "type": "string",
+                      "description": "控件值"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "controlId",
+                    "value"
+                  ],
+                  "required": [
+                    "controlId",
+                    "value"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              },
+              "controls": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "controlId": {
+                      "type": "string",
+                      "title": "",
+                      "description": "控件 id"
+                    },
+                    "value": {
+                      "type": "string",
+                      "title": "",
+                      "description": "控件值"
+                    }
+                  },
+                  "required": [
+                    "controlId",
+                    "value"
+                  ],
+                  "x-apifox-orders": [
+                    "controlId",
+                    "value"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "title": "",
+                "description": "控件数据"
+              },
+              "triggerWorkflow": {
+                "type": "boolean",
+                "description": "是否触发工作流",
+                "default": true
+              }
+            },
+            "required": [
+              "worksheetId",
+              "controls",
+              "appkey",
+              "sign",
+              "rows"
+            ],
+            "title": "",
+            "x-apifox-orders": [
+              "appkey",
+              "sign",
+              "worksheetId",
+              "rows",
+              "controls",
+              "triggerWorkflow"
+            ],
+            "x-apifox-ignore-properties": []
+          },
+          "example": {
+            "appKey": "5004e1f1c103fc82",
+            "sign": "MWQzYWJiNTNlYzZmNjZhNTA1NTExMGZhNzEyMjU3ZTMzM2Q2YWFmZWJkMTZjMWM1NTRjNDZiODUwNjc5OTUzNg==",
+            "worksheetId": "6773abdab945df4389d21c17",
+            "triggerWorkflow": true,
+            "rows": [
+              [
+                {
+                  "controlId": "60d42c197766e73dc71929a2",
+                  "value": "第一行"
+                }
+              ],
+              [
+                {
+                  "controlId": "60d42c197766e73dc71929a2",
+                  "value": "第二行"
+                }
+              ]
+            ]
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                },
+                "code": {
+                  "type": "integer"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "string",
+                  "description": "工作表ID"
+                }
+              },
+              "required": [
+                "success",
+                "code",
+                "msg",
+                "data"
+              ],
+              "title": "",
+              "x-apifox-orders": [
+                "success",
+                "code",
+                "msg",
+                "data"
+              ],
+              "x-apifox-ignore-properties": []
+            },
+            "examples": {
+              "1": {
+                "summary": "成功示例",
+                "value": {
+                  "data": "67eb801bbb2af284541ae54c",
+                  "success": true,
+                  "error_code": 1
+                }
+              },
+              "2": {
+                "summary": "异常示例",
+                "value": {
+                  "error_msg": "具体错误信息",
+                  "error_code": 10101,
+                  "success": false
+                }
+              }
+            }
+          }
+        },
+        "headers": {},
+        "x-apifox-name": "成功"
+      },
+      "401": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "title": "请求结果"
+                },
+                "code": {
+                  "type": "integer",
+                  "title": "代码"
+                },
+                "msg": {
+                  "type": "string",
+                  "title": "消息"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "title": "返回数据",
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
+                }
+              },
+              "required": [
+                "success",
+                "code",
+                "msg",
+                "data"
+              ],
+              "x-apifox-orders": [
+                "success",
+                "code",
+                "msg",
+                "data"
+              ],
+              "x-apifox-ignore-properties": []
+            }
+          }
+        },
+        "headers": {},
+        "x-apifox-name": "没有权限"
+      }
+    },
+    "security": [],
+    "x-apifox-folder": "工作表",
+    "x-apifox-status": "released",
+    "x-apifox-maintainer": "hap",
+    "x-run-in-apifox": "https://app.apifox.com/web/project/6133169/apis/api-278881037-run"
+  }
+}

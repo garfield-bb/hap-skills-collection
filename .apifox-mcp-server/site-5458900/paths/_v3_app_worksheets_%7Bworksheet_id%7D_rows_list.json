@@ -1,0 +1,397 @@
+{
+  "post": {
+    "summary": "获取行记录列表 ",
+    "deprecated": false,
+    "description": "获取工作表记录列表，包含记录创建者、拥有者信息，各控件对应的值\n\n\n",
+    "tags": [],
+    "parameters": [
+      {
+        "name": "worksheet_id",
+        "in": "path",
+        "description": "",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "url",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appid",
+        "in": "header",
+        "description": "当使用Authorization鉴权时，必传",
+        "required": false,
+        "example": "{{appId}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "Authorization",
+        "in": "header",
+        "description": "个人授权 id",
+        "required": false,
+        "example": "{{Authorization}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "pageSize": {
+                "type": "integer",
+                "description": "每页数量，最大为 1000"
+              },
+              "pageIndex": {
+                "type": "integer",
+                "description": "页码"
+              },
+              "viewId": {
+                "type": "string",
+                "description": "视图 id"
+              },
+              "fields": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "页码，填入后，返回数据中，只包含这些字段信息"
+              },
+              "filters": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "description": "'group' | 'condition'。当 type 为 'condition' 时，field/operator/value 为必填；当 type 为 'group' 时，logic 为必填"
+                    },
+                    "field": {
+                      "type": "string",
+                      "description": "字段ID或别名"
+                    },
+                    "operator": {
+                      "type": "string",
+                      "description": "运算符"
+                    },
+                    "value": {
+                      "description": "值（字符串、数值、数组、日期范围DateRange字符串）",
+                      "nullable": true,
+                      "oneOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "integer"
+                        },
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "array"
+                        },
+                        {
+                          "type": "object"
+                        },
+                        {
+                          "type": "number"
+                        }
+                      ]
+                    },
+                    "logic": {
+                      "type": "string",
+                      "description": "'AND' | 'OR'。不区分大小写"
+                    },
+                    "children": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "description": "'group' | 'condition'。当 type 为 'condition' 时，field/operator/value 为必填；当 type 为 'group' 时，logic 为必填"
+                          },
+                          "field": {
+                            "type": "string",
+                            "description": "字段ID或别名"
+                          },
+                          "operator": {
+                            "type": "string",
+                            "description": "运算符"
+                          },
+                          "value": {
+                            "description": "值（字符串、数值、数组、日期范围DateRange字符串）",
+                            "nullable": true,
+                            "oneOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "integer"
+                              },
+                              {
+                                "type": "boolean"
+                              },
+                              {
+                                "type": "array"
+                              },
+                              {
+                                "type": "object"
+                              },
+                              {
+                                "type": "number"
+                              }
+                            ]
+                          },
+                          "logic": {
+                            "type": "string",
+                            "description": "'AND' | 'OR'。不区分大小写"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "筛选器"
+              },
+              "sorts": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "title": "字段ID或别名"
+                    },
+                    "isAsc": {
+                      "type": "boolean",
+                      "title": "是否升序，默认为降序"
+                    }
+                  },
+                  "required": [
+                    "field",
+                    "isAsc"
+                  ]
+                },
+                "description": "排序字段"
+              },
+              "search": {
+                "type": "string",
+                "description": "关键字模糊搜索"
+              },
+              "tableView": {
+                "type": "boolean",
+                "description": "是否用表格视图格式返回记录数据"
+              },
+              "useFieldIdAsKey": {
+                "type": "boolean",
+                "description": "返回数据时字段名称是否使用ID，默认使用别名"
+              },
+              "includeTotalCount": {
+                "type": "boolean",
+                "default": false,
+                "description": "是否返回总记录行数"
+              },
+              "includeSystemFields": {
+                "type": "boolean",
+                "default": false,
+                "description": "是否返回系统字段"
+              }
+            },
+            "required": [
+              "pageSize",
+              "pageIndex"
+            ]
+          },
+          "example": {
+            "pageSize": 100,
+            "pageIndex": 1,
+            "viewId": "",
+            "fields": [
+              ""
+            ],
+            "filters": [
+              {
+                "type": 2,
+                "field": "",
+                "operator": "",
+                "value": "",
+                "logic": "",
+                "children": [
+                  {
+                    "type": 2,
+                    "field": "",
+                    "operator": "",
+                    "value": true,
+                    "logic": ""
+                  }
+                ]
+              }
+            ],
+            "sorts": [
+              {
+                "field": "",
+                "isAsc": false
+              }
+            ],
+            "search": "",
+            "tableView": true,
+            "useFieldIdAsKey": true,
+            "includeTotalCount": true,
+            "includeSystemFields": true
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "properties": {
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "properties": {
+                          "rowId": {
+                            "type": "string"
+                          },
+                          "createAccount": {
+                            "$ref": "#/components/schemas/%E4%BA%BA%E5%91%98%E5%AF%B9%E8%B1%A1"
+                          },
+                          "createTime": {
+                            "type": "string"
+                          },
+                          "updatedTime": {
+                            "type": "string"
+                          },
+                          "updatedAccount": {
+                            "$ref": "#/components/schemas/%E4%BA%BA%E5%91%98%E5%AF%B9%E8%B1%A1"
+                          },
+                          "ownerAccount": {
+                            "$ref": "#/components/schemas/%E4%BA%BA%E5%91%98%E5%AF%B9%E8%B1%A1"
+                          }
+                        },
+                        "required": [
+                          "rowId",
+                          "createTime",
+                          "createAccount",
+                          "updatedTime",
+                          "updatedAccount",
+                          "ownerAccount"
+                        ],
+                        "$ref": "#/components/schemas/%E8%A1%8C%E8%AE%B0%E5%BD%95%E8%AF%A6%E7%BB%86",
+                        "type": "object"
+                      }
+                    },
+                    "total": {
+                      "type": "integer",
+                      "description": "总条数"
+                    }
+                  },
+                  "required": [
+                    "rows",
+                    "total"
+                  ],
+                  "description": "工作表ID",
+                  "$ref": "#/components/schemas/%E8%A1%8C%E8%AE%B0%E5%BD%95%E5%88%97%E8%A1%A8"
+                },
+                "success": {
+                  "type": "boolean",
+                  "description": "是否调用成功"
+                },
+                "errorCode": {
+                  "type": "integer",
+                  "description": "错误代码"
+                },
+                "errorMsg": {
+                  "type": "string",
+                  "description": "错误消息"
+                }
+              },
+              "required": [
+                "data",
+                "success"
+              ]
+            },
+            "example": {
+              "data": {
+                "rows": [
+                  {
+                    "rowid": "0bc19fb7-4100-43ad-8f0e-7d2879427677",
+                    "createdAt": "2024-03-25 15:52:58",
+                    "createdBy": {
+                      "id": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "updatedBy": {
+                      "id": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerBy": {
+                      "id": "user-undefined",
+                      "fullname": "未指定",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/undefined.gif?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "updatedAt": "2024-03-25 15:52:58",
+                    "632444f6182c34e9180b069e": "路由器重置器",
+                    "632444f6182c34e9180b069f": "9.99",
+                    "632444f6182c34e9180b06a1": "产品-30",
+                    "autoid": 15
+                  }
+                ],
+                "total": 1
+              },
+              "success": true
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

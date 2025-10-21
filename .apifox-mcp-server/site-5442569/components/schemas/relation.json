@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "showFields": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "展示字段"
+    },
+    "bidirectional": {
+      "type": "boolean",
+      "description": "是否为双向关联 true：双向，false：单向"
+    }
+  },
+  "description": "type=Relation时传入，关联字段字段 配置项\n\n"
+}

@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "部门Id"
+    },
+    "name": {
+      "type": "string",
+      "description": "部门名称"
+    },
+    "path": {
+      "type": "string",
+      "description": "部门路径\n\"最高级部门名称/.../父部门名称\""
+    }
+  },
+  "required": [
+    "id",
+    "name"
+  ]
+}

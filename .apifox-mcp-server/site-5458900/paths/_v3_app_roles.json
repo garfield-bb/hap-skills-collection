@@ -1,0 +1,642 @@
+{
+  "get": {
+    "summary": "获取角色列表",
+    "deprecated": false,
+    "description": "获取应用下角色列表",
+    "tags": [],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appid",
+        "in": "header",
+        "description": "当使用Authorization鉴权时，必传",
+        "required": false,
+        "example": "{{appId}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "Authorization",
+        "in": "header",
+        "description": "个人授权 id",
+        "required": false,
+        "example": "{{Authorization}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "roles": {
+                      "$ref": "#/components/schemas/roles"
+                    }
+                  },
+                  "required": [
+                    "roles"
+                  ]
+                },
+                "success": {
+                  "type": "boolean"
+                },
+                "errorCode": {
+                  "type": "string"
+                },
+                "errorMsg": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "data",
+                "success"
+              ]
+            },
+            "example": {
+              "data": {
+                "roles": [
+                  {
+                    "id": "角色Id",
+                    "name": "角色名称",
+                    "roleType": "角色类型",
+                    "desc": "角色描述",
+                    "accounts": [
+                      {
+                        "id": "账号Id",
+                        "name": "用户名",
+                        "avatar": "用户头像链接"
+                      }
+                    ],
+                    "departments": [
+                      {
+                        "id": "部门Id",
+                        "name": "部门名称"
+                      }
+                    ],
+                    "jobs": [
+                      {
+                        "id": "职位Id",
+                        "name": "职位名称"
+                      }
+                    ],
+                    "orgRoleIds": [
+                      "组织角色ID"
+                    ]
+                  }
+                ]
+              },
+              "success": true
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  },
+  "post": {
+    "summary": "创建角色",
+    "deprecated": false,
+    "description": "创建角色\n信息包含：角色名称、描述、权限信息",
+    "tags": [],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appid",
+        "in": "header",
+        "description": "当使用Authorization鉴权时，必传",
+        "required": false,
+        "example": "{{appId}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "Authorization",
+        "in": "header",
+        "description": "个人授权 id",
+        "required": false,
+        "example": "{{Authorization}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "角色名称"
+              },
+              "description": {
+                "type": "string",
+                "description": "角色描述"
+              },
+              "hideAppForMembers": {
+                "type": "string",
+                "description": "是否对成员隐藏应用,true：隐藏，false：不隐藏"
+              },
+              "type": {
+                "type": "string",
+                "title": "角色类型",
+                "description": "角色类型 0：自定义角色"
+              },
+              "permissionScope": {
+                "type": "string",
+                "description": "分发所有应用项, 80：可查看、编辑、删除所有记录; 60：可查看所有记录，但只能编辑、删除自己拥有的记录; 30：可查看加入的，只能编辑、删除自己拥有的记录; 20：对所有记录只有查看权限; 0：分发有权限应用项"
+              },
+              "globalPermissions": {
+                "type": "object",
+                "properties": {
+                  "addRecord": {
+                    "type": "boolean",
+                    "description": "添加记录权限，true 有权限，false 无权限"
+                  },
+                  "share": {
+                    "type": "boolean",
+                    "description": "视图和记录的公开分享权限，true 有权限，false 无权限"
+                  },
+                  "import": {
+                    "type": "boolean",
+                    "description": "导入权限，true 有权限，false 无权限"
+                  },
+                  "export": {
+                    "type": "boolean",
+                    "description": "导出权限，true 有权限，false 无权限"
+                  },
+                  "log": {
+                    "type": "boolean",
+                    "description": "日志，true 有权限，false 无权限"
+                  },
+                  "attachmentDownload": {
+                    "type": "boolean",
+                    "description": "附件下载，true 有权限，false 无权限"
+                  },
+                  "systemPrint": {
+                    "type": "boolean",
+                    "description": "系统打印，true 有权限，false 无权限"
+                  },
+                  "discuss": {
+                    "type": "boolean",
+                    "description": "讨论权限，true 有权限，false 无权限"
+                  }
+                },
+                "required": [
+                  "share",
+                  "systemPrint",
+                  "log",
+                  "discuss",
+                  "export",
+                  "import",
+                  "attachmentDownload",
+                  "addRecord"
+                ],
+                "description": "应用全局权限，仅在permissionScope大于0时生效"
+              },
+              "worksheetPermissions": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "工作表Id"
+                    },
+                    "recordDataScope": {
+                      "type": "object",
+                      "properties": {
+                        "read": {
+                          "type": "integer",
+                          "description": "查看权限范围 0：未授权 20：仅我拥有的 30：我的及下属的 100：全部的"
+                        },
+                        "edit": {
+                          "type": "integer",
+                          "description": "编辑权限范围 0：未授权 20：仅我拥有的 30：我的及下属的 100：全部的"
+                        },
+                        "delete": {
+                          "type": "integer",
+                          "description": "删除权限范围 0：未授权 20：仅我拥有的 30：我的及下属的 100：全部的"
+                        }
+                      },
+                      "required": [
+                        "read",
+                        "delete",
+                        "edit"
+                      ],
+                      "description": "行记录的数据权限范围"
+                    },
+                    "worksheetActions": {
+                      "type": "object",
+                      "properties": {
+                        "shareView": {
+                          "type": "boolean",
+                          "description": "公开分享视图权限"
+                        },
+                        "import": {
+                          "type": "boolean",
+                          "description": "工作表导入权限"
+                        },
+                        "export": {
+                          "type": "boolean",
+                          "description": "工作表导出权限"
+                        },
+                        "discuss": {
+                          "type": "boolean",
+                          "description": "工作表讨论权限"
+                        },
+                        "batchOperation": {
+                          "type": "boolean",
+                          "description": "工作表批量操作权限"
+                        }
+                      },
+                      "required": [
+                        "shareView",
+                        "import",
+                        "export",
+                        "discuss",
+                        "batchOperation"
+                      ],
+                      "description": "工作表动作权限"
+                    },
+                    "recordActions": {
+                      "type": "object",
+                      "properties": {
+                        "attachmentDownload": {
+                          "type": "boolean",
+                          "description": "记录附件下载权限"
+                        },
+                        "discuss": {
+                          "type": "boolean",
+                          "description": "记录讨论权限"
+                        },
+                        "systemPrint": {
+                          "type": "boolean",
+                          "description": "记录系统打印权限"
+                        },
+                        "log": {
+                          "type": "boolean",
+                          "description": "记录日志权限"
+                        },
+                        "add": {
+                          "type": "boolean",
+                          "description": "添加记录权限"
+                        },
+                        "share": {
+                          "type": "boolean",
+                          "description": "公开分享记录权限"
+                        }
+                      },
+                      "required": [
+                        "share",
+                        "discuss",
+                        "systemPrint",
+                        "attachmentDownload",
+                        "log",
+                        "add"
+                      ],
+                      "description": "行记录动作权限"
+                    },
+                    "recordPermissionInViews": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "read": {
+                            "type": "boolean",
+                            "description": "查看行记录权限"
+                          },
+                          "edit": {
+                            "type": "boolean",
+                            "description": "编辑行记录权限"
+                          },
+                          "delete": {
+                            "type": "boolean",
+                            "description": "删除行记录权限"
+                          },
+                          "viewId": {
+                            "type": "string",
+                            "description": "视图ID"
+                          }
+                        }
+                      },
+                      "description": "在视图下的行记录权限"
+                    },
+                    "fieldPermissions": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "字段 id"
+                          },
+                          "read": {
+                            "type": "boolean",
+                            "description": "查看字段权限"
+                          },
+                          "edit": {
+                            "type": "boolean",
+                            "description": "编辑字段权限"
+                          },
+                          "add": {
+                            "type": "boolean",
+                            "description": "新增字段权限"
+                          },
+                          "decrypt": {
+                            "type": "boolean",
+                            "description": "解密字段权限"
+                          }
+                        }
+                      },
+                      "description": "字段权限"
+                    },
+                    "paymentActions": {
+                      "type": "object",
+                      "properties": {
+                        "pay": {
+                          "type": "string",
+                          "description": "工作表中付款权限"
+                        }
+                      },
+                      "description": "支付权限",
+                      "required": [
+                        "pay"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "recordDataScope",
+                    "worksheetActions",
+                    "recordActions",
+                    "paymentActions"
+                  ]
+                },
+                "description": "工作表权限明细，仅在permissionScope为0时生效"
+              },
+              "pagePermissions": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "description": "自定义页面权限明细，仅在permissionScope为0时生效"
+              }
+            },
+            "required": [
+              "name",
+              "description",
+              "permissionScope",
+              "type"
+            ],
+            "$ref": "#/components/schemas/%E8%A7%92%E8%89%B2%E6%9D%83%E9%99%90"
+          },
+          "example": {
+            "name": "string",
+            "description": "string",
+            "permissionScope": 100,
+            "type": 0,
+            "hideAppForMembers": true,
+            "globalPermissions": {
+              "addRecord": true,
+              "share": true,
+              "import": true,
+              "export": true,
+              "discuss": true,
+              "systemPrint": true,
+              "attachmentDownload": true,
+              "log": true
+            },
+            "worksheetPermissions": [
+              {
+                "id": "string",
+                "recordPermissionInViews": [
+                  {
+                    "viewId": "string",
+                    "read": true,
+                    "edit": true,
+                    "delete": true
+                  }
+                ],
+                "recordDataScope": {
+                  "read": 0,
+                  "edit": 0,
+                  "delete": 0
+                },
+                "worksheetActions": {
+                  "shareView": true,
+                  "import": true,
+                  "export": true,
+                  "discuss": true,
+                  "batchOperation": true
+                },
+                "recordActions": {
+                  "add": true,
+                  "share": true,
+                  "discuss": true,
+                  "systemPrint": true,
+                  "attachmentDownload": true,
+                  "log": true
+                },
+                "paymentActions": {
+                  "pay": "string"
+                },
+                "fieldPermissions": [
+                  {
+                    "id": "string",
+                    "add": true,
+                    "read": true,
+                    "edit": true,
+                    "decrypt": true
+                  }
+                ]
+              }
+            ],
+            "pagePermissions": [
+              {
+                "id": "string",
+                "enable": true
+              }
+            ]
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "title": "角色 id",
+                      "description": ""
+                    },
+                    "name": {
+                      "type": "string",
+                      "title": "角色名称"
+                    },
+                    "roleType": {
+                      "type": "integer",
+                      "title": "角色类型"
+                    },
+                    "desc": {
+                      "type": "string",
+                      "title": "描述"
+                    },
+                    "users": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "title": "用户信息"
+                    },
+                    "departments": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "title": "部门"
+                    },
+                    "departmentTrees": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "title": "部门树"
+                    },
+                    "projectOrganizes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "title": "组织角色"
+                    },
+                    "jobs": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "title": "职位"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "roleType",
+                    "desc",
+                    "users",
+                    "departments",
+                    "departmentTrees",
+                    "projectOrganizes",
+                    "jobs"
+                  ]
+                },
+                "success": {
+                  "type": "boolean"
+                },
+                "errorCode": {
+                  "type": "string"
+                },
+                "errorMsg": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "data",
+                "success"
+              ]
+            },
+            "example": {
+              "data": {
+                "id": "6825715d-92cc-4e15-83ce-8e39d1a667bc",
+                "name": "新角色40",
+                "roleType": 0,
+                "desc": "",
+                "users": [],
+                "departments": [],
+                "departmentTrees": [],
+                "projectOrganizes": [],
+                "jobs": []
+              },
+              "success": true
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

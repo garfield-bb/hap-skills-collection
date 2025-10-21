@@ -1,0 +1,94 @@
+{
+  "type": "object",
+  "properties": {
+    "columns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "field": {
+            "description": "字段ID",
+            "type": "string"
+          },
+          "displayName": {
+            "description": "显示名称",
+            "type": "string"
+          },
+          "granularity": {
+            "type": "integer",
+            "description": "日期、地区统计维度\n字段类型是日期或者地区时，通过此参数设置统计归组粒度\n- 日期时间：1-日，2-周，3-月；\n- 地区：1-省，2-省/市，3-省/市/县（区）。"
+          },
+          "includeEmpty": {
+            "type": "boolean",
+            "description": "是否统计空值，默认为false不统计"
+          }
+        },
+        "required": [
+          "field"
+        ]
+      },
+      "description": "列（维度）字段列表"
+    },
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "field": {
+            "description": "字段ID",
+            "type": "string"
+          },
+          "displayName": {
+            "description": "显示名称",
+            "type": "string"
+          },
+          "granularity": {
+            "type": "integer",
+            "description": "日期、地区统计维度\n字段类型是日期或者地区时，通过此参数设置统计归组粒度\n- 日期时间：1-日，2-周，3-月；\n- 地区：1-省，2-省/市，3-省/市/县（区）。"
+          },
+          "includeEmpty": {
+            "type": "boolean",
+            "description": "是否统计空值，默认为false不统计"
+          }
+        },
+        "required": [
+          "field"
+        ]
+      },
+      "description": "行（维度）字段列表"
+    },
+    "values": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "field": {
+            "description": "字段ID，仅统计记录行数时，使用`record_count`作为字段ID",
+            "type": "string"
+          },
+          "displayName": {
+            "description": "显示名称",
+            "type": "string"
+          },
+          "aggregation": {
+            "description": "聚合方式（不区分大小写）\n- COUNT：计数\n- DISTINCTCOUNT：去重计数\n- SUM：求和\n- MIN：最小值\n- MAX：最大值\n- AVG：平均值",
+            "type": "string"
+          },
+          "includeEmpty": {
+            "type": "boolean",
+            "description": "是否统计空值，默认为false不统计，空值将显示为0"
+          }
+        },
+        "required": [
+          "field",
+          "aggregation"
+        ]
+      },
+      "description": "字段值列表"
+    }
+  },
+  "required": [
+    "values"
+  ],
+  "description": "元数据"
+}

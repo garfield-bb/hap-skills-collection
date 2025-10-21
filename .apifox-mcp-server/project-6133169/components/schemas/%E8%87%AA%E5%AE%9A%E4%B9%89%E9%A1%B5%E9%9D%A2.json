@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "properties": {
+    "pageId": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "checked": {
+      "type": "boolean"
+    },
+    "navigateHide": {
+      "type": "boolean"
+    },
+    "sortIndex": {
+      "type": "integer"
+    },
+    "iconUrl": {
+      "type": "string"
+    }
+  },
+  "x-apifox-orders": [
+    "pageId",
+    "name",
+    "checked",
+    "navigateHide",
+    "sortIndex",
+    "iconUrl"
+  ],
+  "x-apifox-ignore-properties": [],
+  "x-apifox-folder": ""
+}

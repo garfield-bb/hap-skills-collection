@@ -1,0 +1,99 @@
+{
+  "post": {
+    "summary": "获取工作表总行数",
+    "deprecated": false,
+    "description": "获取工作表总行数",
+    "tags": [],
+    "parameters": [],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "appKey": {
+                "type": "string",
+                "title": "AppKey",
+                "description": ""
+              },
+              "sign": {
+                "type": "string",
+                "title": "签名",
+                "description": ""
+              },
+              "worksheetId": {
+                "type": "string",
+                "title": "工作表ID",
+                "description": ""
+              },
+              "viewId": {
+                "type": "string",
+                "title": "视图 ID",
+                "description": ""
+              },
+              "filters": {
+                "type": "string",
+                "title": "筛选器组合，每个筛选器的参数请参考附录",
+                "description": ""
+              },
+              "keywords": {
+                "type": "string",
+                "title": "关键词"
+              }
+            },
+            "required": [
+              "appKey",
+              "sign",
+              "worksheetId",
+              "viewId"
+            ]
+          },
+          "example": {
+            "appKey": "4fa7cd2c37b8444e",
+            "sign": "YjE5YTg4YTg2MmY2ZjQ4ZjUxMDcxNjk4YTI1MDRmYjQ0N2NkOGExYTJhODdkMDEzYWE3ZTFmMTIwODBlODk4Yg==",
+            "worksheetId": "65dda1a5a608a40050774c78",
+            "viewId": "65dda1a5a608a40050774c86",
+            "filters": [],
+            "keywords": ""
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "string",
+                  "description": "总数量"
+                },
+                "success": {
+                  "type": "boolean"
+                },
+                "error_code": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "data",
+                "success",
+                "error_code"
+              ]
+            },
+            "example": {
+              "data": "总数量",
+              "success": true,
+              "error_code": 1
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

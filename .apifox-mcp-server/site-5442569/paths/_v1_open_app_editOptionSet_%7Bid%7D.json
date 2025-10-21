@@ -1,0 +1,244 @@
+{
+  "post": {
+    "summary": "编辑选项集",
+    "deprecated": false,
+    "description": "创建选项集信息\n数据包括：选项集名称、选项集信息（选项值、排序、颜色、分值）",
+    "tags": [],
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "description": "选项集 id",
+        "required": true,
+        "example": "54102c59-18fd-4ba6-9835-eec240021081",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "选项集名称"
+              },
+              "options": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "string",
+                      "description": "选项值，不允许重复"
+                    },
+                    "index": {
+                      "type": "string",
+                      "description": "选项排序值: 必须为整数，越小越靠前"
+                    },
+                    "isDeleted": {
+                      "type": "string",
+                      "description": "该选项是否已被删除"
+                    },
+                    "color": {
+                      "type": "string",
+                      "description": "颜色值: colorful为true时生效，参考值 #C0E6FC , #C3F2F2 , #00C345 , #FAD714 , #FF9300 , #F52222 , #EB2F96 , #7500EA , #2D46C4 , #484848 , #C9E6FC , #C3F2F2"
+                    },
+                    "score": {
+                      "type": "string",
+                      "description": "分值，enableScore为true时生效，允许小数和正负值"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "index",
+                    "isDeleted",
+                    "color",
+                    "score"
+                  ]
+                },
+                "description": "选项集"
+              },
+              "colorful": {
+                "type": "boolean",
+                "description": "启用彩色"
+              },
+              "enableScore": {
+                "type": "boolean",
+                "description": "启用分值"
+              }
+            },
+            "required": [
+              "name",
+              "options",
+              "colorful",
+              "enableScore"
+            ]
+          },
+          "example": {
+            "appKey": "5004e1f1c103fc82",
+            "sign": "MWQzYWJiNTNlYzZmNjZhNTA1NTExMGZhNzEyMjU3ZTMzM2Q2YWFmZWJkMTZjMWM1NTRjNDZiODUwNjc5OTUzNg==",
+            "name": "测试选项集",
+            "options": [
+              {
+                "value": "已通过",
+                "index": "1",
+                "isDeleted": "false",
+                "color": "#C3F2F2",
+                "score": "1"
+              },
+              {
+                "value": "不通过",
+                "index": 1,
+                "isDeleted": false,
+                "color": "red",
+                "score": 1.5
+              }
+            ],
+            "colorful": false,
+            "enableScore": false
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                },
+                "code": {
+                  "type": "integer"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "collectionId": {
+                      "type": "string",
+                      "description": "选项集ID"
+                    }
+                  },
+                  "required": [
+                    "collectionId"
+                  ]
+                }
+              },
+              "required": [
+                "success",
+                "code",
+                "msg",
+                "data"
+              ]
+            }
+          }
+        },
+        "headers": {}
+      },
+      "401": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "title": "请求结果"
+                },
+                "code": {
+                  "type": "integer",
+                  "title": "代码"
+                },
+                "msg": {
+                  "type": "string",
+                  "title": "消息"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "title": "返回数据"
+                }
+              },
+              "required": [
+                "success",
+                "code",
+                "msg",
+                "data"
+              ]
+            }
+          }
+        },
+        "headers": {}
+      },
+      "404": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "title": "请求结果"
+                },
+                "code": {
+                  "type": "integer",
+                  "title": "代码"
+                },
+                "msg": {
+                  "type": "string",
+                  "title": "消息"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "title": "返回数据"
+                }
+              },
+              "required": [
+                "success",
+                "code",
+                "msg",
+                "data"
+              ],
+              "title": ""
+            },
+            "examples": {
+              "1": {
+                "summary": "异常示例",
+                "value": {
+                  "success": false,
+                  "code": 1001,
+                  "msg": "应用不存在",
+                  "data": {}
+                }
+              },
+              "2": {
+                "summary": "异常示例",
+                "value": {
+                  "success": false,
+                  "code": 1001,
+                  "msg": "应用不存在",
+                  "data": {}
+                }
+              }
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

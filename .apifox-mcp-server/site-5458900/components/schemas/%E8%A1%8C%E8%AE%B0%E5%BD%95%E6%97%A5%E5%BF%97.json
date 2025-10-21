@@ -1,0 +1,134 @@
+{
+  "type": "object",
+  "properties": {
+    "operator": {
+      "type": "object",
+      "properties": {
+        "accountId": {
+          "type": "string",
+          "description": "人员 id"
+        },
+        "fullname": {
+          "type": "string",
+          "description": " 名称"
+        },
+        "avatar": {
+          "type": "string",
+          "description": "头像地址"
+        },
+        "isPortal": {
+          "type": "boolean"
+        },
+        "status": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "accountId",
+        "fullname",
+        "avatar",
+        "isPortal",
+        "status"
+      ],
+      "description": "操作者信息",
+      "title": "操作者 id"
+    },
+    "content": {
+      "type": "object",
+      "properties": {
+        "worksheetId": {
+          "type": "string",
+          "description": "工作表ID"
+        },
+        "objectId": {
+          "type": "string",
+          "description": "操作对象ID"
+        },
+        "uniqueId": {
+          "type": "string",
+          "description": "操作唯一标识"
+        },
+        "objectType": {
+          "type": "string",
+          "description": "日志对象类型 1:工作表 2:行记录 3:视图 4:按钮 5:业务规则 99:其他"
+        },
+        "type": {
+          "type": "integer",
+          "description": "日志操作类型 1:手动 2:工作流 3:按钮"
+        },
+        "requestType": {
+          "type": "string",
+          "description": "（待研发补充枚举值）"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "创建时间"
+        },
+        "logData": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "字段 id"
+              },
+              "name": {
+                "type": "string",
+                "description": "字段名称"
+              },
+              "editType": {
+                "type": "integer",
+                "description": "（待研发补充枚举值）"
+              },
+              "type": {
+                "type": "integer",
+                "description": "字段类型"
+              },
+              "oldValue": {
+                "type": "string",
+                "description": "操作前的值"
+              },
+              "oldText": {
+                "type": "string",
+                "description": "操作前的描述"
+              },
+              "newValue": {
+                "type": "string",
+                "description": "操作后的值"
+              },
+              "newText": {
+                "type": "string",
+                "description": "操作后的描述"
+              },
+              "isDeleted": {
+                "type": "boolean",
+                "description": "是否删除"
+              }
+            },
+            "description": "日志日期"
+          },
+          "description": "操作创建的时间戳"
+        },
+        "extendParams": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "worksheetId",
+        "objectId",
+        "uniqueId",
+        "objectType",
+        "type",
+        "requestType",
+        "createdAt",
+        "logData",
+        "extendParams"
+      ],
+      "description": "操作内容"
+    }
+  }
+}

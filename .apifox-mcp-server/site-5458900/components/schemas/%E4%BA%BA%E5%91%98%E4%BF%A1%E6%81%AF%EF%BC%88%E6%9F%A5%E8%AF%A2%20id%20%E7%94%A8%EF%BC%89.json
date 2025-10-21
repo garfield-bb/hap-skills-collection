@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "accountId": {
+      "type": "string",
+      "description": "用户 id"
+    },
+    "name": {
+      "type": "string",
+      "description": " 名称"
+    },
+    "mobile": {
+      "type": "string",
+      "description": "手机号，脱敏规则：保留前3位 + 最后4位，中间用 * 替代"
+    },
+    "email": {
+      "type": "string",
+      "description": "邮箱，脱敏规则：用户名部分：保留前1位 + 最后1位（或2位）\n\n中间部分用 * 替代\n\n域名部分保留完整"
+    }
+  }
+}

@@ -1,0 +1,283 @@
+{
+  "post": {
+    "summary": "获取行记录详情",
+    "deprecated": false,
+    "description": "获取记录详情信息，包括创建者、拥有者、控件信息、根据控件数据类型生成示例值",
+    "tags": [],
+    "parameters": [],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "appKey": {
+                "type": "string",
+                "title": "AppKey",
+                "description": ""
+              },
+              "sign": {
+                "type": "string",
+                "title": "签名",
+                "description": ""
+              },
+              "worksheetId": {
+                "type": "string",
+                "title": "工作表ID",
+                "description": ""
+              },
+              "rowId": {
+                "type": "string",
+                "title": "行记录ID",
+                "description": ""
+              },
+              "getSystemControl": {
+                "type": "string",
+                "title": "是否获取系统字段"
+              }
+            },
+            "required": [
+              "appKey",
+              "sign",
+              "worksheetId",
+              "rowId",
+              "getSystemControl"
+            ]
+          },
+          "example": {
+            "appKey": "8e43dd1d4cccd32c",
+            "sign": "NThiODI4NGZhN2Y4ZmM0NDE4ZDdhYTI1ODg5ZmM2OWEyNmVlMjlmMGQzYWM3ODc2YTE2OTQwOWZiYmYwYTVkNw==",
+            "worksheetId": "6773abdab945df4389d21c17",
+            "rowId": "0142c26c-144d-490b-8f58-7dd3b2221dfe",
+            "getSystemControl": false
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string"
+                    },
+                    "rowid": {
+                      "type": "string",
+                      "description": "记录id"
+                    },
+                    "ctime": {
+                      "type": "string",
+                      "description": "创建时间"
+                    },
+                    "caid": {
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "type": "string",
+                          "description": "邮箱"
+                        },
+                        "mobilePhone": {
+                          "type": "string",
+                          "description": "手机号"
+                        },
+                        "accountId": {
+                          "type": "string",
+                          "description": "账号Id"
+                        },
+                        "fullname": {
+                          "type": "string",
+                          "description": "别名"
+                        },
+                        "avatar": {
+                          "type": "string",
+                          "description": "头像地址"
+                        },
+                        "isPortal": {
+                          "type": "boolean"
+                        },
+                        "status": {
+                          "type": "integer",
+                          "description": "状态"
+                        }
+                      },
+                      "required": [
+                        "email",
+                        "mobilePhone",
+                        "accountId",
+                        "fullname",
+                        "avatar",
+                        "isPortal",
+                        "status"
+                      ],
+                      "description": "创建人账号"
+                    },
+                    "uaid": {
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "type": "string",
+                          "description": "邮箱"
+                        },
+                        "mobilePhone": {
+                          "type": "string",
+                          "description": "手机号"
+                        },
+                        "accountId": {
+                          "type": "string",
+                          "description": "账号Id"
+                        },
+                        "fullname": {
+                          "type": "string",
+                          "description": "别名"
+                        },
+                        "avatar": {
+                          "type": "string",
+                          "description": "头像地址"
+                        },
+                        "isPortal": {
+                          "type": "boolean"
+                        },
+                        "status": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "email",
+                        "mobilePhone",
+                        "accountId",
+                        "fullname",
+                        "avatar",
+                        "isPortal",
+                        "status"
+                      ],
+                      "description": "更新人账号"
+                    },
+                    "ownerid": {
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "type": "string"
+                        },
+                        "mobilePhone": {
+                          "type": "string"
+                        },
+                        "accountId": {
+                          "type": "string"
+                        },
+                        "fullname": {
+                          "type": "string"
+                        },
+                        "avatar": {
+                          "type": "string"
+                        },
+                        "isPortal": {
+                          "type": "boolean"
+                        },
+                        "status": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "email",
+                        "mobilePhone",
+                        "accountId",
+                        "fullname",
+                        "avatar",
+                        "isPortal",
+                        "status"
+                      ]
+                    },
+                    "utime": {
+                      "type": "string",
+                      "description": "更新时间"
+                    },
+                    "autoid": {
+                      "type": "integer"
+                    },
+                    "controlId": {
+                      "type": "string",
+                      "title": "控件id/别名",
+                      "description": "控件值"
+                    }
+                  },
+                  "required": [
+                    "_id",
+                    "rowid",
+                    "ctime",
+                    "caid",
+                    "uaid",
+                    "ownerid",
+                    "utime",
+                    "autoid",
+                    "controlId"
+                  ]
+                },
+                "success": {
+                  "type": "boolean"
+                },
+                "error_code": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "data",
+                "success",
+                "error_code"
+              ]
+            },
+            "example": {
+              "data": {
+                "_id": "6773abdab945df4389d21c7f",
+                "rowid": "0142c26c-144d-490b-8f58-7dd3b2221dfe",
+                "ctime": "2024-12-31 16:31:22",
+                "caid": {
+                  "email": "1529700000@qq.com",
+                  "mobilePhone": "+86132572000000",
+                  "accountId": "e2453de8-1a6a-4d4f-ba36-87fdff880a20",
+                  "fullname": "卜佳菲",
+                  "avatar": "https://p1.mingdaoyun.cn/UserAvatar/fe9c4374-68f1-4f64-88ea-47050dff28bd.jpg?imageView2/1/w/48/h/48/q/90",
+                  "isPortal": false,
+                  "status": 1
+                },
+                "uaid": {
+                  "email": "",
+                  "mobilePhone": "",
+                  "accountId": "user-api",
+                  "fullname": "API",
+                  "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                  "isPortal": false,
+                  "status": 1
+                },
+                "ownerid": {
+                  "email": "1529700000@qq.com",
+                  "mobilePhone": "+86132572000000",
+                  "accountId": "e2453de8-1a6a-4d4f-ba36-87fdff880a20",
+                  "fullname": "卜佳菲",
+                  "avatar": "https://p1.mingdaoyun.cn/UserAvatar/fe9c4374-68f1-4f64-88ea-47050dff28bd.jpg?imageView2/1/w/48/h/48/q/90",
+                  "isPortal": false,
+                  "status": 1
+                },
+                "utime": "2025-04-02 14:52:07",
+                "autoid": 99,
+                "60d42c197766e73dc71929a2": "昆明长水国际机场",
+                "60d42c197766e73dc71929a3": "KMG",
+                "60d42c197766e73dc71929a4": "ZGKL"
+              },
+              "success": true,
+              "error_code": 1
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

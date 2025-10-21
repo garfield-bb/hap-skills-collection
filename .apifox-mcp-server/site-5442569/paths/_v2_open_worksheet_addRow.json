@@ -1,0 +1,117 @@
+{
+  "post": {
+    "summary": "新建行记录",
+    "deprecated": false,
+    "description": "新建行记录",
+    "tags": [],
+    "parameters": [],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "appkey": {
+                "type": "string",
+                "description": "AppKey"
+              },
+              "sign": {
+                "type": "string",
+                "description": "签名"
+              },
+              "worksheetId": {
+                "type": "string",
+                "title": "",
+                "description": "工作表ID"
+              },
+              "controls": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "controlId": {
+                      "type": "string",
+                      "title": "",
+                      "description": "控件 id"
+                    },
+                    "value": {
+                      "type": "string",
+                      "title": "",
+                      "description": "控件值"
+                    }
+                  },
+                  "required": [
+                    "controlId",
+                    "value"
+                  ]
+                },
+                "title": "",
+                "description": "控件数据"
+              },
+              "triggerWorkflow": {
+                "type": "boolean",
+                "description": "是否触发工作流",
+                "default": true
+              }
+            },
+            "required": [
+              "worksheetId",
+              "controls",
+              "appkey",
+              "sign"
+            ],
+            "title": ""
+          },
+          "example": {
+            "appkey": "ab14bdc682de8bd0",
+            "sign": "OTY0MTczZWE5ZGQxZGIyNjUwNTczNzUyYzk4ZDA5NDNjNGU1YjYxYWMxYzE4YmU2NzkwNGE1NDQ1ZmFkNWUyNQ==",
+            "worksheetId": "6847f2a1e66b4b2aa67b1466",
+            "triggerWorkflow": true,
+            "controls": [
+              {
+                "controlId": "6847f2a1e66b4b2aa67b1467",
+                "value": "HHHH"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "string",
+                  "title": "行记录 id"
+                },
+                "success": {
+                  "type": "boolean"
+                },
+                "error_code": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "data",
+                "success",
+                "error_code"
+              ]
+            },
+            "example": {
+              "data": "91b34c5e-a772-4fd1-a15f-597a4eb7be03",
+              "success": true,
+              "error_code": 1
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

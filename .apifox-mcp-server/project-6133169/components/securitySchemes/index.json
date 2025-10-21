@@ -1,0 +1,5 @@
+{
+  "bearer": {
+    "$ref": "/components/securitySchemes/bearer.json"
+  }
+}

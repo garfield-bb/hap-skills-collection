@@ -1,0 +1,89 @@
+{
+  "options": {
+    "$ref": "/components/schemas/options.json"
+  },
+  "relation": {
+    "$ref": "/components/schemas/relation.json"
+  },
+  "obj_base_response": {
+    "$ref": "/components/schemas/obj_base_response.json"
+  },
+  "obj_field": {
+    "$ref": "/components/schemas/obj_field.json"
+  },
+  "obj_filter": {
+    "$ref": "/components/schemas/obj_filter.json"
+  },
+  "obj_record_row": {
+    "$ref": "/components/schemas/obj_record_row.json"
+  },
+  "obj_record_log": {
+    "$ref": "/components/schemas/obj_record_log.json"
+  },
+  "obj_record_discussion": {
+    "$ref": "/components/schemas/obj_record_discussion.json"
+  },
+  "obj_pivot_meta": {
+    "$ref": "/components/schemas/obj_pivot_meta.json"
+  },
+  "obj_pivot_dimensions": {
+    "$ref": "/components/schemas/obj_pivot_dimensions.json"
+  },
+  "obj_pivot_data": {
+    "$ref": "/components/schemas/obj_pivot_data.json"
+  },
+  "obj_process": {
+    "$ref": "/components/schemas/obj_process.json"
+  },
+  "obj_process_detail": {
+    "$ref": "/components/schemas/obj_process_detail.json"
+  },
+  "obj_input": {
+    "$ref": "/components/schemas/obj_input.json"
+  },
+  "obj_output": {
+    "$ref": "/components/schemas/obj_output.json"
+  },
+  "obj_role": {
+    "$ref": "/components/schemas/obj_role.json"
+  },
+  "obj_role_permission": {
+    "$ref": "/components/schemas/obj_role_permission.json"
+  },
+  "obj_user": {
+    "$ref": "/components/schemas/obj_user.json"
+  },
+  "obj_user_desensitized": {
+    "$ref": "/components/schemas/obj_user_desensitized.json"
+  },
+  "obj_department": {
+    "$ref": "/components/schemas/obj_department.json"
+  },
+  "obj_custom_page": {
+    "$ref": "/components/schemas/obj_custom_page.json"
+  },
+  "obj_optionset": {
+    "$ref": "/components/schemas/obj_optionset.json"
+  },
+  "obj_filter_children": {
+    "$ref": "/components/schemas/obj_filter_children.json"
+  },
+  "obj_app": {
+    "$ref": "/components/schemas/obj_app.json"
+  },
+  "鉴权信息": {
+    "$ref": "/components/schemas/%E9%89%B4%E6%9D%83%E4%BF%A1%E6%81%AF.json"
+  },
+  "人员对象": {
+    "$ref": "/components/schemas/%E4%BA%BA%E5%91%98%E5%AF%B9%E8%B1%A1.json"
+  },
+  "自定义页面": {
+    "$ref": "/components/schemas/%E8%87%AA%E5%AE%9A%E4%B9%89%E9%A1%B5%E9%9D%A2.json"
+  },
+  "应用角色": {
+    "$ref": "/components/schemas/%E5%BA%94%E7%94%A8%E8%A7%92%E8%89%B2.json"
+  },
+  "人员信息": {
+    "$ref": "/components/schemas/%E4%BA%BA%E5%91%98%E4%BF%A1%E6%81%AF.json"
+  }
+}

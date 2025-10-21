@@ -1,0 +1,89 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "",
+      "description": "字段名称"
+    },
+    "alias": {
+      "type": "string",
+      "title": "",
+      "description": "字段别名"
+    },
+    "type": {
+      "type": "integer",
+      "title": "",
+      "description": "字段类型"
+    },
+    "isTitle": {
+      "type": "boolean",
+      "description": "是否是标题字段"
+    },
+    "required": {
+      "type": "boolean",
+      "description": "是否必填"
+    },
+    "isHidden": {
+      "type": "boolean",
+      "description": "是否隐藏"
+    },
+    "isReadOnly": {
+      "type": "boolean",
+      "description": "是否只读"
+    },
+    "isHiddenOnCreate": {
+      "type": "boolean",
+      "description": "是否新增记录时隐藏"
+    },
+    "isUnique": {
+      "type": "boolean",
+      "description": "是否唯一"
+    },
+    "precision": {
+      "type": "integer",
+      "description": "保留小数位（0-14），控件类型为6:数值,8:金额时填入"
+    },
+    "subType": {
+      "type": "string",
+      "description": "类型为26成员时，表示成员数量，填入规则 0：单选,1：多选\n类型为29关联记录时，表示关联记录数量，填入规则 1：单条 2：多条\n"
+    },
+    "options": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string",
+          "description": "选项名称"
+        },
+        "index": {
+          "description": "选项排序",
+          "type": "integer"
+        }
+      },
+      "description": "选项信息，控件类型为 11:单选,10:多选时填入"
+    },
+    "showFields": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "类型为29关联记录时，表示展示字段"
+    },
+    "max": {
+      "type": "integer",
+      "description": "控件类型为28等级时，表示等级最大值，填入规则（0-10）"
+    },
+    "appid": {
+      "type": "string",
+      "description": "关联表所属应用，\n类型为29关联记录时传入，创建"
+    },
+    "dataSource": {
+      "type": "string",
+      "description": "数据源 id，类型为 29 （关联记录）时，且选择已有关联时，传入关联表 字段id"
+    },
+    "sourceControlId": {
+      "type": "string",
+      "description": "关联字段字段 id，用于创建双向关联\n"
+    }
+  }
+}

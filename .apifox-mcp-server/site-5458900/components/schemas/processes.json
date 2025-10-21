@@ -1,0 +1,121 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "inputParameters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "字段id"
+          },
+          "name": {
+            "type": "string",
+            "description": "字段名称"
+          },
+          "alias": {
+            "type": "string",
+            "description": "别名"
+          },
+          "type": {
+            "type": "integer",
+            "description": "字段类型"
+          },
+          "description": {
+            "type": "string",
+            "description": "描述"
+          },
+          "required": {
+            "type": "boolean",
+            "description": "是否必填"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "key",
+                "value"
+              ]
+            },
+            "description": "选项集,字段类型为选项时，返回选项名称数组"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/input"
+            },
+            "description": "如果参数是对象数组，这是对象数组的子字段结构"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "alias",
+          "type",
+          "description",
+          "required"
+        ]
+      }
+    },
+    "outputParameters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "字段id"
+          },
+          "name": {
+            "type": "string",
+            "description": "字段名称"
+          },
+          "type": {
+            "type": "integer",
+            "description": "字段类型"
+          },
+          "description": {
+            "type": "string",
+            "description": "描述"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/output"
+            },
+            "description": "如果参数是对象数组，这是子字段结构"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "type",
+          "description"
+        ]
+      }
+    }
+  },
+  "required": [
+    "inputParameters",
+    "outputParameters"
+  ]
+}

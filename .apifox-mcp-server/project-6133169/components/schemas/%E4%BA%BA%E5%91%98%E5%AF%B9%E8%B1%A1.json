@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "accountId": {
+      "type": "string"
+    },
+    "fullname": {
+      "type": "string"
+    },
+    "avatar": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    }
+  },
+  "x-apifox-orders": [
+    "accountId",
+    "fullname",
+    "avatar",
+    "status"
+  ],
+  "required": [
+    "accountId",
+    "fullname",
+    "avatar",
+    "status"
+  ],
+  "x-apifox-ignore-properties": [],
+  "x-apifox-folder": ""
+}

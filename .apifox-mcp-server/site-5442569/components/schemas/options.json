@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "value": {
+      "type": "string",
+      "description": "选项名称"
+    },
+    "index": {
+      "type": "integer",
+      "description": "选项排序"
+    }
+  },
+  "required": [
+    "value",
+    "index"
+  ]
+}

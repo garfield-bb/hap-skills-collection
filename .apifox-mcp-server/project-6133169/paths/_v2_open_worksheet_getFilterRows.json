@@ -1,0 +1,1439 @@
+{
+  "post": {
+    "summary": "获取行记录列表",
+    "deprecated": false,
+    "description": "获取工作表记录列表，包含记录创建者、拥有者信息，各控件对应的值",
+    "tags": [
+      "工作表"
+    ],
+    "parameters": [],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "appKey": {
+                "type": "string",
+                "title": "AppKey"
+              },
+              "sign": {
+                "type": "string",
+                "title": "签名"
+              },
+              "worksheetId": {
+                "type": "string",
+                "title": "工作表ID"
+              },
+              "viewId": {
+                "type": "string",
+                "title": "视图 id"
+              },
+              "pageSize": {
+                "type": "integer",
+                "title": "每页数量，最大为 1000"
+              },
+              "pageIndex": {
+                "type": "integer",
+                "title": "页码"
+              },
+              "listType": {
+                "type": "integer",
+                "title": "返回数据类型"
+              },
+              "controls": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "title": "返回指定控件（ID或别名）",
+                "description": "填入后，返回数据中，只包含这些控件信息"
+              },
+              "filters": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "每个筛选器的参数请参考附录",
+                "title": "筛选器组合"
+              },
+              "sortId": {
+                "type": "string",
+                "title": "排序字段ID"
+              },
+              "isAsc": {
+                "type": "string",
+                "title": "是否升序"
+              },
+              "notGetTotal": {
+                "type": "boolean",
+                "default": false,
+                "title": "是否不统计总行数以提高性能"
+              },
+              "useControlId": {
+                "type": "boolean",
+                "default": false,
+                "title": "是否只返回controlId"
+              },
+              "getSystemControl": {
+                "type": "boolean",
+                "default": false,
+                "title": "是否获取系统字段"
+              }
+            },
+            "required": [
+              "appKey",
+              "sign",
+              "worksheetId",
+              "pageSize",
+              "pageIndex"
+            ],
+            "x-apifox-orders": [
+              "appKey",
+              "sign",
+              "worksheetId",
+              "viewId",
+              "pageSize",
+              "pageIndex",
+              "listType",
+              "controls",
+              "filters",
+              "sortId",
+              "isAsc",
+              "notGetTotal",
+              "useControlId",
+              "getSystemControl"
+            ],
+            "x-apifox-ignore-properties": []
+          },
+          "example": {
+            "appKey": "4fa7cd2c37b8444e",
+            "sign": "YjE5YTg4YTg2MmY2ZjQ4ZjUxMDcxNjk4YTI1MDRmYjQ0N2NkOGExYTJhODdkMDEzYWE3ZTFmMTIwODBlODk4Yg==",
+            "worksheetId": "65dda1a5a608a40050774c78",
+            "viewId": "",
+            "pageSize": 50,
+            "pageIndex": 1,
+            "listType": 0,
+            "controls": [],
+            "filters": [],
+            "sortId": "",
+            "isAsc": "false",
+            "notGetTotal": "false",
+            "useControlId": "false",
+            "getSystemControl": "false"
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                },
+                "code": {
+                  "type": "integer"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "rowid": {
+                            "type": "string",
+                            "description": "记录ID"
+                          },
+                          "ctime": {
+                            "type": "string",
+                            "description": "创建时间"
+                          },
+                          "caid": {
+                            "type": "object",
+                            "properties": {
+                              "accountId": {
+                                "type": "string"
+                              },
+                              "fullname": {
+                                "type": "string"
+                              },
+                              "avatar": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "accountId",
+                              "fullname",
+                              "avatar",
+                              "status"
+                            ],
+                            "description": "创建者信息",
+                            "x-apifox-orders": [
+                              "accountId",
+                              "fullname",
+                              "avatar",
+                              "status"
+                            ],
+                            "x-apifox-ignore-properties": []
+                          },
+                          "ownerid": {
+                            "type": "object",
+                            "properties": {
+                              "accountId": {
+                                "type": "string"
+                              },
+                              "fullname": {
+                                "type": "string"
+                              },
+                              "avatar": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "accountId",
+                              "fullname",
+                              "avatar",
+                              "status"
+                            ],
+                            "x-apifox-orders": [
+                              "accountId",
+                              "fullname",
+                              "avatar",
+                              "status"
+                            ],
+                            "description": "拥有者信息",
+                            "x-apifox-ignore-properties": []
+                          },
+                          "utime": {
+                            "type": "string",
+                            "description": "编辑时间"
+                          },
+                          "controlId": {
+                            "type": "string",
+                            "description": "控件信息"
+                          }
+                        },
+                        "required": [
+                          "rowid",
+                          "ctime",
+                          "caid",
+                          "ownerid",
+                          "utime",
+                          "controlId"
+                        ],
+                        "x-apifox-orders": [
+                          "rowid",
+                          "ctime",
+                          "caid",
+                          "ownerid",
+                          "utime",
+                          "controlId"
+                        ],
+                        "x-apifox-ignore-properties": []
+                      }
+                    }
+                  },
+                  "required": [
+                    "rows"
+                  ],
+                  "x-apifox-orders": [
+                    "rows"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              },
+              "required": [
+                "success",
+                "code",
+                "msg",
+                "data"
+              ],
+              "x-apifox-orders": [
+                "success",
+                "code",
+                "msg",
+                "data"
+              ],
+              "x-apifox-ignore-properties": []
+            },
+            "example": {
+              "data": {
+                "rows": [
+                  {
+                    "_id": "66012d5a9c20ba7170852df3",
+                    "rowid": "0bc19fb7-4100-43ad-8f0e-7d2879427677",
+                    "ctime": "2024-03-25 15:52:58",
+                    "caid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "uaid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "user-undefined",
+                      "fullname": "未指定",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/undefined.gif?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "utime": "2024-03-25 15:52:58",
+                    "632444f6182c34e9180b069e": "路由器重置器",
+                    "632444f6182c34e9180b069f": "9.99",
+                    "632444f6182c34e9180b06a1": "产品-30",
+                    "autoid": 15
+                  },
+                  {
+                    "_id": "66012d5a9c20ba7170852df2",
+                    "rowid": "3dd94902-8ee4-498d-bd5b-c030e9d7e9da",
+                    "ctime": "2024-03-25 15:52:58",
+                    "caid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "uaid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "user-undefined",
+                      "fullname": "未指定",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/undefined.gif?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "utime": "2024-03-25 15:52:58",
+                    "632444f6182c34e9180b069e": "移动硬盘",
+                    "632444f6182c34e9180b069f": "129.99",
+                    "632444f6182c34e9180b06a1": "产品-29",
+                    "autoid": 14
+                  },
+                  {
+                    "_id": "66012d5a9c20ba7170852df1",
+                    "rowid": "65fdfb74-12a8-485d-b125-805f3170fc82",
+                    "ctime": "2024-03-25 15:52:58",
+                    "caid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "uaid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "user-undefined",
+                      "fullname": "未指定",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/undefined.gif?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "utime": "2024-03-25 15:52:58",
+                    "632444f6182c34e9180b069e": "键鼠套装",
+                    "632444f6182c34e9180b069f": "59.99",
+                    "632444f6182c34e9180b06a1": "产品-28",
+                    "autoid": 13
+                  },
+                  {
+                    "_id": "66012d5a9c20ba7170852df0",
+                    "rowid": "85a34a10-48cb-4724-922a-bfcaf9290acd",
+                    "ctime": "2024-03-25 15:52:58",
+                    "caid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "uaid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "user-undefined",
+                      "fullname": "未指定",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/undefined.gif?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "utime": "2024-03-25 15:52:58",
+                    "632444f6182c34e9180b069e": "耳麦",
+                    "632444f6182c34e9180b069f": "69.99",
+                    "632444f6182c34e9180b06a1": "产品-27",
+                    "autoid": 12
+                  },
+                  {
+                    "_id": "66012d5a9c20ba7170852def",
+                    "rowid": "6fc9e804-48af-4e56-be5a-c2b35d6635a1",
+                    "ctime": "2024-03-25 15:52:58",
+                    "caid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "uaid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "user-undefined",
+                      "fullname": "未指定",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/undefined.gif?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "utime": "2024-03-25 15:52:58",
+                    "632444f6182c34e9180b069e": "显示器",
+                    "632444f6182c34e9180b069f": "299.99",
+                    "632444f6182c34e9180b06a1": "产品-26",
+                    "autoid": 11
+                  },
+                  {
+                    "_id": "66012d5a9c20ba7170852dee",
+                    "rowid": "f6789557-6759-46a9-a88b-1f98dc9b5863",
+                    "ctime": "2024-03-25 15:52:58",
+                    "caid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "uaid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "user-undefined",
+                      "fullname": "未指定",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/undefined.gif?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "utime": "2024-03-25 15:52:58",
+                    "632444f6182c34e9180b069e": "鼠标",
+                    "632444f6182c34e9180b069f": "19.99",
+                    "632444f6182c34e9180b06a1": "产品-25",
+                    "autoid": 10
+                  },
+                  {
+                    "_id": "66012d5a9c20ba7170852ded",
+                    "rowid": "edab740e-7918-42b8-aadd-929c2e3dc08b",
+                    "ctime": "2024-03-25 15:52:58",
+                    "caid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "uaid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "user-undefined",
+                      "fullname": "未指定",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/undefined.gif?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "utime": "2024-03-25 15:52:58",
+                    "632444f6182c34e9180b069e": "键盘",
+                    "632444f6182c34e9180b069f": "39.99",
+                    "632444f6182c34e9180b06a1": "产品-24",
+                    "autoid": 9
+                  },
+                  {
+                    "_id": "66012d5a9c20ba7170852dec",
+                    "rowid": "74da83e3-96fc-403a-8ba3-3d3442a1633b",
+                    "ctime": "2024-03-25 15:52:58",
+                    "caid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "uaid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "user-undefined",
+                      "fullname": "未指定",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/undefined.gif?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "utime": "2024-03-25 15:52:58",
+                    "632444f6182c34e9180b069e": "路由器",
+                    "632444f6182c34e9180b069f": "99.99",
+                    "632444f6182c34e9180b06a1": "产品-23",
+                    "autoid": 8
+                  },
+                  {
+                    "_id": "66012d5a9c20ba7170852deb",
+                    "rowid": "e6ec418c-5919-4d15-8282-d44228bbf6cb",
+                    "ctime": "2024-03-25 15:52:58",
+                    "caid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "uaid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "user-undefined",
+                      "fullname": "未指定",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/undefined.gif?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "utime": "2024-03-25 15:52:58",
+                    "632444f6182c34e9180b069e": "音箱",
+                    "632444f6182c34e9180b069f": "199.99",
+                    "632444f6182c34e9180b06a1": "产品-22",
+                    "autoid": 7
+                  },
+                  {
+                    "_id": "66012d5a9c20ba7170852dea",
+                    "rowid": "0fcdd777-8189-4181-9905-dd4385982ac3",
+                    "ctime": "2024-03-25 15:52:58",
+                    "caid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "uaid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "user-undefined",
+                      "fullname": "未指定",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/undefined.gif?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "utime": "2024-03-25 15:52:58",
+                    "632444f6182c34e9180b069e": "相机",
+                    "632444f6182c34e9180b069f": "799.99",
+                    "632444f6182c34e9180b06a1": "产品-21",
+                    "autoid": 6
+                  },
+                  {
+                    "_id": "66012d5a9c20ba7170852de9",
+                    "rowid": "15da1889-c566-419a-9878-5fab27c28d7a",
+                    "ctime": "2024-03-25 15:52:58",
+                    "caid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "uaid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "user-undefined",
+                      "fullname": "未指定",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/undefined.gif?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "utime": "2024-03-25 15:52:58",
+                    "632444f6182c34e9180b069e": "电脑",
+                    "632444f6182c34e9180b069f": "1999.99",
+                    "632444f6182c34e9180b06a1": "产品-20",
+                    "autoid": 5
+                  },
+                  {
+                    "_id": "66012d5a9c20ba7170852de8",
+                    "rowid": "290a5c44-e25c-4516-a95a-22b173eee35c",
+                    "ctime": "2024-03-25 15:52:58",
+                    "caid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "uaid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "user-undefined",
+                      "fullname": "未指定",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/undefined.gif?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "utime": "2024-03-25 15:52:58",
+                    "632444f6182c34e9180b069e": "耳机",
+                    "632444f6182c34e9180b069f": "59.99",
+                    "632444f6182c34e9180b06a1": "产品-19",
+                    "autoid": 4
+                  },
+                  {
+                    "_id": "66012d5a9c20ba7170852de7",
+                    "rowid": "f54ea86a-8914-46f2-b5b3-5bd0d7c097cc",
+                    "ctime": "2024-03-25 15:52:58",
+                    "caid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "uaid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "user-undefined",
+                      "fullname": "未指定",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/undefined.gif?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "utime": "2024-03-25 15:52:58",
+                    "632444f6182c34e9180b069e": "电视",
+                    "632444f6182c34e9180b069f": "1999.99",
+                    "632444f6182c34e9180b06a1": "产品-18",
+                    "autoid": 3
+                  },
+                  {
+                    "_id": "66012d5a9c20ba7170852de6",
+                    "rowid": "1294e9fd-3b26-4e02-8394-598ef3a0b49b",
+                    "ctime": "2024-03-25 15:52:58",
+                    "caid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "uaid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "user-undefined",
+                      "fullname": "未指定",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/undefined.gif?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "utime": "2024-03-25 15:52:58",
+                    "632444f6182c34e9180b069e": "平板电脑",
+                    "632444f6182c34e9180b069f": "1299.99",
+                    "632444f6182c34e9180b06a1": "产品-17",
+                    "autoid": 2
+                  },
+                  {
+                    "_id": "66012d5a9c20ba7170852de5",
+                    "rowid": "88d31795-0e4a-4a90-be6f-202c01b23907",
+                    "ctime": "2024-03-25 15:52:58",
+                    "caid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "uaid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "user-undefined",
+                      "fullname": "未指定",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/undefined.gif?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "utime": "2024-03-25 15:52:58",
+                    "632444f6182c34e9180b069e": "手机",
+                    "632444f6182c34e9180b069f": "999.99",
+                    "632444f6182c34e9180b06a1": "产品-16",
+                    "autoid": 1
+                  },
+                  {
+                    "_id": "65fd61b94209df8611d96478",
+                    "rowid": "495ba93b-3a10-4c0f-ba9f-d6d9e6db9335",
+                    "ctime": "2024-03-22 18:47:21",
+                    "caid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "uaid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "user-undefined",
+                      "fullname": "未指定",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/undefined.gif?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "utime": "2024-03-22 18:47:21",
+                    "632444f6182c34e9180b069e": "平板支架",
+                    "632444f6182c34e9180b069f": "19.99",
+                    "632444f6182c34e9180b06a1": "产品-15",
+                    "autoid": 15
+                  },
+                  {
+                    "_id": "65fd61b94209df8611d96477",
+                    "rowid": "0e22ab3d-11d7-4875-b7bc-e210d94a8452",
+                    "ctime": "2024-03-22 18:47:21",
+                    "caid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "uaid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "user-undefined",
+                      "fullname": "未指定",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/undefined.gif?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "utime": "2024-03-22 18:47:21",
+                    "632444f6182c34e9180b069e": "无线耳机",
+                    "632444f6182c34e9180b069f": "89.99",
+                    "632444f6182c34e9180b06a1": "产品-14",
+                    "autoid": 14
+                  },
+                  {
+                    "_id": "65fd61b94209df8611d96476",
+                    "rowid": "e8b0d576-8de6-4bb1-be2e-3291a17827f4",
+                    "ctime": "2024-03-22 18:47:21",
+                    "caid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "uaid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "user-undefined",
+                      "fullname": "未指定",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/undefined.gif?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "utime": "2024-03-22 18:47:21",
+                    "632444f6182c34e9180b069e": "智能手表",
+                    "632444f6182c34e9180b069f": "199.99",
+                    "632444f6182c34e9180b06a1": "产品-13",
+                    "autoid": 13
+                  },
+                  {
+                    "_id": "65fd61b94209df8611d96475",
+                    "rowid": "3dd11d5e-42a2-4a4b-8cdf-9839eae27e4b",
+                    "ctime": "2024-03-22 18:47:21",
+                    "caid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "uaid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "user-undefined",
+                      "fullname": "未指定",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/undefined.gif?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "utime": "2024-03-22 18:47:21",
+                    "632444f6182c34e9180b069e": "影音耳机",
+                    "632444f6182c34e9180b069f": "69.99",
+                    "632444f6182c34e9180b06a1": "产品-12",
+                    "autoid": 12
+                  },
+                  {
+                    "_id": "65fd61b94209df8611d96474",
+                    "rowid": "c799691f-bde8-4c0f-80bc-72ed40520828",
+                    "ctime": "2024-03-22 18:47:21",
+                    "caid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "uaid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "user-undefined",
+                      "fullname": "未指定",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/undefined.gif?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "utime": "2024-03-22 18:47:21",
+                    "632444f6182c34e9180b069e": "充电宝",
+                    "632444f6182c34e9180b069f": "39.99",
+                    "632444f6182c34e9180b06a1": "产品-11",
+                    "autoid": 11
+                  },
+                  {
+                    "_id": "65fd61b94209df8611d96473",
+                    "rowid": "e7d61fd6-43df-4b3b-99e1-5e5b1e3fb858",
+                    "ctime": "2024-03-22 18:47:21",
+                    "caid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "uaid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "user-undefined",
+                      "fullname": "未指定",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/undefined.gif?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "utime": "2024-03-22 18:47:21",
+                    "632444f6182c34e9180b069e": "显示器",
+                    "632444f6182c34e9180b069f": "399.99",
+                    "632444f6182c34e9180b06a1": "产品-10",
+                    "autoid": 10
+                  },
+                  {
+                    "_id": "65fd61b94209df8611d96472",
+                    "rowid": "e2127642-e48a-411c-8863-23b61983d37a",
+                    "ctime": "2024-03-22 18:47:21",
+                    "caid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "uaid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "user-undefined",
+                      "fullname": "未指定",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/undefined.gif?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "utime": "2024-03-22 18:47:21",
+                    "632444f6182c34e9180b069e": "耳麦",
+                    "632444f6182c34e9180b069f": "59.99",
+                    "632444f6182c34e9180b06a1": "产品-9",
+                    "autoid": 9
+                  },
+                  {
+                    "_id": "65fd61b94209df8611d96471",
+                    "rowid": "be528ee9-88eb-42d4-949f-d0b258cfad35",
+                    "ctime": "2024-03-22 18:47:21",
+                    "caid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "uaid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "user-undefined",
+                      "fullname": "未指定",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/undefined.gif?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "utime": "2024-03-22 18:47:21",
+                    "632444f6182c34e9180b069e": "鼠标",
+                    "632444f6182c34e9180b069f": "29.99",
+                    "632444f6182c34e9180b06a1": "产品-8",
+                    "autoid": 8
+                  },
+                  {
+                    "_id": "65fd61b94209df8611d96470",
+                    "rowid": "99e42997-15c3-43ab-a43f-b5b34a16bc1a",
+                    "ctime": "2024-03-22 18:47:21",
+                    "caid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "uaid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "user-undefined",
+                      "fullname": "未指定",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/undefined.gif?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "utime": "2024-03-22 18:47:21",
+                    "632444f6182c34e9180b069e": "键盘",
+                    "632444f6182c34e9180b069f": "49.99",
+                    "632444f6182c34e9180b06a1": "产品-7",
+                    "autoid": 7
+                  },
+                  {
+                    "_id": "65fd61b94209df8611d9646f",
+                    "rowid": "5fdcba26-e7dc-4a9b-ac8c-b88b0b509190",
+                    "ctime": "2024-03-22 18:47:21",
+                    "caid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "uaid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "user-undefined",
+                      "fullname": "未指定",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/undefined.gif?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "utime": "2024-03-22 18:47:21",
+                    "632444f6182c34e9180b069e": "路由器",
+                    "632444f6182c34e9180b069f": "79.99",
+                    "632444f6182c34e9180b06a1": "产品-6",
+                    "autoid": 6
+                  },
+                  {
+                    "_id": "65fd61b94209df8611d9646e",
+                    "rowid": "090b0e53-3b1d-4a9d-90ec-fa432d32abea",
+                    "ctime": "2024-03-22 18:47:21",
+                    "caid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "uaid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "user-undefined",
+                      "fullname": "未指定",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/undefined.gif?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "utime": "2024-03-22 18:47:21",
+                    "632444f6182c34e9180b069e": "相机",
+                    "632444f6182c34e9180b069f": "1499.99",
+                    "632444f6182c34e9180b06a1": "产品-5",
+                    "autoid": 5
+                  },
+                  {
+                    "_id": "65fd61b94209df8611d9646d",
+                    "rowid": "30d29d37-950e-4e70-b4ca-a65eb21ee777",
+                    "ctime": "2024-03-22 18:47:21",
+                    "caid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "uaid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "user-undefined",
+                      "fullname": "未指定",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/undefined.gif?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "utime": "2024-03-22 18:47:21",
+                    "632444f6182c34e9180b069e": "平板电脑",
+                    "632444f6182c34e9180b069f": "2999.99",
+                    "632444f6182c34e9180b06a1": "产品-4",
+                    "autoid": 4
+                  },
+                  {
+                    "_id": "65fd61b94209df8611d9646c",
+                    "rowid": "f625d926-8474-4bb0-9c1f-5662de0aecc9",
+                    "ctime": "2024-03-22 18:47:21",
+                    "caid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "uaid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "user-undefined",
+                      "fullname": "未指定",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/undefined.gif?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "utime": "2024-03-22 18:47:21",
+                    "632444f6182c34e9180b069e": "耳机",
+                    "632444f6182c34e9180b069f": "99.99",
+                    "632444f6182c34e9180b06a1": "产品-3",
+                    "autoid": 3
+                  },
+                  {
+                    "_id": "65fd61b94209df8611d9646b",
+                    "rowid": "1dac6252-5637-46fe-bb75-f45b0f118f5e",
+                    "ctime": "2024-03-22 18:47:21",
+                    "caid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "uaid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "user-undefined",
+                      "fullname": "未指定",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/undefined.gif?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "utime": "2024-03-22 18:47:21",
+                    "632444f6182c34e9180b069e": "电视",
+                    "632444f6182c34e9180b069f": "1999.99",
+                    "632444f6182c34e9180b06a1": "产品-2",
+                    "autoid": 2
+                  },
+                  {
+                    "_id": "65fd61b94209df8611d9646a",
+                    "rowid": "3e8f1d75-31ac-42c4-8d99-e13f40a384e6",
+                    "ctime": "2024-03-22 18:47:21",
+                    "caid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "uaid": {
+                      "accountId": "user-api",
+                      "fullname": "API",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "user-undefined",
+                      "fullname": "未指定",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/undefined.gif?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "utime": "2024-03-22 18:47:21",
+                    "632444f6182c34e9180b069e": "手机",
+                    "632444f6182c34e9180b069f": "999.99",
+                    "632444f6182c34e9180b06a1": "产品-1",
+                    "autoid": 1
+                  },
+                  {
+                    "_id": "65dda1a5a608a40050774d0c",
+                    "rowid": "2d4316d3-4871-4958-a8c4-d6b027395f1c",
+                    "caid": {
+                      "accountId": "e2453de8-1a6a-4d4f-ba36-87fdff880a20",
+                      "fullname": "卜佳菲",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/fe9c4374-68f1-4f64-88ea-47050dff28bd.jpg?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "e2453de8-1a6a-4d4f-ba36-87fdff880a20",
+                      "fullname": "卜佳菲",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/fe9c4374-68f1-4f64-88ea-47050dff28bd.jpg?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "632444f6182c34e9180b069e": "电视",
+                    "632444f6182c34e9180b069f": "7000.00",
+                    "632444f6182c34e9180b06a1": "产品-4",
+                    "autoid": 4,
+                    "ctime": "2024-02-27 16:47:33",
+                    "utime": "2024-02-27 16:47:33",
+                    "uaid": ""
+                  },
+                  {
+                    "_id": "65dda1a5a608a40050774d0b",
+                    "rowid": "dcfb7316-971c-4828-ba8d-ac6e294b9281",
+                    "caid": {
+                      "accountId": "e2453de8-1a6a-4d4f-ba36-87fdff880a20",
+                      "fullname": "卜佳菲",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/fe9c4374-68f1-4f64-88ea-47050dff28bd.jpg?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "e2453de8-1a6a-4d4f-ba36-87fdff880a20",
+                      "fullname": "卜佳菲",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/fe9c4374-68f1-4f64-88ea-47050dff28bd.jpg?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "632444f6182c34e9180b069e": "游戏机",
+                    "632444f6182c34e9180b069f": "2500.00",
+                    "632444f6182c34e9180b06a1": "产品-3",
+                    "autoid": 3,
+                    "ctime": "2024-02-27 16:47:33",
+                    "utime": "2024-02-27 16:47:33",
+                    "uaid": ""
+                  },
+                  {
+                    "_id": "65dda1a5a608a40050774d0a",
+                    "rowid": "66d4f50e-5670-4214-a428-c8f1f1fb80e0",
+                    "caid": {
+                      "accountId": "e2453de8-1a6a-4d4f-ba36-87fdff880a20",
+                      "fullname": "卜佳菲",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/fe9c4374-68f1-4f64-88ea-47050dff28bd.jpg?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "e2453de8-1a6a-4d4f-ba36-87fdff880a20",
+                      "fullname": "卜佳菲",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/fe9c4374-68f1-4f64-88ea-47050dff28bd.jpg?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "632444f6182c34e9180b069e": "电脑",
+                    "632444f6182c34e9180b069f": "8000.00",
+                    "632444f6182c34e9180b06a1": "产品-2",
+                    "autoid": 2,
+                    "ctime": "2024-02-27 16:47:33",
+                    "utime": "2024-02-27 16:47:33",
+                    "uaid": ""
+                  },
+                  {
+                    "_id": "65dda1a5a608a40050774d09",
+                    "rowid": "3f35d6d6-88c6-4e3a-b38a-8b8e8e7a605b",
+                    "caid": {
+                      "accountId": "e2453de8-1a6a-4d4f-ba36-87fdff880a20",
+                      "fullname": "卜佳菲",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/fe9c4374-68f1-4f64-88ea-47050dff28bd.jpg?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "ownerid": {
+                      "accountId": "e2453de8-1a6a-4d4f-ba36-87fdff880a20",
+                      "fullname": "卜佳菲",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/fe9c4374-68f1-4f64-88ea-47050dff28bd.jpg?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "632444f6182c34e9180b069e": "手机",
+                    "632444f6182c34e9180b069f": "5000.00",
+                    "632444f6182c34e9180b06a1": "产品-1",
+                    "autoid": 1,
+                    "ctime": "2024-02-27 16:47:33",
+                    "utime": "2024-02-27 16:47:33",
+                    "uaid": ""
+                  }
+                ],
+                "total": 34
+              },
+              "success": true,
+              "error_code": 1
+            }
+          }
+        },
+        "headers": {},
+        "x-apifox-name": "成功"
+      },
+      "401": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "title": "请求结果"
+                },
+                "code": {
+                  "type": "integer",
+                  "title": "代码"
+                },
+                "msg": {
+                  "type": "string",
+                  "title": "消息"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "title": "返回数据",
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
+                }
+              },
+              "required": [
+                "success",
+                "code",
+                "msg",
+                "data"
+              ],
+              "x-apifox-orders": [
+                "success",
+                "code",
+                "msg",
+                "data"
+              ],
+              "x-apifox-ignore-properties": []
+            }
+          }
+        },
+        "headers": {},
+        "x-apifox-name": "没有权限"
+      },
+      "404": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "title": "请求结果"
+                },
+                "code": {
+                  "type": "integer",
+                  "title": "代码"
+                },
+                "msg": {
+                  "type": "string",
+                  "title": "消息"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "title": "返回数据",
+                  "x-apifox-orders": [],
+                  "x-apifox-ignore-properties": []
+                }
+              },
+              "required": [
+                "success",
+                "code",
+                "msg",
+                "data"
+              ],
+              "title": "",
+              "x-apifox-orders": [
+                "success",
+                "code",
+                "msg",
+                "data"
+              ],
+              "x-apifox-ignore-properties": []
+            },
+            "examples": {
+              "2": {
+                "summary": "异常示例",
+                "value": {
+                  "success": false,
+                  "code": 1001,
+                  "msg": "应用不存在",
+                  "data": {}
+                }
+              },
+              "3": {
+                "summary": "异常示例",
+                "value": {
+                  "success": false,
+                  "code": 1001,
+                  "msg": "应用不存在",
+                  "data": {}
+                }
+              }
+            }
+          }
+        },
+        "headers": {},
+        "x-apifox-name": "记录不存在"
+      }
+    },
+    "security": [],
+    "x-apifox-folder": "工作表",
+    "x-apifox-status": "released",
+    "x-apifox-maintainer": "hap",
+    "x-run-in-apifox": "https://app.apifox.com/web/project/6133169/apis/api-278479065-run"
+  }
+}

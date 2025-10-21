@@ -1,0 +1,412 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "角色名称"
+    },
+    "description": {
+      "type": "string",
+      "description": "角色描述"
+    },
+    "permissionWay": {
+      "type": "string",
+      "description": "分发所有应用项, 80：可查看、编辑、删除所有记录; 60：可查看所有记录，但只能编辑、删除自己拥有的记录; 30：可查看加入的，只能编辑、删除自己拥有的记录; 20：对所有记录只有查看权限; 0：分发有权限应用项"
+    },
+    "hideAppForMembers": {
+      "type": "string",
+      "description": "是否对成员隐藏应用,true：隐藏，false：不隐藏"
+    },
+    "generalAdd": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "description": "添加权限"
+    },
+    "gneralShare": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "description": "分享权限"
+    },
+    "generalImport": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "description": "导入权限"
+    },
+    "generalExport": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "description": "导出权限"
+    },
+    "generalDiscussion": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "description": "讨论权限"
+    },
+    "generalSystemPrinting": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "description": "系统打印"
+    },
+    "generalAttachmentDownload": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "description": "附件下载"
+    },
+    "generalLogging": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "description": "日志"
+    },
+    "worksheetAddRecord": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "description": "工作表添加记录",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "description": "工作表添加记录"
+    },
+    "worksheetShareView": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "description": "工作表分享",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "description": "工作表分享"
+    },
+    "worksheetImport": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "description": "工作表导入",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "description": "工作表导入"
+    },
+    "worksheetExport": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "description": "工作表导出",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "description": "工作表导出"
+    },
+    "worksheetDiscuss": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "description": "工作表讨论",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "description": "工作表讨论"
+    },
+    "worksheetLogging": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "description": "工作表日志",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "description": "工作表日志"
+    },
+    "worksheetBatchOperation": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "description": "工作表批量操作",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "description": "工作表批量操作"
+    },
+    "recordShare": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "description": "记录分享",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "description": "记录分享"
+    },
+    "recordDiscussion": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "description": "记录讨论",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "description": "记录讨论"
+    },
+    "recordSystemPrinting": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "description": "系统打印",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "description": "系统打印"
+    },
+    "recordAttachmentDownload": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "description": "附件下载",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "description": "附件下载"
+    },
+    "recordLogging": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "description": "日志",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "description": "日志"
+    },
+    "payment": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "description": "支付",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enable"
+      ],
+      "description": "支付"
+    },
+    "extendAttrs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "扩展属性"
+    },
+    "optionalControls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "可选控件"
+    },
+    "sheets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "sheetId": {
+            "type": "string",
+            "description": "工作表Id"
+          },
+          "canAdd": {
+            "type": "string",
+            "description": "是否可添加"
+          },
+          "readLevelId": {
+            "type": "string",
+            "description": "查看权限级别 0：未授权 20：仅我拥有的 30：我的及下属的 100：全部的"
+          },
+          "editLevelId": {
+            "type": "string",
+            "description": "编辑权限级别 0：未授权 20：仅我拥有的 30：我的及下属的 100：全部的"
+          },
+          "removeLevel": {
+            "type": "string",
+            "description": "删除权限级别 0：未授权 20：仅我拥有的 30：我的及下属的 100：全部的"
+          },
+          "removeLevelId": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "viewId": {
+                  "type": "string",
+                  "title": "视图 ID",
+                  "description": ""
+                },
+                "viewName": {
+                  "type": "string"
+                },
+                "canRead": {
+                  "type": "string"
+                },
+                "canEdit": {
+                  "type": "string"
+                },
+                "canRemove": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "viewId",
+                "viewName",
+                "canRead",
+                "canEdit",
+                "canRemove",
+                "type"
+              ]
+            },
+            "description": "删除权限级别 0：未授权 20：仅我拥有的 30：我的及下属的 100：全部的"
+          },
+          "navigateHide": {
+            "type": "string",
+            "description": "是否导航隐藏"
+          }
+        },
+        "required": [
+          "sheetId",
+          "canAdd",
+          "readLevelId",
+          "editLevelId",
+          "removeLevelId",
+          "navigateHide",
+          "removeLevel"
+        ]
+      }
+    },
+    "pages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "pageId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "checked": {
+            "type": "boolean"
+          },
+          "navigateHide": {
+            "type": "boolean"
+          },
+          "sortIndex": {
+            "type": "integer"
+          },
+          "iconUrl": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "自定义页面Id集"
+    }
+  },
+  "required": [
+    "name",
+    "description",
+    "permissionWay",
+    "pages",
+    "hideAppForMembers"
+  ]
+}

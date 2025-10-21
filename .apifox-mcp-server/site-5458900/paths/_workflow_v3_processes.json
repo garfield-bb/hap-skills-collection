@@ -1,0 +1,124 @@
+{
+  "get": {
+    "summary": "获取流程列表",
+    "deprecated": false,
+    "description": "获取应用下工作流列表",
+    "tags": [],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appid",
+        "in": "header",
+        "description": "当使用Authorization鉴权时，必传",
+        "required": false,
+        "example": "{{appId}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "Authorization",
+        "in": "header",
+        "description": "个人授权 id",
+        "required": false,
+        "example": "{{Authorization}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "processes": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/%E6%B5%81%E7%A8%8B%E5%88%97%E8%A1%A8"
+                      }
+                    }
+                  },
+                  "required": [
+                    "processes"
+                  ]
+                },
+                "success": {
+                  "type": "boolean"
+                },
+                "errorCode": {
+                  "type": "string"
+                },
+                "errorMsg": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "data",
+                "success"
+              ]
+            },
+            "example": {
+              "data": {
+                "processes": [
+                  {
+                    "id": "681b8934ec9191462c08417a",
+                    "name": "新增线索",
+                    "alias": "",
+                    "type": 10,
+                    "description": "新增线索流程",
+                    "status": 0,
+                    "createdAt": "2025-02-17 17:53:44",
+                    "updatedAt": "2025-06-17 17:53:44",
+                    "owner": {
+                      "id": "e2453de8-1a6a-4d4f-ba36-87fdff880a20",
+                      "name": "卜佳菲",
+                      "avatar": "https://p1.mingdaoyun.cn/UserAvatar/fe9c4374-68f1-4f64-88ea-47050dff28bd.jpg?imageView2/1/w/100/h/100/q/90",
+                      "status": 1
+                    }
+                  }
+                ]
+              },
+              "success": true
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

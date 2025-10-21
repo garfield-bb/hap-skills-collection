@@ -1,0 +1,240 @@
+{
+  "get": {
+    "summary": "获取角色详情",
+    "deprecated": false,
+    "description": "",
+    "tags": [],
+    "parameters": [
+      {
+        "name": "appKey",
+        "in": "query",
+        "description": "AppKey",
+        "required": false,
+        "example": "401ea5361c510771",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "sign",
+        "in": "query",
+        "description": "签名",
+        "required": false,
+        "example": "NWE3NTFmYWQzNjJhYTBkMzk4YTQ5YjI2MDVlNDI4MDNkYTgxYzI4MTVlODJhNTI1YTdiNTEyMDRkMTExNDJlOA==",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "roleId",
+        "in": "query",
+        "description": "角色 id",
+        "required": false,
+        "example": "3843c546-fc47-4d29-b0cc-2463f013f115",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "roleId": {
+                      "type": "string",
+                      "description": "角色Id"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "角色名称"
+                    },
+                    "roleType": {
+                      "type": "string",
+                      "description": "角色类型"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "角色描述"
+                    },
+                    "hideAppForMembers": {
+                      "type": "string",
+                      "description": "是否对成员隐藏应用,true：隐藏，false：不隐藏"
+                    },
+                    "permissionWay": {
+                      "type": "string",
+                      "description": "\"分发所有应用项, 80：可查看、编辑、删除所有记录; 60：可查看所有记录，但只能编辑、删除自己拥有的记录; 30：可查看加入的，只能编辑、删除自己拥有的记录; 20：对所有记录只有查看权限; 0：分发有权限应用项\""
+                    },
+                    "sheets": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "sheetId": {
+                            "type": "string",
+                            "description": "工作表ID"
+                          },
+                          "sheetName": {
+                            "type": "string",
+                            "description": "工作表名称"
+                          },
+                          "canAdd": {
+                            "type": "string",
+                            "description": "是否可以添加记录"
+                          },
+                          "readLevel": {
+                            "type": "string",
+                            "description": "读取权限级别"
+                          },
+                          "editLevel": {
+                            "type": "string",
+                            "description": "编辑权限级别"
+                          },
+                          "removeLevel": {
+                            "type": "string",
+                            "description": "删除权限级别"
+                          }
+                        }
+                      }
+                    },
+                    "extendAttrs": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "扩展属性"
+                    },
+                    "optionalControls": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "可选控件"
+                    },
+                    "pages": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "自定义页面权限"
+                    },
+                    "generalAdd": {
+                      "type": "string",
+                      "description": "添加权限"
+                    },
+                    "gneralShare": {
+                      "type": "string",
+                      "description": "分享权限"
+                    },
+                    "generalImport": {
+                      "type": "string",
+                      "description": "导入权限"
+                    },
+                    "generalExport": {
+                      "type": "string",
+                      "description": "导出权限"
+                    },
+                    "generalDiscussion": {
+                      "type": "string",
+                      "description": "讨论权限"
+                    },
+                    "generalSystemPrinting": {
+                      "type": "string",
+                      "description": "系统打印权限"
+                    },
+                    "generalAttachmentDownload": {
+                      "type": "string",
+                      "description": "附件下载权限"
+                    },
+                    "generalLogging": {
+                      "type": "string",
+                      "description": "日志权限"
+                    }
+                  },
+                  "required": [
+                    "roleId",
+                    "name",
+                    "roleType",
+                    "description",
+                    "hideAppForMembers",
+                    "permissionWay",
+                    "sheets",
+                    "extendAttrs",
+                    "optionalControls",
+                    "pages",
+                    "generalAdd",
+                    "gneralShare",
+                    "generalImport",
+                    "generalExport",
+                    "generalDiscussion",
+                    "generalSystemPrinting",
+                    "generalAttachmentDownload",
+                    "generalLogging"
+                  ]
+                },
+                "success": {
+                  "type": "boolean"
+                },
+                "error_code": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "data",
+                "success",
+                "error_code"
+              ]
+            },
+            "example": {
+              "data": {
+                "roleId": "角色Id",
+                "name": "角色名称",
+                "roleType": "角色类型",
+                "description": "角色描述",
+                "hideAppForMembers": "是否对成员隐藏应用,true：隐藏，false：不隐藏",
+                "permissionWay": "分发所有应用项, 80：可查看、编辑、删除所有记录; 60：可查看所有记录，但只能编辑、删除自己拥有的记录; 30：可查看加入的，只能编辑、删除自己拥有的记录; 20：对所有记录只有查看权限; 0：分发有权限应用项",
+                "sheets": [
+                  {
+                    "sheetId": "工作表ID",
+                    "sheetName": "工作表名称",
+                    "canAdd": "是否可以添加记录",
+                    "readLevel": "读取权限级别",
+                    "editLevel": "编辑权限级别",
+                    "removeLevel": "删除权限级别"
+                  }
+                ],
+                "extendAttrs": [
+                  "扩展属性"
+                ],
+                "optionalControls": [
+                  "可选控件"
+                ],
+                "pages": [
+                  "自定义页面权限"
+                ],
+                "generalAdd": "添加权限",
+                "gneralShare": "分享权限",
+                "generalImport": "导入权限",
+                "generalExport": "导出权限",
+                "generalDiscussion": "讨论权限",
+                "generalSystemPrinting": "系统打印权限",
+                "generalAttachmentDownload": "附件下载权限",
+                "generalLogging": "日志权限"
+              },
+              "success": true,
+              "error_code": 1
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

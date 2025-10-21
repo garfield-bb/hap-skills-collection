@@ -1,0 +1,67 @@
+{
+  "type": "object",
+  "properties": {
+    "accountId": {
+      "type": "string",
+      "description": "用户 id"
+    },
+    "fullname": {
+      "type": "string",
+      "description": " 名称"
+    },
+    "mobile": {
+      "type": "string",
+      "description": "手机号，脱敏规则：保留前3位 + 最后4位，中间用 * 替代"
+    },
+    "email": {
+      "type": "string",
+      "description": "     邮箱，脱敏规则：\n      前缀长度 > 4：去掉前缀最后 4 位，余下部分 + **** + @域名。例：abcdefg@example.com → abc****@example.com\n      前缀长度 2～4：保留首字母 + *** + @域名。例：ab@example.com → a***@example.com"
+    },
+    "departments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "部门id"
+          },
+          "name": {
+            "type": "string",
+            "description": "部门名称\n"
+          },
+          "path": {
+            "type": "string",
+            "description": "部门路径\n\"最高级部门名称/.../父部门名称\""
+          },
+          "pathNodes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "部门id"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "部门名称"
+                }
+              },
+              "required": [
+                "id",
+                "name"
+              ]
+            },
+            "description": "部门路径列表"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "path"
+        ]
+      }
+    }
+  }
+}

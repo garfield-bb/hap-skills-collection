@@ -1,0 +1,63 @@
+{
+  "get": {
+    "summary": "获取角色详情",
+    "deprecated": false,
+    "description": "",
+    "tags": [
+      "角色"
+    ],
+    "parameters": [
+      {
+        "name": "appKey",
+        "in": "query",
+        "description": "AppKey",
+        "required": false,
+        "example": "401ea5361c510771",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "sign",
+        "in": "query",
+        "description": "签名",
+        "required": false,
+        "example": "NWE3NTFmYWQzNjJhYTBkMzk4YTQ5YjI2MDVlNDI4MDNkYTgxYzI4MTVlODJhNTI1YTdiNTEyMDRkMTExNDJlOA==",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "roleId",
+        "in": "query",
+        "description": "角色 id",
+        "required": false,
+        "example": "3843c546-fc47-4d29-b0cc-2463f013f115",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {},
+              "x-apifox-ignore-properties": [],
+              "x-apifox-orders": []
+            }
+          }
+        },
+        "headers": {},
+        "x-apifox-name": "成功"
+      }
+    },
+    "security": [],
+    "x-apifox-folder": "角色",
+    "x-apifox-status": "released",
+    "x-run-in-apifox": "https://app.apifox.com/web/project/6133169/apis/api-279069265-run"
+  }
+}

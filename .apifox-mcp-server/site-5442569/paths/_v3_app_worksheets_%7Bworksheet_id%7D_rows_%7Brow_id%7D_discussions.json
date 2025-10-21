@@ -1,0 +1,170 @@
+{
+  "get": {
+    "summary": "获取行记录讨论",
+    "deprecated": false,
+    "description": "获取行记录讨论",
+    "tags": [
+      "工作表行记录"
+    ],
+    "parameters": [
+      {
+        "name": "worksheet_id",
+        "in": "path",
+        "description": "工作表 ID",
+        "required": true,
+        "example": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "row_id",
+        "in": "path",
+        "description": " 行记录 ID",
+        "required": true,
+        "example": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "pageIndex",
+        "in": "query",
+        "description": "",
+        "required": false,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      {
+        "name": "pageSize",
+        "in": "query",
+        "description": "",
+        "required": false,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      {
+        "name": "search",
+        "in": "query",
+        "description": "",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "onlyWithAttachments",
+        "in": "query",
+        "description": "是否只返回包含附件的讨论",
+        "required": false,
+        "schema": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "discussions": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/obj_record_discussion"
+                      }
+                    }
+                  },
+                  "required": [
+                    "discussions"
+                  ]
+                },
+                "success": {
+                  "type": "boolean",
+                  "description": "是否调用成功"
+                },
+                "error_code": {
+                  "type": "integer",
+                  "description": "错误代码"
+                },
+                "error_msg": {
+                  "type": "string",
+                  "description": "错误消息"
+                }
+              },
+              "required": [
+                "data",
+                "success"
+              ]
+            },
+            "example": {
+              "data": {
+                "discussions": [
+                  {
+                    "id": "187f3fd4-411d-42fe-8bd0-2af79d35807b",
+                    "message": "？",
+                    "_createdAt": "2025-07-15 22:28:21",
+                    "_createdBy": {
+                      "id": "e2453de8-1a6a-4d4f-ba36-87fdff880a20",
+                      "name": "卜佳菲",
+                      "avatar": "https://dn-mdpic.mingdao.com/UserAvatar/fUdk9QeS4D2QcJ3edmfrdP6ydYadd4fy8ZdDaJbNdr8Sdq151MbW7oeZ8ld7194Z.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "replyToAuthor": {
+                      "id": "e2453de8-1a6a-4d4f-ba36-87fdff880a20",
+                      "name": "卜佳菲",
+                      "avatar": "https://dn-mdpic.mingdao.com/UserAvatar/fUdk9QeS4D2QcJ3edmfrdP6ydYadd4fy8ZdDaJbNdr8Sdq151MbW7oeZ8ld7194Z.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "replyToId": [],
+                    "attachments": [
+                      {
+                        "originalFilename": "文件名称",
+                        "ext": "文件类型",
+                        "filesize": "文件大小",
+                        "downloadUrl": "下载地址"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "success": true
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

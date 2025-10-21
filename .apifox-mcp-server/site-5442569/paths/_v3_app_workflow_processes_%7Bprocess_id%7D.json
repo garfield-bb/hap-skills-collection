@@ -1,0 +1,122 @@
+{
+  "get": {
+    "summary": "获取流程详情",
+    "deprecated": false,
+    "description": "获取流程详情，包含流程请求参数，响应参数",
+    "tags": [
+      "工作流"
+    ],
+    "parameters": [
+      {
+        "name": "process_id",
+        "in": "path",
+        "description": "",
+        "required": true,
+        "example": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "$ref": "#/components/schemas/obj_process_detail"
+                },
+                "success": {
+                  "type": "boolean",
+                  "description": "是否调用成功"
+                },
+                "error_code": {
+                  "type": "integer",
+                  "description": "错误代码"
+                },
+                "error_msg": {
+                  "type": "string",
+                  "description": "错误消息"
+                }
+              },
+              "required": [
+                "data",
+                "success"
+              ]
+            },
+            "example": {
+              "data": {
+                "id": "681b8934ec9191462c08417a",
+                "name": "新增线索",
+                "description": "新增线索的描述",
+                "inputParameters": [
+                  {
+                    "id": "681b8190ec9191462c08283b",
+                    "name": "名称",
+                    "alias": "",
+                    "description": "",
+                    "type": 2,
+                    "required": false
+                  },
+                  {
+                    "id": "681b8190ec9191462c08111",
+                    "name": "渠道",
+                    "description": "",
+                    "alias": "",
+                    "type": 9,
+                    "options": [
+                      {
+                        "key": "1",
+                        "value": "a"
+                      },
+                      {
+                        "key": "2",
+                        "value": "b"
+                      }
+                    ],
+                    "required": false
+                  }
+                ],
+                "outputParameters": [
+                  {
+                    "id": "681b8190ec9191462c082222",
+                    "name": "id",
+                    "alias": "",
+                    "description": "",
+                    "type": 2
+                  }
+                ]
+              },
+              "success": true
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

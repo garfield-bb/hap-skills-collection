@@ -1,0 +1,81 @@
+{
+  "post": {
+    "summary": "删除角色",
+    "deprecated": false,
+    "description": "",
+    "tags": [
+      "角色"
+    ],
+    "parameters": [],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "appKey": {
+                "type": "string",
+                "title": "AppKey",
+                "description": ""
+              },
+              "sign": {
+                "type": "string",
+                "title": "签名",
+                "description": ""
+              },
+              "roleId": {
+                "type": "string",
+                "title": "角色 id",
+                "description": ""
+              },
+              "operatorId": {
+                "type": "string",
+                "title": "操作者 id"
+              }
+            },
+            "required": [
+              "appKey",
+              "sign",
+              "roleId",
+              "operatorId"
+            ],
+            "x-apifox-orders": [
+              "appKey",
+              "sign",
+              "roleId",
+              "operatorId"
+            ],
+            "x-apifox-ignore-properties": []
+          },
+          "example": {
+            "appKey": "422e5a5d0e570105",
+            "sign": "MzkzMDY3Mzk1NjM0YjkyNjE1YzI2N2ZhNDEzZGE3ZTQwMzQ3ZWJkNzI1ZDc2NjcxYTdkY2ViMzVhZGJlNTI0Yg==",
+            "roleId": "4602ddf3-390a-4d0e-82ad-e928f72e8ae4",
+            "operatorId": "e2453de8-1a6a-4d4f-ba36-87fdff880a20"
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {},
+              "x-apifox-ignore-properties": [],
+              "x-apifox-orders": []
+            }
+          }
+        },
+        "headers": {},
+        "x-apifox-name": "成功"
+      }
+    },
+    "security": [],
+    "x-apifox-folder": "角色",
+    "x-apifox-status": "released",
+    "x-run-in-apifox": "https://app.apifox.com/web/project/6133169/apis/api-278479086-run"
+  }
+}

@@ -1,0 +1,193 @@
+{
+  "get": {
+    "summary": "获取行记录讨论",
+    "deprecated": false,
+    "description": "获取行记录日志",
+    "tags": [],
+    "parameters": [
+      {
+        "name": "worksheet_id",
+        "in": "path",
+        "description": "",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "row_id",
+        "in": "path",
+        "description": "",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "pageIndex",
+        "in": "query",
+        "description": "",
+        "required": false,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      {
+        "name": "pageSize",
+        "in": "query",
+        "description": "",
+        "required": false,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      {
+        "name": "search",
+        "in": "query",
+        "description": "",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "onlyWithAttachments",
+        "in": "query",
+        "description": "是否只返回包含附件的讨论",
+        "required": false,
+        "schema": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      {
+        "name": "url",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appid",
+        "in": "header",
+        "description": "当使用Authorization鉴权时，必传",
+        "required": false,
+        "example": "{{appId}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "Authorization",
+        "in": "header",
+        "description": "个人授权 id",
+        "required": false,
+        "example": "{{Authorization}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "discussions": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/discuss"
+                      }
+                    }
+                  },
+                  "required": [
+                    "discussions"
+                  ]
+                },
+                "success": {
+                  "type": "boolean"
+                },
+                "errorCode": {
+                  "type": "string"
+                },
+                "errorMsg": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "data",
+                "success"
+              ]
+            },
+            "example": {
+              "data": {
+                "discussions": [
+                  {
+                    "id": "187f3fd4-411d-42fe-8bd0-2af79d35807b",
+                    "message": "？",
+                    "createdAt": "2025-07-15 22:28:21",
+                    "createdBy": {
+                      "id": "e2453de8-1a6a-4d4f-ba36-87fdff880a20",
+                      "name": "卜佳菲",
+                      "avatar": "https://dn-mdpic.mingdao.com/UserAvatar/fUdk9QeS4D2QcJ3edmfrdP6ydYadd4fy8ZdDaJbNdr8Sdq151MbW7oeZ8ld7194Z.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "replyToAuthor": {
+                      "id": "e2453de8-1a6a-4d4f-ba36-87fdff880a20",
+                      "name": "卜佳菲",
+                      "avatar": "https://dn-mdpic.mingdao.com/UserAvatar/fUdk9QeS4D2QcJ3edmfrdP6ydYadd4fy8ZdDaJbNdr8Sdq151MbW7oeZ8ld7194Z.png?imageView2/1/w/48/h/48/q/90",
+                      "isPortal": false,
+                      "status": 1
+                    },
+                    "replyId": "fbf1ff76-5a4a-49b5-b51f-e879d058142d",
+                    "projectId": "fe288386-3d26-4eab-b5d2-51eeab82a7f9",
+                    "replyToId": [],
+                    "attachments": [
+                      {
+                        "originalFilename": "文件名称",
+                        "ext": "文件类型",
+                        "filesize": "文件大小",
+                        "downloadUrl": "下载地址"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "success": true
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

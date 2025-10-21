@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "properties": {
+    "field": {
+      "type": "string",
+      "description": "字段id"
+    },
+    "fieldname": {
+      "type": "string",
+      "description": "字段名称"
+    },
+    "alias": {
+      "type": "string",
+      "description": "别名"
+    },
+    "type": {
+      "type": "integer",
+      "description": "字段类型"
+    },
+    "description": {
+      "type": "string",
+      "description": "描述"
+    },
+    "required": {
+      "type": "boolean",
+      "description": "是否必填"
+    },
+    "options": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "选项集,字段类型为选项时，包含选项集信息"
+    }
+  },
+  "required": [
+    "field",
+    "fieldname",
+    "type",
+    "required",
+    "options",
+    "description",
+    "alias"
+  ],
+  "nullable": true
+}

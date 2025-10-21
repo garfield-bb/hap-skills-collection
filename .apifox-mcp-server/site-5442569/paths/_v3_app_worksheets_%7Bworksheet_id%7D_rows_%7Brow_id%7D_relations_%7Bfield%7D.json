@@ -1,0 +1,204 @@
+{
+  "get": {
+    "summary": "获取关联记录",
+    "deprecated": false,
+    "description": "获取关联记录列表，包括关联记录来源工作表信息，行记录信息，行记录详细信息，创建者信息",
+    "tags": [
+      "工作表行记录"
+    ],
+    "parameters": [
+      {
+        "name": "worksheet_id",
+        "in": "path",
+        "description": "工作表ID",
+        "required": true,
+        "example": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "row_id",
+        "in": "path",
+        "description": "行记录ID",
+        "required": true,
+        "example": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "field",
+        "in": "path",
+        "description": "字段 ID/别名",
+        "required": true,
+        "example": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "pageSize",
+        "in": "query",
+        "description": "行数",
+        "required": false,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      {
+        "name": "pageIndex",
+        "in": "query",
+        "description": "页码",
+        "required": false,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      {
+        "name": "isReturnSystemFields",
+        "in": "query",
+        "description": "是否获取系统字段",
+        "required": false,
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "description": "工作表ID",
+                  "type": "object",
+                  "properties": {
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "行记录 ID"
+                          },
+                          "{field}": {
+                            "description": "字段ID或别名以及该字段的值",
+                            "oneOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "integer"
+                              },
+                              {
+                                "type": "boolean"
+                              },
+                              {
+                                "type": "array"
+                              },
+                              {
+                                "type": "object"
+                              },
+                              {
+                                "type": "number"
+                              }
+                            ],
+                            "type": "null"
+                          },
+                          "_createAt": {
+                            "type": "string",
+                            "description": " 创建时间"
+                          },
+                          "_updatedAt": {
+                            "type": "string",
+                            "description": "更新时间"
+                          },
+                          "_owner": {
+                            "$ref": "#/components/schemas/obj_user",
+                            "description": "拥有者信息"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "_createAt",
+                          "_updatedAt",
+                          "_owner",
+                          "{field}"
+                        ],
+                        "type": "object"
+                      }
+                    },
+                    "total": {
+                      "type": "integer",
+                      "description": "总条数"
+                    }
+                  },
+                  "required": [
+                    "rows",
+                    "total"
+                  ]
+                },
+                "success": {
+                  "type": "boolean",
+                  "description": "是否调用成功"
+                },
+                "error_code": {
+                  "type": "integer",
+                  "description": "错误代码"
+                },
+                "error_msg": {
+                  "type": "string",
+                  "description": "错误消息"
+                }
+              },
+              "required": [
+                "data",
+                "success"
+              ]
+            },
+            "example": {
+              "data": {
+                "rows": [
+                  {
+                    "id": "关联记录id",
+                    "_createAt": "创建时间",
+                    "_updatedAt": "更新时间",
+                    "关联记录字段id/别名": "控件值"
+                  }
+                ],
+                "total": "总条数"
+              },
+              "success": true
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

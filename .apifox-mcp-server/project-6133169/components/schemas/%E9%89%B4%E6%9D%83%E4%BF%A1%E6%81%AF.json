@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "appKey": {
+      "type": "string",
+      "description": "AppKey"
+    },
+    "sign": {
+      "type": "string",
+      "description": "签名\n"
+    }
+  },
+  "x-apifox-orders": [
+    "appKey",
+    "sign"
+  ],
+  "required": [
+    "appKey",
+    "sign"
+  ],
+  "x-apifox-ignore-properties": [],
+  "x-apifox-folder": ""
+}

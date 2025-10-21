@@ -1,0 +1,567 @@
+{
+  "get": {
+    "summary": "获取应用信息",
+    "deprecated": false,
+    "description": "获取应用信息，包含应用下分组、工作表、自定义页面信息",
+    "tags": [],
+    "parameters": [
+      {
+        "name": "appKey",
+        "in": "query",
+        "description": "AppKey",
+        "required": true,
+        "example": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "sign",
+        "in": "query",
+        "description": "签名",
+        "required": true,
+        "example": "",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "projectId": {
+                      "type": "string",
+                      "title": "组织 id"
+                    },
+                    "appId": {
+                      "type": "string",
+                      "title": "应用ID"
+                    },
+                    "name": {
+                      "type": "string",
+                      "title": "应用名称"
+                    },
+                    "iconUrl": {
+                      "type": "string",
+                      "title": "图标地址"
+                    },
+                    "color": {
+                      "type": "string",
+                      "title": "颜色"
+                    },
+                    "desc": {
+                      "type": "string",
+                      "title": "应用描述"
+                    },
+                    "sections": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "sectionId": {
+                            "type": "string",
+                            "title": "应用分组id"
+                          },
+                          "name": {
+                            "type": "string",
+                            "title": "分组名称"
+                          },
+                          "items": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "title": "应用项id"
+                                },
+                                "name": {
+                                  "type": "string",
+                                  "title": "应用项名称"
+                                },
+                                "type": {
+                                  "type": "integer",
+                                  "title": "应用项类型 ",
+                                  "description": "应用项类型 0:工作表、1:自定义页面、2：子分组"
+                                },
+                                "iconUrl": {
+                                  "type": "string",
+                                  "title": "应用项图标地址"
+                                },
+                                "status": {
+                                  "type": "integer",
+                                  "title": "状态"
+                                },
+                                "alias": {
+                                  "type": "string",
+                                  "title": "别名"
+                                },
+                                "notes": {
+                                  "type": "string",
+                                  "title": "开发者备注"
+                                }
+                              },
+                              "description": "分组下应用项信息"
+                            },
+                            "title": "分组下应用项信息"
+                          },
+                          "childSections": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "sectionId": {
+                                  "type": "string",
+                                  "title": "子分组id"
+                                },
+                                "name": {
+                                  "type": "string",
+                                  "title": "子分组名称"
+                                },
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "title": "应用项id",
+                                      "description": "子分组下应用项 id"
+                                    },
+                                    "name": {
+                                      "type": "string",
+                                      "title": "应用项名称",
+                                      "description": "子分组下应用项名称"
+                                    },
+                                    "type": {
+                                      "type": "string",
+                                      "description": "0:工作表、1:自定义页面、2：子分组",
+                                      "title": "应用项类型"
+                                    },
+                                    "iconUrl": {
+                                      "type": "string",
+                                      "title": "应用项图标地址"
+                                    },
+                                    "status": {
+                                      "type": "string",
+                                      "title": "状态"
+                                    },
+                                    "alias": {
+                                      "type": "string",
+                                      "title": "别名"
+                                    },
+                                    "notes": {
+                                      "type": "string",
+                                      "title": "开发者备注"
+                                    }
+                                  },
+                                  "required": [
+                                    "id",
+                                    "name",
+                                    "type",
+                                    "iconUrl",
+                                    "status",
+                                    "alias",
+                                    "notes"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "sectionId",
+                                "items",
+                                "name"
+                              ],
+                              "description": "子分组下应用项信息",
+                              "nullable": true
+                            },
+                            "title": "子分组信息"
+                          }
+                        }
+                      },
+                      "title": "分组信息"
+                    }
+                  },
+                  "required": [
+                    "projectId",
+                    "appId",
+                    "name",
+                    "iconUrl",
+                    "color",
+                    "desc",
+                    "sections"
+                  ],
+                  "title": "返回数据"
+                },
+                "createType": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean",
+                  "title": "请求结果"
+                },
+                "error_code": {
+                  "type": "integer",
+                  "title": "错误码"
+                }
+              },
+              "required": [
+                "data",
+                "success",
+                "error_code",
+                "createType"
+              ]
+            },
+            "examples": {
+              "1": {
+                "summary": "成功示例",
+                "value": {
+                  "data": {
+                    "projectId": "28447959-cf7f-4ae9-XXXXXXXXXXXXXXX",
+                    "appId": "b55d6ceb-b69a-44f0-a011-XXXXXXXXXXXXXXX",
+                    "name": "客户关系管理",
+                    "iconUrl": "https://fp1.mingdaoyun.cn/customIcon/sys_13_1_shop.svg",
+                    "color": "#3054EB",
+                    "desc": "",
+                    "sections": [
+                      {
+                        "sectionId": "676910ae3e6f2583f5d3edd5",
+                        "name": "驾驶舱",
+                        "items": [
+                          {
+                            "id": "676910ad3e6f2583f5d3edd0",
+                            "name": "应用说明(操作指引)",
+                            "type": 1,
+                            "iconUrl": "https://fp1.mingdaoyun.cn/customIcon/12_2_book.svg",
+                            "status": 1,
+                            "alias": "",
+                            "notes": ""
+                          },
+                          {
+                            "id": "67eb58288f74243cd249f8c5",
+                            "name": "子分组",
+                            "type": 2,
+                            "iconUrl": "https://fp1.mingdaoyun.cn/customIcon/sys_cheque_office.svg",
+                            "status": 1,
+                            "alias": "",
+                            "notes": ""
+                          }
+                        ],
+                        "childSections": [
+                          {
+                            "sectionId": "67eb58288f74243cd249f8c5",
+                            "name": "子分组",
+                            "items": [
+                              {
+                                "id": "676910ad3e6f2583f5d3edd2",
+                                "name": "经理看板",
+                                "type": 1,
+                                "iconUrl": "https://fp1.mingdaoyun.cn/customIcon/1_1_combo_chart.svg",
+                                "status": 1,
+                                "alias": "",
+                                "notes": ""
+                              },
+                              {
+                                "id": "676910ad3e6f2583f5d3edd1",
+                                "name": "销售看板",
+                                "type": 1,
+                                "iconUrl": "https://fp1.mingdaoyun.cn/customIcon/2_4_training.svg",
+                                "status": 1,
+                                "alias": "",
+                                "notes": ""
+                              }
+                            ],
+                            "childSections": []
+                          }
+                        ]
+                      },
+                      {
+                        "sectionId": "676910ae3e6f2583f5d3edd9",
+                        "name": "渠道",
+                        "items": [
+                          {
+                            "id": "676910ad8d09d8a189da06a1",
+                            "name": "渠道伙伴",
+                            "type": 0,
+                            "iconUrl": "https://fp1.mingdaoyun.cn/customIcon/sys_10_8_advertising.svg",
+                            "status": 1,
+                            "alias": "",
+                            "notes": ""
+                          }
+                        ],
+                        "childSections": []
+                      },
+                      {
+                        "sectionId": "676910ae3e6f2583f5d3edd3",
+                        "name": "客户",
+                        "items": [
+                          {
+                            "id": "676910ad8d09d8a189da06a0",
+                            "name": "客户公司",
+                            "type": 0,
+                            "iconUrl": "https://fp1.mingdaoyun.cn/customIcon/sys_8_4_folder.svg",
+                            "status": 1,
+                            "alias": "",
+                            "notes": ""
+                          },
+                          {
+                            "id": "676910ad8d09d8a189da069f",
+                            "name": "联系人",
+                            "type": 0,
+                            "iconUrl": "https://fp1.mingdaoyun.cn/customIcon/6_1_user_group.svg",
+                            "status": 1,
+                            "alias": "",
+                            "notes": ""
+                          }
+                        ],
+                        "childSections": []
+                      },
+                      {
+                        "sectionId": "676910ae3e6f2583f5d3edd4",
+                        "name": "销售",
+                        "items": [
+                          {
+                            "id": "676910ad8d09d8a189da069e",
+                            "name": "线索",
+                            "type": 0,
+                            "iconUrl": "https://fp1.mingdaoyun.cn/customIcon/9_3_marker.svg",
+                            "status": 1,
+                            "alias": "",
+                            "notes": ""
+                          },
+                          {
+                            "id": "676910ad8d09d8a189da069d",
+                            "name": "成交机会",
+                            "type": 0,
+                            "iconUrl": "https://fp1.mingdaoyun.cn/customIcon/10_5_star.svg",
+                            "status": 1,
+                            "alias": "",
+                            "notes": ""
+                          },
+                          {
+                            "id": "676910ad8d09d8a189da069c",
+                            "name": "报价",
+                            "type": 0,
+                            "iconUrl": "https://fp1.mingdaoyun.cn/customIcon/2_4_training.svg",
+                            "status": 1,
+                            "alias": "",
+                            "notes": ""
+                          },
+                          {
+                            "id": "676910ad8d09d8a189da0696",
+                            "name": "报价明细",
+                            "type": 0,
+                            "iconUrl": "https://fp1.mingdaoyun.cn/customIcon/12_4_puzzle.svg",
+                            "status": 2,
+                            "alias": "",
+                            "notes": ""
+                          },
+                          {
+                            "id": "676910ad8d09d8a189da0692",
+                            "name": "订单",
+                            "type": 0,
+                            "iconUrl": "https://fp1.mingdaoyun.cn/customIcon/3_2_money_box.svg",
+                            "status": 1,
+                            "alias": "",
+                            "notes": ""
+                          },
+                          {
+                            "id": "676910ad8d09d8a189da0693",
+                            "name": "订单明细",
+                            "type": 0,
+                            "iconUrl": "https://fp1.mingdaoyun.cn/customIcon/12_2_book.svg",
+                            "status": 2,
+                            "alias": "",
+                            "notes": ""
+                          },
+                          {
+                            "id": "676910ad8d09d8a189da0698",
+                            "name": "行动",
+                            "type": 0,
+                            "iconUrl": "https://fp1.mingdaoyun.cn/customIcon/4_1_calendar.svg",
+                            "status": 1,
+                            "alias": "",
+                            "notes": ""
+                          },
+                          {
+                            "id": "676910ad8d09d8a189da0699",
+                            "name": "日志",
+                            "type": 0,
+                            "iconUrl": "https://fp1.mingdaoyun.cn/customIcon/1_5_create_new.svg",
+                            "status": 1,
+                            "alias": "",
+                            "notes": ""
+                          }
+                        ],
+                        "childSections": []
+                      },
+                      {
+                        "sectionId": "676910ae3e6f2583f5d3edda",
+                        "name": "市场",
+                        "items": [
+                          {
+                            "id": "676910ad8d09d8a189da06a2",
+                            "name": "市场活动",
+                            "type": 0,
+                            "iconUrl": "https://fp1.mingdaoyun.cn/customIcon/table.svg",
+                            "status": 1,
+                            "alias": "schd",
+                            "notes": ""
+                          }
+                        ],
+                        "childSections": []
+                      },
+                      {
+                        "sectionId": "676910ae3e6f2583f5d3edd7",
+                        "name": "产品",
+                        "items": [
+                          {
+                            "id": "676910ad8d09d8a189da069b",
+                            "name": "产品",
+                            "type": 0,
+                            "iconUrl": "https://fp1.mingdaoyun.cn/customIcon/7_1_truck.svg",
+                            "status": 1,
+                            "alias": "",
+                            "notes": ""
+                          }
+                        ],
+                        "childSections": []
+                      },
+                      {
+                        "sectionId": "676910ae3e6f2583f5d3edd8",
+                        "name": "帐务",
+                        "items": [
+                          {
+                            "id": "676910ad8d09d8a189da0691",
+                            "name": "发票",
+                            "type": 0,
+                            "iconUrl": "https://fp1.mingdaoyun.cn/customIcon/3_3_paper_money.svg",
+                            "status": 1,
+                            "alias": "",
+                            "notes": ""
+                          },
+                          {
+                            "id": "676910ad8d09d8a189da0690",
+                            "name": "发票明细",
+                            "type": 0,
+                            "iconUrl": "https://fp1.mingdaoyun.cn/customIcon/8_5_print.svg",
+                            "status": 2,
+                            "alias": "",
+                            "notes": ""
+                          },
+                          {
+                            "id": "676910ad8d09d8a189da06a4",
+                            "name": "款项登记",
+                            "type": 0,
+                            "iconUrl": "https://fp1.mingdaoyun.cn/customIcon/table.svg",
+                            "status": 1,
+                            "alias": "kxdj",
+                            "notes": ""
+                          }
+                        ],
+                        "childSections": []
+                      },
+                      {
+                        "sectionId": "676910ae3e6f2583f5d3edd6",
+                        "name": "设置",
+                        "items": [
+                          {
+                            "id": "676910ad8d09d8a189da069a",
+                            "name": "价目表",
+                            "type": 0,
+                            "iconUrl": "https://fp1.mingdaoyun.cn/customIcon/1_4_calculator.svg",
+                            "status": 1,
+                            "alias": "",
+                            "notes": ""
+                          },
+                          {
+                            "id": "676910ad8d09d8a189da0697",
+                            "name": "价目表明细",
+                            "type": 0,
+                            "iconUrl": "https://fp1.mingdaoyun.cn/customIcon/1_2_order.svg",
+                            "status": 2,
+                            "alias": "",
+                            "notes": ""
+                          },
+                          {
+                            "id": "676910ad8d09d8a189da0695",
+                            "name": "计价单位组",
+                            "type": 0,
+                            "iconUrl": "https://fp1.mingdaoyun.cn/customIcon/10_2_lock.svg",
+                            "status": 2,
+                            "alias": "",
+                            "notes": ""
+                          },
+                          {
+                            "id": "676910ad8d09d8a189da0694",
+                            "name": "计价单位",
+                            "type": 0,
+                            "iconUrl": "https://fp1.mingdaoyun.cn/customIcon/9_2_map.svg",
+                            "status": 2,
+                            "alias": "",
+                            "notes": ""
+                          }
+                        ],
+                        "childSections": []
+                      }
+                    ],
+                    "createType": 0
+                  },
+                  "success": true,
+                  "error_code": 1
+                }
+              },
+              "2": {
+                "summary": "失败示例",
+                "value": {
+                  "error_msg": "appKey无效!",
+                  "error_code": 0,
+                  "success": false
+                }
+              }
+            }
+          }
+        },
+        "headers": {}
+      },
+      "x-200:appKey无效": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error_msg": {
+                  "type": "string"
+                },
+                "error_code": {
+                  "type": "integer"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "error_msg",
+                "error_code",
+                "success"
+              ]
+            },
+            "example": {
+              "error_msg": "appKey无效!",
+              "error_code": 0,
+              "success": false
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

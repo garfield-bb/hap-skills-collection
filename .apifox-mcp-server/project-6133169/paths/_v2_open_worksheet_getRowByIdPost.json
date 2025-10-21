@@ -1,0 +1,130 @@
+{
+  "post": {
+    "summary": "获取行记录详情",
+    "deprecated": false,
+    "description": "获取记录详情信息，包括创建者、拥有者、控件信息、根据控件数据类型生成示例值",
+    "tags": [
+      "工作表"
+    ],
+    "parameters": [],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "appKey": {
+                "type": "string",
+                "title": "AppKey",
+                "description": ""
+              },
+              "sign": {
+                "type": "string",
+                "title": "签名",
+                "description": ""
+              },
+              "worksheetId": {
+                "type": "string",
+                "title": "工作表ID",
+                "description": ""
+              },
+              "rowId": {
+                "type": "string",
+                "title": "行记录ID",
+                "description": ""
+              },
+              "getSystemControl": {
+                "type": "string",
+                "title": "是否获取系统字段"
+              }
+            },
+            "required": [
+              "appKey",
+              "sign",
+              "worksheetId",
+              "rowId",
+              "getSystemControl"
+            ],
+            "x-apifox-orders": [
+              "appKey",
+              "sign",
+              "worksheetId",
+              "rowId",
+              "getSystemControl"
+            ],
+            "x-apifox-ignore-properties": []
+          },
+          "example": {
+            "appKey": "8e43dd1d4cccd32c",
+            "sign": "NThiODI4NGZhN2Y4ZmM0NDE4ZDdhYTI1ODg5ZmM2OWEyNmVlMjlmMGQzYWM3ODc2YTE2OTQwOWZiYmYwYTVkNw==",
+            "worksheetId": "6773abdab945df4389d21c17",
+            "rowId": "0142c26c-144d-490b-8f58-7dd3b2221dfe",
+            "getSystemControl": false
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {},
+              "x-apifox-ignore-properties": [],
+              "x-apifox-orders": []
+            },
+            "example": {
+              "data": {
+                "_id": "6773abdab945df4389d21c7f",
+                "rowid": "0142c26c-144d-490b-8f58-7dd3b2221dfe",
+                "ctime": "2024-12-31 16:31:22",
+                "caid": {
+                  "email": "1529700000@qq.com",
+                  "mobilePhone": "+86132572000000",
+                  "accountId": "e2453de8-1a6a-4d4f-ba36-87fdff880a20",
+                  "fullname": "卜佳菲",
+                  "avatar": "https://p1.mingdaoyun.cn/UserAvatar/fe9c4374-68f1-4f64-88ea-47050dff28bd.jpg?imageView2/1/w/48/h/48/q/90",
+                  "isPortal": false,
+                  "status": 1
+                },
+                "uaid": {
+                  "email": "",
+                  "mobilePhone": "",
+                  "accountId": "user-api",
+                  "fullname": "API",
+                  "avatar": "https://p1.mingdaoyun.cn/UserAvatar/worksheetapi.png?imageView2/1/w/48/h/48/q/90",
+                  "isPortal": false,
+                  "status": 1
+                },
+                "ownerid": {
+                  "email": "1529700000@qq.com",
+                  "mobilePhone": "+86132572000000",
+                  "accountId": "e2453de8-1a6a-4d4f-ba36-87fdff880a20",
+                  "fullname": "卜佳菲",
+                  "avatar": "https://p1.mingdaoyun.cn/UserAvatar/fe9c4374-68f1-4f64-88ea-47050dff28bd.jpg?imageView2/1/w/48/h/48/q/90",
+                  "isPortal": false,
+                  "status": 1
+                },
+                "utime": "2025-04-02 14:52:07",
+                "autoid": 99,
+                "60d42c197766e73dc71929a2": "昆明长水国际机场",
+                "60d42c197766e73dc71929a3": "KMG",
+                "60d42c197766e73dc71929a4": "ZGKL"
+              },
+              "success": true,
+              "error_code": 1
+            }
+          }
+        },
+        "headers": {},
+        "x-apifox-name": "成功"
+      }
+    },
+    "security": [],
+    "x-apifox-folder": "工作表",
+    "x-apifox-status": "released",
+    "x-run-in-apifox": "https://app.apifox.com/web/project/6133169/apis/api-278911320-run"
+  }
+}

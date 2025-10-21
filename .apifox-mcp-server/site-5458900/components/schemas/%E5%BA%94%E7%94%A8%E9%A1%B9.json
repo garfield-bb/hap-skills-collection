@@ -1,0 +1,45 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "title": "应用项id",
+      "description": "子分组下应用项 id"
+    },
+    "name": {
+      "type": "string",
+      "title": "应用项名称",
+      "description": "子分组下应用项名称"
+    },
+    "type": {
+      "type": "integer",
+      "title": "应用项类型",
+      "description": "0:工作表、1:自定义页面、2：子分组"
+    },
+    "iconUrl": {
+      "type": "string",
+      "title": "应用项图标地址"
+    },
+    "status": {
+      "type": "integer",
+      "title": "状态"
+    },
+    "alias": {
+      "type": "string",
+      "title": "别名"
+    },
+    "notes": {
+      "type": "string",
+      "title": "开发者备注"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "type",
+    "iconUrl",
+    "status",
+    "alias",
+    "notes"
+  ]
+}

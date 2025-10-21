@@ -1,0 +1,106 @@
+{
+  "post": {
+    "summary": "获取记录分享链接",
+    "deprecated": false,
+    "description": "获取记录分享链接",
+    "tags": [
+      "工作表"
+    ],
+    "parameters": [],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "appKey": {
+                "type": "string",
+                "title": "AppKey",
+                "description": ""
+              },
+              "sign": {
+                "type": "string",
+                "title": "签名",
+                "description": ""
+              },
+              "worksheetId": {
+                "type": "string",
+                "title": "工作表ID",
+                "description": ""
+              },
+              "rowId": {
+                "type": "string",
+                "title": "行记录ID",
+                "description": ""
+              },
+              "visibleFields": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "title": "可见字段ID集合"
+              },
+              "validTime": {
+                "type": "number",
+                "title": "单位s,为空表示永久有效"
+              },
+              "password": {
+                "type": "string",
+                "title": "为空表示不需要密码"
+              }
+            },
+            "required": [
+              "appKey",
+              "sign",
+              "worksheetId",
+              "rowId",
+              "visibleFields",
+              "validTime",
+              "password"
+            ],
+            "x-apifox-orders": [
+              "appKey",
+              "sign",
+              "worksheetId",
+              "rowId",
+              "visibleFields",
+              "validTime",
+              "password"
+            ],
+            "x-apifox-ignore-properties": []
+          },
+          "example": {
+            "appKey": "b09410353a7d607e",
+            "sign": "MDg2MzlmZGFhMTFiYjIwODE0MDdkMGNlZmU4YWM2ZmU5NjFkZWUzYWI5NTM5MzNiZDEzNjUxZTA4M2UyMDI3OQ==",
+            "worksheetId": "67eb8326143184e59c37575a",
+            "rowId": "099236ee-01df-458b-9c62-125289fd3de7",
+            "visibleFields": [],
+            "validTime": "",
+            "password": ""
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {},
+              "x-apifox-ignore-properties": [],
+              "x-apifox-orders": []
+            }
+          }
+        },
+        "headers": {},
+        "x-apifox-name": "成功"
+      }
+    },
+    "security": [],
+    "x-apifox-folder": "工作表",
+    "x-apifox-status": "released",
+    "x-run-in-apifox": "https://app.apifox.com/web/project/6133169/apis/api-278981747-run"
+  }
+}

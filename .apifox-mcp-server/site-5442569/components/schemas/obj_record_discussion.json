@@ -1,0 +1,94 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "讨论 id"
+    },
+    "message": {
+      "type": "string",
+      "description": "讨论内容"
+    },
+    "_createdAt": {
+      "type": "string",
+      "description": "创建时间"
+    },
+    "_createdBy": {
+      "description": "创建人信息",
+      "$ref": "#/components/schemas/obj_user"
+    },
+    "replyToAuthor": {
+      "description": "被回复人信息",
+      "$ref": "#/components/schemas/obj_user"
+    },
+    "replyToId": {
+      "type": "string",
+      "description": "被回复的讨论 id"
+    },
+    "mentions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "accountId": {
+            "type": "string",
+            "description": "人员 id"
+          },
+          "fullname": {
+            "type": "string",
+            "description": " 名称"
+          },
+          "avatar": {
+            "type": "string",
+            "description": "头像地址"
+          }
+        },
+        "required": [
+          "accountId",
+          "fullname",
+          "avatar"
+        ]
+      }
+    },
+    "attachments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "originalFilename": {
+            "type": "string",
+            "description": "文件名称"
+          },
+          "ext": {
+            "type": "string",
+            "description": "文件类型"
+          },
+          "filesize": {
+            "type": "string",
+            "description": "文件大小"
+          },
+          "downloadUrl": {
+            "type": "string",
+            "description": "下载地址"
+          }
+        },
+        "required": [
+          "ext",
+          "filesize",
+          "downloadUrl"
+        ]
+      },
+      "description": "附件信息"
+    }
+  },
+  "required": [
+    "id",
+    "message",
+    "_createdAt",
+    "_createdBy",
+    "replyToAuthor",
+    "replyToId",
+    "mentions",
+    "attachments"
+  ]
+}

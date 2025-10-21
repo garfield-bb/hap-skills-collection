@@ -1,0 +1,818 @@
+{
+  "post": {
+    "summary": "编辑工作表",
+    "deprecated": false,
+    "description": "创建工作表，目前支持控件类型有文本、数值、单选、多选、时间、日期、成员、附件、关联记录",
+    "tags": [],
+    "parameters": [
+      {
+        "name": "worksheet_id",
+        "in": "path",
+        "description": "",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "url",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appid",
+        "in": "header",
+        "description": "当使用Authorization鉴权时，必传",
+        "required": false,
+        "example": "{{appId}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "Authorization",
+        "in": "header",
+        "description": "个人授权 id",
+        "required": false,
+        "example": "{{Authorization}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "title": "",
+                "description": "工作表名称"
+              },
+              "alias": {
+                "type": "string",
+                "description": "工作表别名"
+              },
+              "sectionId": {
+                "type": "string",
+                "title": "",
+                "description": "分组 id"
+              },
+              "addFields": {
+                "type": "array",
+                "items": {
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "title": "",
+                      "description": "字段名称"
+                    },
+                    "alias": {
+                      "type": "string",
+                      "title": "",
+                      "description": "字段别名"
+                    },
+                    "type": {
+                      "type": "integer",
+                      "title": "",
+                      "description": "字段类型"
+                    },
+                    "isTitle": {
+                      "type": "boolean",
+                      "description": "是否是标题字段"
+                    },
+                    "required": {
+                      "type": "boolean",
+                      "description": "是否必填"
+                    },
+                    "isHidden": {
+                      "type": "boolean",
+                      "description": "是否隐藏"
+                    },
+                    "isReadOnly": {
+                      "type": "boolean",
+                      "description": "是否只读"
+                    },
+                    "isHiddenOnCreate": {
+                      "type": "boolean",
+                      "description": "是否新增记录时隐藏"
+                    },
+                    "isUnique": {
+                      "type": "boolean",
+                      "description": "是否唯一"
+                    },
+                    "precision": {
+                      "type": "integer",
+                      "description": "保留小数位（0-14），控件类型为6:数值,8:金额时填入"
+                    },
+                    "subType": {
+                      "type": "string",
+                      "description": "类型为26成员时，表示成员数量，填入规则 0：单选,1：多选\n类型为29关联记录时，表示关联记录数量，填入规则 1：单条 2：多条\n"
+                    },
+                    "options": {
+                      "type": "object",
+                      "properties": {
+                        "value": {
+                          "type": "string",
+                          "description": "选项名称"
+                        },
+                        "index": {
+                          "description": "选项排序",
+                          "type": "integer"
+                        }
+                      },
+                      "description": "选项信息，控件类型为 11:单选,10:多选时填入"
+                    },
+                    "showFields": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "类型为29关联记录时，表示展示字段"
+                    },
+                    "max": {
+                      "type": "integer",
+                      "description": "控件类型为28等级时，表示等级最大值，填入规则（0-10）"
+                    },
+                    "appid": {
+                      "type": "string",
+                      "description": "关联表所属应用，\n类型为29关联记录时传入，创建"
+                    },
+                    "dataSource": {
+                      "type": "string",
+                      "description": "类型为 29 （关联记录）时传入，表示关联工作表 id"
+                    },
+                    "sourceControlId": {
+                      "type": "string",
+                      "description": "关联字段字段 id，用于创建双向关联"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "type",
+                    "required"
+                  ],
+                  "type": "object"
+                },
+                "title": "",
+                "description": "新增的字段"
+              },
+              "editFields": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "字段 id/别名"
+                    },
+                    "name": {
+                      "type": "string",
+                      "title": "",
+                      "description": "字段名称"
+                    },
+                    "alias": {
+                      "type": "string",
+                      "title": "",
+                      "description": "字段别名"
+                    },
+                    "type": {
+                      "type": "integer",
+                      "title": "",
+                      "description": "字段类型"
+                    },
+                    "isTitle": {
+                      "type": "boolean",
+                      "description": "是否是标题字段"
+                    },
+                    "required": {
+                      "type": "boolean",
+                      "description": "是否必填"
+                    },
+                    "isHidden": {
+                      "type": "boolean",
+                      "description": "是否隐藏"
+                    },
+                    "isReadOnly": {
+                      "type": "boolean",
+                      "description": "是否只读"
+                    },
+                    "isHiddenOnCreate": {
+                      "type": "boolean",
+                      "description": "是否新增记录时隐藏"
+                    },
+                    "isUnique": {
+                      "type": "boolean",
+                      "description": "是否唯一"
+                    },
+                    "precision": {
+                      "type": "integer",
+                      "description": "保留小数位（0-14），控件类型为6:数值,8:金额时填入"
+                    },
+                    "subType": {
+                      "type": "string",
+                      "description": "类型为26成员时，表示成员数量，填入规则 0：单选,1：多选\n类型为29关联记录时，表示关联记录数量，填入规则 1：单条 2：多条\n"
+                    },
+                    "options": {
+                      "type": "object",
+                      "properties": {
+                        "value": {
+                          "type": "string",
+                          "description": "选项名称"
+                        },
+                        "index": {
+                          "description": "选项排序",
+                          "type": "integer"
+                        }
+                      },
+                      "description": "选项信息，控件类型为 11:单选,10:多选时填入"
+                    },
+                    "showFields": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "类型为29关联记录时，表示展示字段"
+                    },
+                    "max": {
+                      "type": "integer",
+                      "description": "控件类型为28等级时，表示等级最大值，填入规则（0-10）"
+                    },
+                    "appid": {
+                      "type": "string",
+                      "description": "关联表所属应用，\n类型为29关联记录时传入，创建"
+                    },
+                    "dataSource": {
+                      "type": "string",
+                      "description": "数据源 id，类型为 29 （关联记录）时，且选择已有关联时，传入关联表 字段id"
+                    },
+                    "sourceControlId": {
+                      "type": "string",
+                      "description": "关联字段字段 id，用于创建双向关联\n"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                },
+                "description": "编辑的字段"
+              },
+              "removeFields": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "字段 id"
+                },
+                "description": "删除的字段"
+              }
+            },
+            "title": ""
+          },
+          "example": {
+            "addFields": [
+              {
+                "name": "测试双向关联",
+                "type": 29,
+                "showFields": [
+                  ""
+                ],
+                "appid": "",
+                "worksheetId": "",
+                "dataSource": ""
+              }
+            ],
+            "editFields": [
+              {
+                "id": "",
+                "name": ""
+              }
+            ],
+            "removeFields": [
+              ""
+            ]
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "success": {
+                  "type": "boolean",
+                  "description": "是否调用成功"
+                },
+                "errorCode": {
+                  "type": "integer",
+                  "description": "错误代码"
+                },
+                "errorMsg": {
+                  "type": "string",
+                  "description": "错误消息"
+                }
+              },
+              "required": [
+                "data",
+                "success"
+              ],
+              "title": "",
+              "type": "object"
+            },
+            "examples": {
+              "1": {
+                "summary": "成功示例",
+                "value": {
+                  "data": {},
+                  "success": true
+                }
+              },
+              "2": {
+                "summary": "异常示例",
+                "value": {
+                  "error_msg": "具体错误信息",
+                  "error_code": 10101,
+                  "success": false
+                }
+              }
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  },
+  "delete": {
+    "summary": "删除工作表",
+    "deprecated": false,
+    "description": "创建工作表，目前支持控件类型有文本、数值、单选、多选、时间、日期、成员、附件、关联记录",
+    "tags": [],
+    "parameters": [
+      {
+        "name": "worksheet_id",
+        "in": "path",
+        "description": "",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "url",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appid",
+        "in": "header",
+        "description": "当使用Authorization鉴权时，必传",
+        "required": false,
+        "example": "{{appId}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "Authorization",
+        "in": "header",
+        "description": "个人授权 id",
+        "required": false,
+        "example": "{{Authorization}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "success": {
+                  "type": "boolean",
+                  "description": "是否调用成功"
+                },
+                "errorCode": {
+                  "type": "integer",
+                  "description": "错误代码"
+                },
+                "errorMsg": {
+                  "type": "string",
+                  "description": "错误消息"
+                }
+              },
+              "required": [
+                "data",
+                "success"
+              ],
+              "title": "",
+              "type": "object"
+            },
+            "examples": {
+              "1": {
+                "summary": "成功示例",
+                "value": {
+                  "data": {},
+                  "success": true
+                }
+              },
+              "2": {
+                "summary": "异常示例",
+                "value": {
+                  "error_msg": "具体错误信息",
+                  "error_code": 10101,
+                  "success": false
+                }
+              }
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  },
+  "get": {
+    "summary": "获取工作表结构信息",
+    "deprecated": false,
+    "description": "获取工作表配置及其控件信息",
+    "tags": [],
+    "parameters": [
+      {
+        "name": "worksheet_id",
+        "in": "path",
+        "description": "",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "url",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appid",
+        "in": "header",
+        "description": "当使用Authorization鉴权时，必传",
+        "required": false,
+        "example": "{{appId}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "Authorization",
+        "in": "header",
+        "description": "个人授权 id",
+        "required": false,
+        "example": "{{Authorization}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "worksheetId": {
+                      "type": "string",
+                      "description": "工作表ID"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "工作表名称"
+                    },
+                    "alias": {
+                      "type": "string",
+                      "description": "工作表别名"
+                    },
+                    "desc": {
+                      "type": "string",
+                      "description": "说明"
+                    },
+                    "fields": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "字段ID"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "字段名称"
+                          },
+                          "alias": {
+                            "type": "string",
+                            "description": "字段别名"
+                          },
+                          "desc": {
+                            "type": "string",
+                            "description": "字段描述"
+                          },
+                          "type": {
+                            "type": "integer",
+                            "description": "字段类型"
+                          },
+                          "typeName": {
+                            "type": "string",
+                            "description": "字段类型名称"
+                          },
+                          "required": {
+                            "type": "boolean",
+                            "description": "默认值"
+                          },
+                          "isHidden": {
+                            "type": "boolean",
+                            "description": "是否隐藏"
+                          },
+                          "isReadOnly": {
+                            "type": "boolean",
+                            "description": "是否只读"
+                          },
+                          "isHiddenOnCreate": {
+                            "type": "boolean",
+                            "description": "是否新增记录时隐藏"
+                          },
+                          "isUnique": {
+                            "type": "boolean",
+                            "description": "是否唯一"
+                          },
+                          "isTitle": {
+                            "type": "boolean",
+                            "description": " 1：标题,0：非标题"
+                          },
+                          "precision": {
+                            "type": "integer",
+                            "description": "当type=6时，表示保留小数位（0-14）"
+                          },
+                          "unit": {
+                            "type": "string",
+                            "description": "单位，当type=46时，1：时分，6：时分秒"
+                          },
+                          "subType": {
+                            "type": "integer",
+                            "description": "类型为26:成员时，表示成员数量，填入规则 0：单选,1：多选。类型为29:关联记录时，表示关联记录数量，填入规则 1：单条 2：多条"
+                          },
+                          "remark": {
+                            "type": "string",
+                            "description": "开发者备注"
+                          },
+                          "options": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "key": {
+                                  "type": "string"
+                                },
+                                "value": {
+                                  "type": "string"
+                                },
+                                "index": {
+                                  "type": "string"
+                                },
+                                "isDeleted": {
+                                  "type": "string",
+                                  "description": "是否删除"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "index",
+                                "key",
+                                "isDeleted"
+                              ]
+                            },
+                            "description": "选项信息，类型为 11:单选,10:多选时填入"
+                          },
+                          "max": {
+                            "type": "integer",
+                            "description": "等级最大值，类型为28:等级时填入"
+                          },
+                          "dataSource": {
+                            "type": "string",
+                            "description": "数据源 id，类型为 29 （关联记录）时传入,表示关联表 id)"
+                          },
+                          "sourceField": {
+                            "type": "string",
+                            "description": "关联表字段 id"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "type",
+                          "alias",
+                          "name",
+                          "desc",
+                          "typeName",
+                          "sourceField",
+                          "required"
+                        ]
+                      },
+                      "description": "控件列表"
+                    },
+                    "views": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "title": "视图 ID",
+                            "description": "视图 ID"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "视图 名称"
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "视图类型"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "type"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "worksheetId",
+                    "name",
+                    "desc",
+                    "alias",
+                    "fields",
+                    "views"
+                  ]
+                },
+                "success": {
+                  "type": "boolean"
+                },
+                "errorCode": {
+                  "type": "string"
+                },
+                "errorMsg": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "data",
+                "success"
+              ]
+            },
+            "examples": {
+              "1": {
+                "summary": "成功示例",
+                "value": {
+                  "data": {
+                    "worksheetId": "65dda1a5a608a40050774c72",
+                    "name": "会员信息",
+                    "alias": "",
+                    "createdAt": "",
+                    "desc": "",
+                    "views": [
+                      {
+                        "id": "65dda1a5a608a40050774c8f",
+                        "name": "全部"
+                      },
+                      {
+                        "id": "65dda1a5a608a40050774c91",
+                        "name": "等级分类"
+                      },
+                      {
+                        "id": "65dda1a5a608a40050774c90",
+                        "name": "我的信息"
+                      }
+                    ],
+                    "fields": [
+                      {
+                        "id": "632444f6182c34e9180b0676",
+                        "name": "名称",
+                        "type": 2,
+                        "attribute": 0,
+                        "required": false,
+                        "alias": "",
+                        "size": 6,
+                        "remark": ""
+                      }
+                    ]
+                  },
+                  "success": true
+                }
+              },
+              "2": {
+                "summary": "异常示例",
+                "value": {
+                  "success": false,
+                  "code": 10001,
+                  "msg": "具体错误信息",
+                  "data": {}
+                }
+              }
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

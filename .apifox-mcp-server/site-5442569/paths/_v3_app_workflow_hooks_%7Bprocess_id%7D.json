@@ -1,0 +1,155 @@
+{
+  "post": {
+    "summary": "触发流程",
+    "deprecated": false,
+    "description": "触发流程",
+    "tags": [
+      "工作流"
+    ],
+    "parameters": [
+      {
+        "name": "process_id",
+        "in": "path",
+        "description": "",
+        "required": true,
+        "example": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "{inputs}": {
+                "description": "流程的输入参数及对应的值\n",
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "array"
+                  },
+                  {
+                    "type": "object"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "type": "null"
+              }
+            },
+            "required": [
+              "{inputs}"
+            ]
+          },
+          "example": {
+            "text_field": "日报",
+            "number_field": 100,
+            "checkbox_field": 1,
+            "datetime_field": "2025-07-16 15:20",
+            "radio_field": "选项B",
+            "array_field": [
+              "item1",
+              "item2"
+            ],
+            "object_array_field": [
+              {
+                "key": "A",
+                "value": 1
+              },
+              {
+                "key": "B",
+                "value": 2
+              }
+            ],
+            "user_field": [
+              "user_001"
+            ],
+            "department_field": [
+              "dept_001"
+            ],
+            "role_field": [
+              "role_leader"
+            ],
+            "file_field": [
+              "https://example.com/input/file1.pdf"
+            ]
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "{outputs}": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "array"
+                    },
+                    {
+                      "type": "object"
+                    },
+                    {
+                      "type": "number"
+                    }
+                  ],
+                  "type": "null"
+                }
+              },
+              "required": [
+                "{outputs}"
+              ]
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "type": "object",
+  "properties": {
+    "rows": {
+      "type": "array",
+      "items": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "行记录 ID"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": " 创建时间"
+          },
+          "createdBy": {
+            "$ref": "#/components/schemas/%E4%BA%BA%E5%91%98%E5%AF%B9%E8%B1%A1",
+            "description": "创建人信息"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "更新时间"
+          },
+          "updatedBy": {
+            "$ref": "#/components/schemas/%E4%BA%BA%E5%91%98%E5%AF%B9%E8%B1%A1",
+            "description": "更新人信息"
+          },
+          "owner": {
+            "$ref": "#/components/schemas/%E4%BA%BA%E5%91%98%E5%AF%B9%E8%B1%A1",
+            "description": "拥有者信息"
+          },
+          "{field}": {
+            "description": "工作表字段ID或别名以及该字段的值",
+            "nullable": true,
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "array"
+              },
+              {
+                "type": "object"
+              },
+              {
+                "type": "number"
+              }
+            ]
+          }
+        },
+        "required": [
+          "{field}",
+          "id",
+          "createdAt",
+          "createdBy",
+          "updatedAt",
+          "updatedBy",
+          "owner"
+        ],
+        "type": "object"
+      }
+    },
+    "total": {
+      "type": "integer",
+      "description": "总条数"
+    }
+  },
+  "required": [
+    "rows",
+    "total"
+  ],
+  "description": "工作表ID"
+}

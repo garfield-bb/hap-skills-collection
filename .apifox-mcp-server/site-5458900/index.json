@@ -1,0 +1,207 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "应用 API 3.0（开发中）",
+    "description": "",
+    "version": "1.0.0",
+    "x-download-time": "2025-08-06T16:33:25.781Z"
+  },
+  "paths": {
+    "/v3/app": {
+      "$ref": "/paths/_v3_app.json",
+      "get": {
+        "summary": "获取应用信息"
+      }
+    },
+    "/v3/app/worksheets": {
+      "$ref": "/paths/_v3_app_worksheets.json",
+      "post": {
+        "summary": "新建工作表"
+      }
+    },
+    "/v3/app/worksheets/{worksheet_id}": {
+      "$ref": "/paths/_v3_app_worksheets_%7Bworksheet_id%7D.json",
+      "post": {
+        "summary": "编辑工作表"
+      },
+      "delete": {
+        "summary": "删除工作表"
+      },
+      "get": {
+        "summary": "获取工作表结构信息"
+      }
+    },
+    "/v3/app/worksheets/{worksheet_id}/rows/list": {
+      "$ref": "/paths/_v3_app_worksheets_%7Bworksheet_id%7D_rows_list.json",
+      "post": {
+        "summary": "获取行记录列表 "
+      }
+    },
+    "/report/v3/app/worksheets/{worksheet_id}/rows/pivot": {
+      "$ref": "/paths/_report_v3_app_worksheets_%7Bworksheet_id%7D_rows_pivot.json",
+      "post": {
+        "summary": "获取行记录透视数据"
+      }
+    },
+    "/v3/app/worksheets/{worksheet_id}/rows": {
+      "$ref": "/paths/_v3_app_worksheets_%7Bworksheet_id%7D_rows.json",
+      "post": {
+        "summary": "新建行记录"
+      }
+    },
+    "/v3/app/worksheets/{worksheet_id}/rows/batch": {
+      "$ref": "/paths/_v3_app_worksheets_%7Bworksheet_id%7D_rows_batch.json",
+      "post": {
+        "summary": "批量新增行记录"
+      },
+      "patch": {
+        "summary": "批量更新行记录详情"
+      },
+      "delete": {
+        "summary": "批量删除行记录"
+      }
+    },
+    "/v3/app/worksheets/{worksheet_id}/rows/{row_id}": {
+      "$ref": "/paths/_v3_app_worksheets_%7Bworksheet_id%7D_rows_%7Brow_id%7D.json",
+      "get": {
+        "summary": "获取行记录详情"
+      },
+      "patch": {
+        "summary": "更新行记录详情"
+      },
+      "delete": {
+        "summary": "删除行记录"
+      }
+    },
+    "/v3/app/worksheets/{worksheet_id}/rows/{row_id}/relations/{field}": {
+      "$ref": "/paths/_v3_app_worksheets_%7Bworksheet_id%7D_rows_%7Brow_id%7D_relations_%7Bfield%7D.json",
+      "get": {
+        "summary": "获取关联记录"
+      }
+    },
+    "/v3/app/worksheets/{worksheet_id}/rows/{row_id}/share-link": {
+      "$ref": "/paths/_v3_app_worksheets_%7Bworksheet_id%7D_rows_%7Brow_id%7D_share-link.json",
+      "post": {
+        "summary": "获取记录分享链接"
+      }
+    },
+    "/v3/app/worksheets/{worksheet_id}/rows/{row_id}/logs": {
+      "$ref": "/paths/_v3_app_worksheets_%7Bworksheet_id%7D_rows_%7Brow_id%7D_logs.json",
+      "get": {
+        "summary": "获取行记录日志"
+      }
+    },
+    "/v3/app/worksheets/{worksheet_id}/rows/{row_id}/discussions": {
+      "$ref": "/paths/_v3_app_worksheets_%7Bworksheet_id%7D_rows_%7Brow_id%7D_discussions.json",
+      "get": {
+        "summary": "获取行记录讨论"
+      }
+    },
+    "/v3/app/optionsets": {
+      "$ref": "/paths/_v3_app_optionsets.json",
+      "get": {
+        "summary": "获取选项集列表"
+      },
+      "post": {
+        "summary": "创建选项集"
+      }
+    },
+    "/v3/app/optionsets/{optionset_id}": {
+      "$ref": "/paths/_v3_app_optionsets_%7Boptionset_id%7D.json",
+      "post": {
+        "summary": "编辑选项集"
+      },
+      "delete": {
+        "summary": "删除选项集"
+      }
+    },
+    "/workflow/v3/processes": {
+      "$ref": "/paths/_workflow_v3_processes.json",
+      "get": {
+        "summary": "获取流程列表"
+      }
+    },
+    "/workflow/v3/processes/{process_id}": {
+      "$ref": "/paths/_workflow_v3_processes_%7Bprocess_id%7D.json",
+      "get": {
+        "summary": "获取流程详情"
+      }
+    },
+    "/workflow/v3/hooks/{process_id}": {
+      "$ref": "/paths/_workflow_v3_hooks_%7Bprocess_id%7D.json",
+      "post": {
+        "summary": "触发流程"
+      }
+    },
+    "/v3/app/roles": {
+      "$ref": "/paths/_v3_app_roles.json",
+      "get": {
+        "summary": "获取角色列表"
+      },
+      "post": {
+        "summary": "创建角色"
+      }
+    },
+    "/v3/app/roles/{role_id}": {
+      "$ref": "/paths/_v3_app_roles_%7Brole_id%7D.json",
+      "get": {
+        "summary": "获取角色详情"
+      },
+      "delete": {
+        "summary": "删除角色"
+      }
+    },
+    "/v3/app/roles/{role_id}/members": {
+      "$ref": "/paths/_v3_app_roles_%7Brole_id%7D_members.json",
+      "post": {
+        "summary": "添加角色成员"
+      },
+      "delete": {
+        "summary": "移除角色成员"
+      }
+    },
+    "/v3/app/roles/users/{user_id}": {
+      "$ref": "/paths/_v3_app_roles_users_%7Buser_id%7D.json",
+      "delete": {
+        "summary": "成员退出所有角色"
+      }
+    },
+    "/v3/users/lookup": {
+      "$ref": "/paths/_v3_users_lookup.json",
+      "get": {
+        "summary": "查找成员"
+      }
+    },
+    "/v3/departments/lookup": {
+      "$ref": "/paths/_v3_departments_lookup.json",
+      "get": {
+        "summary": "查找部门"
+      }
+    },
+    "/v3/regions": {
+      "$ref": "/paths/_v3_regions.json",
+      "get": {
+        "summary": "获取地区信息"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "$ref": "/components/schemas/index.json"
+    },
+    "securitySchemes": {
+      "$ref": "/components/securitySchemes/index.json"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.mingdao.com",
+      "description": "正式环境"
+    },
+    {
+      "url": "{{url}}",
+      "description": "自定义"
+    }
+  ],
+  "security": []
+}

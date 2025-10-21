@@ -1,0 +1,132 @@
+{
+  "post": {
+    "summary": "添加角色成员",
+    "deprecated": false,
+    "description": "添加角色成员信息\n数据包括：添加用户、职位、部门",
+    "tags": [
+      "角色"
+    ],
+    "parameters": [],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "appKey": {
+                "type": "string",
+                "title": "AppKey",
+                "description": ""
+              },
+              "sign": {
+                "type": "string",
+                "title": "签名",
+                "description": ""
+              },
+              "roleId": {
+                "type": "string",
+                "description": " 角色 id"
+              },
+              "operatorId": {
+                "type": "string",
+                "description": "操作者 id"
+              },
+              "userIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "账号Id合集"
+              },
+              "departmentIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "部门集合"
+              },
+              "departmentTreeIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "部门树集合"
+              },
+              "jobIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "职位 id 集合"
+              },
+              "orgRoleIds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "组织角色id集合"
+              }
+            },
+            "required": [
+              "appKey",
+              "sign",
+              "roleId",
+              "operatorId",
+              "userIds",
+              "departmentIds",
+              "departmentTreeIds",
+              "jobIds",
+              "orgRoleIds"
+            ],
+            "x-apifox-orders": [
+              "appKey",
+              "sign",
+              "roleId",
+              "operatorId",
+              "userIds",
+              "departmentIds",
+              "departmentTreeIds",
+              "jobIds",
+              "orgRoleIds"
+            ],
+            "x-apifox-ignore-properties": []
+          },
+          "example": {
+            "appKey": "5004e1f1c103fc82",
+            "sign": "MWQzYWJiNTNlYzZmNjZhNTA1NTExMGZhNzEyMjU3ZTMzM2Q2YWFmZWJkMTZjMWM1NTRjNDZiODUwNjc5OTUzNg==",
+            "roleId": "3843c546-fc47-4d29-b0cc-2463f013f115",
+            "operatorId": "e2453de8-1a6a-4d4f-ba36-87fdff880a20",
+            "userIds": [
+              "e2453de8-1a6a-4d4f-ba36-87fdff880a20"
+            ],
+            "departmentIds": [],
+            "departmentTreeIds": [],
+            "jobIds": [],
+            "orgRoleIds": []
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {},
+              "x-apifox-ignore-properties": [],
+              "x-apifox-orders": []
+            }
+          }
+        },
+        "headers": {},
+        "x-apifox-name": "成功"
+      }
+    },
+    "security": [],
+    "x-apifox-folder": "角色",
+    "x-apifox-status": "released",
+    "x-run-in-apifox": "https://app.apifox.com/web/project/6133169/apis/api-278479088-run"
+  }
+}

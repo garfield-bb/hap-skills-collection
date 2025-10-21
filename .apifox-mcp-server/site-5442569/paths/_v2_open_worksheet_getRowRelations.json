@@ -1,0 +1,160 @@
+{
+  "post": {
+    "summary": "获取关联记录",
+    "deprecated": false,
+    "description": "获取关联记录列表，包括关联记录来源工作表信息，行记录信息，行记录详细信息，创建者信息",
+    "tags": [],
+    "parameters": [],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "appKey": {
+                "type": "string",
+                "title": "AppKey",
+                "description": ""
+              },
+              "sign": {
+                "type": "string",
+                "title": "签名",
+                "description": ""
+              },
+              "worksheetId": {
+                "type": "string",
+                "title": "工作表ID",
+                "description": ""
+              },
+              "pageSize": {
+                "type": "integer",
+                "title": "行数",
+                "description": ""
+              },
+              "pageIndex": {
+                "type": "integer",
+                "title": "页码",
+                "description": ""
+              },
+              "rowId": {
+                "type": "string",
+                "title": "行记录ID",
+                "description": ""
+              },
+              "controlId": {
+                "type": "string",
+                "title": "关联字段 ID"
+              },
+              "getSystemControl": {
+                "type": "boolean",
+                "title": "是否获取系统字段",
+                "default": false
+              }
+            },
+            "required": [
+              "appKey",
+              "sign",
+              "worksheetId",
+              "pageSize",
+              "pageIndex",
+              "rowId",
+              "controlId"
+            ]
+          },
+          "example": {
+            "appKey": "b09410353a7d607e",
+            "sign": "MDg2MzlmZGFhMTFiYjIwODE0MDdkMGNlZmU4YWM2ZmU5NjFkZWUzYWI5NTM5MzNiZDEzNjUxZTA4M2UyMDI3OQ==",
+            "worksheetId": "67eb8326143184e59c37575a",
+            "pageSize": 50,
+            "pageIndex": 1,
+            "rowId": "099236ee-01df-458b-9c62-125289fd3de7",
+            "controlId": "67eb8326bb2af284541ae765",
+            "getSystemControl": false
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "rowid": {
+                            "type": "string",
+                            "description": "关联记录id"
+                          },
+                          "ctime": {
+                            "type": "string",
+                            "description": "创建时间"
+                          },
+                          "utime": {
+                            "type": "string",
+                            "description": "utime"
+                          },
+                          "controlId": {
+                            "type": "string",
+                            "description": "关联记录控件值"
+                          }
+                        },
+                        "required": [
+                          "controlId"
+                        ]
+                      }
+                    },
+                    "total": {
+                      "type": "string",
+                      "description": "总条数"
+                    }
+                  },
+                  "required": [
+                    "rows",
+                    "total"
+                  ]
+                },
+                "success": {
+                  "type": "boolean"
+                },
+                "error_code": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "data",
+                "success",
+                "error_code"
+              ]
+            },
+            "example": {
+              "data": {
+                "rows": [
+                  {
+                    "rowid": "关联记录id",
+                    "ctime": "创建时间",
+                    "utime": "更新时间",
+                    "关联记录控件id/别名": "控件值"
+                  }
+                ],
+                "total": "总条数"
+              },
+              "success": true,
+              "error_code": 1
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

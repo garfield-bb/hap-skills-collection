@@ -1,0 +1,306 @@
+{
+  "post": {
+    "summary": "编辑选项集",
+    "deprecated": false,
+    "description": "创建选项集信息\n数据包括：选项集名称、选项集信息（选项值、排序、颜色、分值）",
+    "tags": [],
+    "parameters": [
+      {
+        "name": "optionset_id",
+        "in": "path",
+        "description": "",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "url",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appid",
+        "in": "header",
+        "description": "当使用Authorization鉴权时，必传",
+        "required": false,
+        "example": "{{appId}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "Authorization",
+        "in": "header",
+        "description": "个人授权 id",
+        "required": false,
+        "example": "{{Authorization}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "选项集名称"
+              },
+              "options": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "key": {
+                      "type": "string",
+                      "description": "选项的Key"
+                    },
+                    "value": {
+                      "type": "string",
+                      "description": "选项值，不允许重复"
+                    },
+                    "index": {
+                      "type": "integer",
+                      "description": "选项排序值: 必须为整数，越小越靠前"
+                    },
+                    "isDeleted": {
+                      "type": "boolean",
+                      "description": "该选项是否已被删除"
+                    },
+                    "color": {
+                      "type": "string",
+                      "description": "颜色值: colorful为true时生效，参考值 #C0E6FC , #C3F2F2 , #00C345 , #FAD714 , #FF9300 , #F52222 , #EB2F96 , #7500EA , #2D46C4 , #484848 , #C9E6FC , #C3F2F2"
+                    },
+                    "score": {
+                      "type": "number",
+                      "description": "分值，enableScore为true时生效，允许小数和正负值"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "index",
+                    "isDeleted",
+                    "color",
+                    "key"
+                  ]
+                },
+                "description": "选项集"
+              },
+              "enableColor": {
+                "type": "boolean",
+                "description": "启用彩色"
+              },
+              "enableScore": {
+                "type": "boolean",
+                "description": "启用分值"
+              }
+            },
+            "required": [
+              "name",
+              "options",
+              "enableColor",
+              "enableScore"
+            ]
+          },
+          "example": {
+            "name": "测试选项集",
+            "options": [
+              {
+                "key": "1e49e111-1293-4abe-bf22-9a98b0da3670",
+                "value": "已通过",
+                "index": "0",
+                "isDeleted": false,
+                "color": "#C3F2F2",
+                "score": 1
+              },
+              {
+                "key": "92e6c4fd-b149-4f6f-a27c-5805f31ea6d2",
+                "value": "不通过",
+                "index": 1,
+                "isDeleted": false,
+                "color": "red",
+                "score": 1.5
+              },
+              {
+                "key": "92e6c4fd-b149-4f6f-a27c-5805f31ea6d2",
+                "value": "废弃",
+                "index": 2,
+                "isDeleted": true,
+                "color": "#F4893C",
+                "score": 0
+              }
+            ],
+            "enableColor": false,
+            "enableScore": false
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "success": {
+                  "type": "boolean"
+                },
+                "errorCode": {
+                  "type": "string"
+                },
+                "errorMsg": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "data",
+                "success"
+              ]
+            },
+            "example": {
+              "data": {},
+              "success": true
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  },
+  "delete": {
+    "summary": "删除选项集",
+    "deprecated": false,
+    "description": "删除选项集",
+    "tags": [],
+    "parameters": [
+      {
+        "name": "optionset_id",
+        "in": "path",
+        "description": "",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "url",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appkey",
+        "in": "header",
+        "description": "appkey",
+        "required": false,
+        "example": "{{appkey}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Sign",
+        "in": "header",
+        "description": "签名",
+        "required": false,
+        "example": "{{sign}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "HAP-Appid",
+        "in": "header",
+        "description": "当使用Authorization鉴权时，必传",
+        "required": false,
+        "example": "{{appId}}",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "Authorization",
+        "in": "header",
+        "description": "个人授权 id",
+        "required": false,
+        "example": "{{Authorization}}",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "success": {
+                  "type": "boolean"
+                },
+                "errorCode": {
+                  "type": "string"
+                },
+                "errorMsg": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "data",
+                "success"
+              ]
+            },
+            "example": {
+              "data": {},
+              "success": true
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

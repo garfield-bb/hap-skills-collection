@@ -1,0 +1,510 @@
+  "controls": [
+    {
+      "controlId": "62304777a05b1cddd4a43e5b",
+      "value": "文本"
+    },
+    {
+      "controlId": "623047c7a05b1cddd4a43f56",
+      "value": "rowid"
+    },
+    {
+      "controlId": "623047c7a05b1cddd4a43f58",
+      "value": "2018-8-8"
+    },
+    {
+      "controlId": "623047c7a05b1cddd4a43f59",
+      "value": "2018-8-8"
+    },
+    {
+      "controlId": "623048190e278efaa411174e",
+      "value": "rowid"
+    },
+    {
+      "controlId": "6230483ca05b1cddd4a43fd0",
+      "value": "未开始",
+      "valueType": “1”
+    },
+    {
+      "controlId": "623049f47c0d3c9fdbcf419d",
+      "value": "rowid1,rowid2,rowid3"
+    },
+    {
+      "controlId": "62304ea8a05b1cddd4a4475a",
+      "value": "rowid"
+    },
+    {
+      "controlId": "62304ea8a05b1cddd4a4475b",
+      "value": "rowid1,rowid2,rowid3"
+    },
+    {
+      "controlId": "62343454016df8b87e54c91d",
+      "value": "文本"
+    },
+    {
+      "controlId": "6262111b71459570fb525e64",
+      "value": "[\"微盟定制项目\"]",
+      "valueType": “1”
+    },
+    {
+      "controlId": "62628466c6728782c7e777a9",
+      "value": "e2453de8-1a6a-4d4f-ba36-87fdff880a20"
+    },
+    {
+      "controlId": "ownerid",
+      "value": "e2453de8-1a6a-4d4f-ba36-87fdff880a20"
+    }
+  ],
+  "triggerWorkflow": true
+}'
+curl --location --request POST 'https://api.mingdao.com/v2/open/worksheet/addRow' --header 'Content-Type: application/json' --data-raw '{
+  "appKey": "42e79929576df7b2",
+  "sign": "YWRmZWNkZGFlZjM2NjcxNDA0M2I3NTJiOTMzYzAxODM1MmVlNTVjM2M0ZWNlZjQ4Yzc4Y2I3YmU5MGIxNmRjNw==",
+  "worksheetId": "62304777a05b1cddd4a43e5a",
+  "controls": [
+    {
+      "controlId": "62304777a0522b1cddd4a43e5b",
+      "value": "文本"
+    },
+    {
+      "controlId": "623047c7a05b1cddd4a43f56",
+      "value": "rowid"
+    },
+    {
+      "controlId": "623047c7a05b1cddd4a43f58",
+      "value": "2018-8-8"
+    },
+    {
+      "controlId": "623047c7a05b1cddd4a43f59",
+      "value": "2018-8-8"
+    },
+    {
+      "controlId": "623048190e278efaa411174e",
+      "value": "rowid"
+    },
+    {
+      "controlId": "6230483ca05b1cddd4a43fd0",
+      "value": "未开始",
+      "valueType": "1"
+    },
+    {
+      "controlId": "623049f47c0d3c9fdbcf419d",
+      "value": "rowid1,rowid2,rowid3"
+    },
+    {
+      "controlId": "62304ea8a05b1cddd4a4475a",
+      "value": "rowid"
+    },
+    {
+      "controlId": "62304ea8a05b1cddd4a4475b",
+      "value": "rowid1,rowid2,rowid3"
+    },
+    {
+      "controlId": "62343454016df8b87e54c91d",
+      "value": "文本"
+    },
+    {
+      "controlId": "6262111b71459570fb525e64",
+      "value": '\''["微盟定制项目"]'\'',
+      "valueType": "1"
+    },
+    {
+      "controlId": "62628466c6728782c7e777a9",
+      "value": "e2453de8-1a6a-4d4f-ba36-87fdff880a20"
+    },
+    {
+      "controlId": "ownerid",
+      "value": "e2453de8-1a6a-4d4f-ba36-87fdff880a20"
+    }
+  ],
+  "triggerWorkflow": true
+}'
+curl --location --request POST 'https://api.mingdao.com/v2/open/worksheet/addRow' --header 'Content-Type: application/json' --data-raw '{
+  "appKey": "42e79929576df7b2",
+  "sign": "YWRmZWNkZGFlZjM2NjcxNDA0M2I3NTJiOTMzYzAxODM1MmVlNTVjM2M0ZWNlZjQ4Yzc4Y2I3YmU5MGIxNmRjNw==",
+  "worksheetId": "62304777a05b1cddd4a43e5a",
+  "controls": [
+    {
+      "controlId": "62304777a0522b1cddd4a43e5b",
+      "value": "文本"
+    },
+    {
+      "controlId": "623047c7a05b1cddd4a43f56",
+      "value": "rowid"
+    },
+    {
+      "controlId": "623047c7a05b1cddd4a43f58",
+      "value": "2018-8-8"
+    },
+    {
+      "controlId": "623047c7a05b1cddd4a43f59",
+      "value": "2018-8-8"
+    },
+    {
+      "controlId": "623048190e278efaa411174e",
+      "value": "rowid"
+    },
+    {
+      "controlId": "6230483ca05b1cddd4a43fd0",
+      "value": "未开始",
+      "valueType": "1"
+    },
+    {
+      "controlId": "623049f47c0d3c9fdbcf419d",
+      "value": "rowid1,rowid2,rowid3"
+    },
+    {
+      "controlId": "62304ea8a05b1cddd4a4475a",
+      "value": "rowid"
+    },
+    {
+      "controlId": "62304ea8a05b1cddd4a4475b",
+      "value": "rowid1,rowid2,rowid3"
+    },
+    {
+      "controlId": "62343454016df8b87e54c91d",
+      "value": "文本"
+    },
+    {
+      "controlId": "6262111b71459570fb525e64",
+      "value": '["微盟定制项目"]',
+      "valueType": "1"
+    },
+    {
+      "controlId": "62628466c6728782c7e777a9",
+      "value": "e2453de8-1a6a-4d4f-ba36-87fdff880a20"
+    },
+    {
+      "controlId": "ownerid",
+      "value": "e2453de8-1a6a-4d4f-ba36-87fdff880a20"
+    }
+  ],
+  "triggerWorkflow": true
+}'
+curl --location --request POST 'https://api.mingdao.com/v2/open/worksheet/addRow' --header 'Content-Type: application/json' --data-raw '{
+  "appKey": "42e79929576df7b2",
+  "sign": "YWRmZWNkZGFlZjM2NjcxNDA0M2I3NTJiOTMzYzAxODM1MmVlNTVjM2M0ZWNlZjQ4Yzc4Y2I3YmU5MGIxNmRjNw==",
+  "worksheetId": "62304777a05b1cddd4a43e5a",
+  "controls": [
+    {
+      "controlId": "62304777a0522b1cddd4a43e5b",
+      "value": "文本"
+    },
+    {
+      "controlId": "623047c7a05b1cddd4a43f56",
+      "value": "rowid"
+    },
+    {
+      "controlId": "623047c7a05b1cddd4a43f58",
+      "value": "2018-8-8"
+    },
+    {
+      "controlId": "623047c7a05b1cddd4a43f59",
+      "value": "2018-8-8"
+    },
+    {
+      "controlId": "623048190e278efaa411174e",
+      "value": "rowid"
+    },
+    {
+      "controlId": "6230483ca05b1cddd4a43fd0",
+      "value": "未开始",
+      "valueType": "1"
+    },
+    {
+      "controlId": "623049f47c0d3c9fdbcf419d",
+      "value": "rowid1,rowid2,rowid3"
+    },
+    {
+      "controlId": "62304ea8a05b1cddd4a4475a",
+      "value": "rowid"
+    },
+    {
+      "controlId": "62304ea8a05b1cddd4a4475b",
+      "value": "rowid1,rowid2,rowid3"
+    },
+    {
+      "controlId": "62343454016df8b87e54c91d",
+      "value": "文本"
+    },
+    {
+      "controlId": "6262111b71459570fb525e64",
+      "value": "["微盟定制项目"]",
+      "valueType": "1"
+    },
+    {
+      "controlId": "62628466c6728782c7e777a9",
+      "value": "e2453de8-1a6a-4d4f-ba36-87fdff880a20"
+    },
+    {
+      "controlId": "ownerid",
+      "value": "e2453de8-1a6a-4d4f-ba36-87fdff880a20"
+    }
+  ],
+  "triggerWorkflow": true
+}'
+curl -i -X POST 'http://aimatch.market.alicloudapi.com/ai_market/ai_face/ai_face_match/v1'  -H 'Authorization:APPCODE 你自己的AppCode' --data 'IMAGE_A=%E5%9B%BE%E5%83%8F%E6%95%B0%E6%8D%AE&IMAGE_B=%E5%9B%BE%E5%83%8F%E6%95%B0%E6%8D%AE&IMAGE_TYPE_A=%E5%9B%BE%E5%83%8F%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B&IMAGE_TYPE_B=%E5%9B%BE%E5%83%8F%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B'
+curl -i -k --get --include 'https://ips.market.alicloudapi.com/iplocaltion?ip=192.168.31.146'  
+curl -i -k --get --include 'https://ips.market.alicloudapi.com/iplocaltion?ip=192.168.31.146'  
+-H 'Authorization:LTAI5t99ByQakGVWnuWuaHm6'
+curl -i -k --get --include 'https://ips.market.alicloudapi.com/iplocaltion?ip=192.168.31.146'  
+-H 'Authorization:APPCODE LTAI5t99ByQakGVWnuWuaHm6'
+curl -i -k --get --include 'https://ips.market.alicloudapi.com/iplocaltion?ip=192.168.31.146'  
+-H 'Authorization:APPCODE 8740f84f3c3444e09a53cc8f2a6d8fc1'
+curl -i -k --get --include 'https://ips.market.alicloudapi.com/iplocaltion?ip=192.168.31.146'  
+-H 'Authorization:8740f84f3c3444e09a53cc8f2a6d8fc1'
+curl -i -k --get --include 'https://ips.market.alicloudapi.com/iplocaltion?ip=192.168.31.146'  
+-H 'Authorization:8740f84f3c3444e09a53cc8f2a6d8fc1'
+curl -i -k --get --include 'https://ips.market.alicloudapi.com/iplocaltion?ip=192.168.31.146'  -H 'Authorization:APPCODE 8740f84f3c3444e09a53cc8f2a6d8fc1'
+curl -i -k --get --include 'https://ips.market.alicloudapi.com/iplocaltion?ip=192.168.31.146'  -H 'Authorization: 8740f84f3c3444e09a53cc8f2a6d8fc1'
+curl -i -k --get --include 'https://ips.market.alicloudapi.com/iplocaltion?ip=192.168.31.146'  -H 'Authorization:APPCODE 8740f84f3c3444e09a53cc8f2a6d8fc1'
+curl -X POST -H 'content-type: application/json'  -d '{"open_id_type":"1","mobile":"138****3622","result_type_list":[0,1]}'  "https://open.youzanyun.com/api/youzan.users.info.query/1.0.0?access_token=ebf23ed2a72339b7f00a34b14842a6c"
+curl -X POST -H 'content-type: application/json'  -d '{"open_id_type":"1","mobile":"13257288921","result_type_list":[0,1]}'  "https://open.youzanyun.com/api/youzan.users.info.query/1.0.0?access_token=ebf23ed2a72339b7f00a34b14842a6c"
+yarn add zent
+curl -X POST -H 'content-type: application/json'  -d '{"open_id_type":"1","weixin_open_id":"oHIuujqttsLcr9LxPfu4aKaEkNlcliq","mobile":"138****3622","yz_open_id":"LnhGm4rh576452722916618240","weixin_union_id":"oyzyK1Ma95qZtmRvUTFXqoNyQ3mUliq","result_type_list":[0,1]}'  "https://open.youzanyun.com/api/youzan.users.info.query/1.0.0?access_token=594d2322e10f802f8f9cefc1ece6e25"
+curl --location --request POST 'https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=chat_id' --header 'Authorization: Bearer t-dc038b25859ead7fd6a905e0cd9d26d1f8e756a3' --header 'Content-Type: application/json; charset=utf-8' --data-raw '{
+    "receive_id": "oc_84983ff6516d731e5b5f68d4ea2e1da5",
+    "content": "{\"text\":\"<at user_id=\\\"ou_155184d1e73cbfb8973e5a9e698e74f2\\\">Tom</at>  test content \"}",
+    "msg_type": "text"
+}'
+curl --location --request POST 'https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=chat_id' --header 'Authorization: Bearer t-XXX' --header 'Content-Type: application/json; charset=utf-8' --data-raw '{
+    "receive_id": "oc_84983ff6516d731e5b5f68d4ea2e1da5",
+    "content": "{\"text\":\"<at user_id=\\\"ou_155184d1e73cbfb8973e5a9e698e74f2\\\">Tom</at>  test content \"}",
+    "msg_type": "text"
+}'
+curl -s -H 'Authorization: Bearer <your API token>'   'https://coda.io/apis/v1/docs' |   jq .items[0].name
+# => "New Document"
+curl "https://api.airtable.com/v0/appeqRuDddrmhuLCR/111111111?maxRecords=3&view=Grid%20view"   -H "Authorization: Bearer keyQMY1hFpQysisMe"
+curl -X POST https://api.airtable.com/v0/appeqRuDddrmhuLCR/111111111   -H "Authorization: Bearer keyQMY1hFpQysisMe"   -H "Content-Type: application/json"   --data '{
+  "records": [
+    {
+      "fields": {
+        "Name": "Quarterly launch",
+        "Status": "Done",
+        "Priority": "Low",
+        "Start date": "2022-06-05"
+      }
+    },
+    {
+      "fields": {
+        "Name": "Customer research",
+        "Status": "In progress",
+        "Priority": "Medium",
+        "Start date": "2022-06-08"
+      }
+    }
+  ]
+}'
+curl https://api.airtable.com/v0/appeqRuDddrmhuLCR/111111111/reczAH2ukhBJGXuhE   -H "Authorization: Bearer YOUR_API_KEY"
+curl -s -H 'Authorization: Bearer <your API token>'   'https://coda.io/apis/v1/docs' |   jq .items[0].name
+# => "New Document"
+curl -s -H 'Authorization: Bearer <jiafei>'   'https://coda.io/apis/v1/docs' |   jq .items[0].name
+# => "New Document"
+curl --location --request POST 'http://poll.kuaidi100.com/poll/query.do' --header 'Content-Type: application/x-www-form-urlencoded' --data-urlencode 'param={"com":"yunda","num":"123456789","resultv2":"1"}' --data-urlencode 'customer=12333' --data-urlencode 'sign=B19DB55FF14E35488D780C172E19DF99'
+curl --location --request POST 'http://poll.kuaidi100.com/poll/query.do' --header 'Content-Type: application/x-www-form-urlencoded' --data-urlencode 'param={"com":"yunda","num":"123456789","resultv2":"1"}' --data-urlencode 'customer=12333' --data-urlencode 'sign=B19DB55FF14E35488D780C172E19DF99'
+https://poll.kuaidi100.com/poll/query.do?customer=F132EF7C170A432E82F9331C1FE869E0&sign=6D51D83EA9EB149400A9FFC3808BBB98&param={"com":"yuantong","num":"YT6576856192864","phone":"","from":"","to":"","resultv2":0,"show":"0","order":"desc"}
+curl -X POST -H 'content-type: application/json'  -d '{"mobile":"13257288921","result_type_list":[0,1]}'  "https://open.youzanyun.com/api/youzan.users.info.query/1.0.0?access_token=12642b4b1eea4cc0009a5ffcbd2f024"
+curl -X POST -H 'content-type: application/json'  -d '{"reason":"Jack add pionts","account_type":"3","account_id":"13257288921","points":"10"}'  "https://open.youzanyun.com/api/youzan.crm.customer.points.sync/3.1.0?access_token=1dbe0632deb14fdd011332a584c2ee7"
+jkl;'
+sudo xattr -d com.apple.quarantine "/Applications/明道云(内测版).app"
+
+sudo xattr -d com.apple.quarantine /Applications/明道云\(内测版\).app 
+npm install -g @airtable/blocks-cli
+佳节快乐；‘
+jkl;'
+
+
+
+l
+
+q
+
+npm install -g @airtable/blocks-cli
+npm install -g @airtable/blocks-cli
+npm install --global @airtable/blocks-cli
+npm install --global
+npm install --global @airtable/blocks-cli
+block run
+npm install --global @airtable/blocks-cli
+金坷垃；‘
+jkl;'
+
+curl -H "Authorization: apikey 2CaoUUizhfZSLlkLouDU" https://bjfwww.freshdesk.com/api/v2/tickets
+curl -u 2CaoUUizhfZSLlkLouDU:X -H "Content-Type: application/json" -X GET 'https://bjfwww.freshdesk.com/api/v2/tickets'
+curl -o image.svg https://fassets.freshdesk.com/production/a/assets/images/sandbox/build-23830151a377e9e34bfcc3048c16b50ac0eada30119eb7336d6742eb5a3d14d4.svg
+curl -o image.svg https://fassets.freshdesk.com/production/a/assets/images/sandbox/build-23830151a377e9e34bfcc3048c16b50ac0eada30119eb7336d6742eb5a3d14d4.svg
+curl -o image.svg https://fassets.freshdesk.com/production/a/assets/images/sandbox/build-23830151a377e9e34bfcc3048c16b50ac0eada30119eb7336d6742eb5a3d14d4.svg
+curl -v -u Basic MkNhb1VVaXpoZlpTTGxrTG91RFU6WA==:X -X GET 'https://https://bjfwww.freshdesk.com.freshdesk.com/api/v2/canned_response_folders'
+java -version
+java -version
+cd ~
+ sudo vim /etc/profile
+touch .bash_profile
+/usr/libexec/java_home
+sudo vim /etc/profile
+source /etc/profile
+echo $JAVA_HOME
+vi .bash_profile
+source .bash_profile
+/usr/libexec/java_home  -V
+/usr/libexec/java_home  -V
+/Applications/YonghongZ-Suite/command/startCMD.sh 
+chmod +x /Applications/YonghongZ-Suite/command/startCMD.sh 
+/Applications/YonghongZ-Suite/command/startCMD.sh 
+start /Applications/YonghongZ-Suite/command/startCMD.sh 
+cd /Applications/YonghongZ-Suite/command 
+./ startCMD.sh
+/Applications/YonghongZ-Suite/command/startCMD.sh 
+/Applications/YonghongZ-Suite/command/startCMD.bat 
+su sh
+su sh
+su yxzuji
+cd /Applications/YonghongZ-Suite
+chmod +x "Yonghong Z-Suite V10.0.sh
+
+cd /Applications/YonghongZ-Suite/tomcat/bin
+ll
+ls -all
+sh ./startup.sh
+sudo sh ./startup.sh
+chmod +777 ./startup.sh
+sudo sh ./startup.sh
+cd ..
+ll
+ls
+chmod +777 ./bin
+chmod -r +777 ./bin
+chmod + 777 ./bin/*
+chmod +777 ./bin/*
+cd bin
+ls
+ls -all
+ls -al
+cd /Applications/YonghongZ-Suite/tomcat/bin
+./startup.sh
+sudo ./startup.s
+sudo ./startup.sh
+pwd
+ls -al
+sudo ls -al
+sudo sh ./startup.sh
+chmod +x *.sh
+sudo chmod +x *.sh
+sudo chmod +x catalina.sh
+sudo sh ./startup.sh
+ps aux | grep tomcat
+cd ..
+ls -al
+tail -f ./logs/catalina.out 
+telnet localhost 8080
+/Applications/YonghongZ-Suite/tomcat/bin/startup.command ; exit;
+ifconfig
+pwd
+cd /Applications/YonghongZ-Suite/
+ls -al
+ls -al
+chmod +x chmod.sh 
+./chmod.sh 
+sudo chmod +x chmod.sh 
+ls -al
+./tomcat/bin/startup.sh 
+ps aux | grep tomcat
+kill 30488
+sudo kill 30488
+pwd
+sudo ./tomcat/bin/startup.sh 
+sudo tail -f ./tomcat/logs/catalina.out 
+/Users/yxzuji/Downloads/ngrok ; exit;
+npm i -g asar
+% asar e app.asar app
+pip install scrapy
+pip install scrapy
+金坷垃；’
+金坷垃；‘
+jkl;'
+pip install scrapy
+
+ping
+ping google.com
+sudo xattr -r -d com.apple.quarantine /Applications/Paste.app
+sudo xattr -r -d com.apple.quarantine /Applications/Firefox.app
+sudo xattr -r -d com.apple.quarantine /Applications/Firefox.app
+networkQuality
+networkQuality
+networkQuality
+softwareupdate --install-rosetta
+softwareupdate --install-rosetta
+/usr/sbin/softwareupdate --install-rosetta --agree-to-license
+/Volumes/PS2022_M1_23.1.0/M1\ PS破解补丁.dmg 
+sudo xattr -r -d com.apple.quarantine
+/Volumes/PS2022_M1_23.1.0/M1\ PS破解补丁.dmg 
+sudo xattr -r -d com.apple.quarantine
+ /Volumes/PS2022_M1_23.1.0/Install\ PHSP_23.1-zh_CN-macuniversal.app 
+sudo xattr -r -d com.apple.quarantine /Volumes/PS2022_M1_23.1.0/Install\ PHSP_23.1-zh_CN-macuniversal.app 
+sudo xattr -r -d com.apple.quarantine
+ /Volumes/PS2022_M1_23.1.0/Install\ PHSP_23.1-zh_CN-macuniversal.app 
+/Users/yxzuji/Documents/PS2022_M1_23.1.0_macOShome.dmg 
+sudo xattr -r -d com.apple.quarantine 
+/Users/yxzuji/Documents/PS2022_M1_23.1.0_macOShome.dmg 
+sudo xattr -r -d com.apple.quarantine 
+sudo xattr -r -d com.apple.quarantine /Users/yxzuji/Desktop/Install\ PHSP_23.1-zh_CN-macuniversal.app 
+/Users/yxzuji/Desktop/Install\ PHSP_23.1-zh_CN-macuniversal.app 
+sudo xattr -r -d com.apple.quarantine /Users/yxzuji/Desktop/AntiCC\ 1.7\ \[RiD\].pkg 
+sudo xattr -r -d com.apple.quarantine /Users/yxzuji/Desktop/Install.app 
+sudo xattr -r -d com.apple.quarantine /Users/yxzuji/Desktop/Install.app 
+npm install -g mdye-cli
+jkl;'
+npm install -g mdye-cli
+
+npm install -g mdye-cli
+cd ~
+npm install -g mdye-cli
+jkl;'
+ npm: command not found
+sudo apt-get remove npm
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+        sudo apt-get remove npm
+sudo apt-get remove npm
+node -v
+sudo spctl --master-disable
+sudo npm install -g cnpm --registry=https://registry.npm.taobao.org
+sudo spctl --master-disable
+node -v
+//command not found
+node -v
+$ brew install git
+$ brew install git
+$ sudo port install git
+npm install --save-dev webpack
+sudo spctl --master-disable
+node --version
+node --version
+touch ~/.bash_profile
+cd/
+cd /
+cd/
+brew install node
+sudo mkdir -p /usr/local/include /usr/local/lib /usr/local/sbin
+sudo chown -R $(whoami) /usr/local/include /usr/local/lib /usr/local/sbin
+brew link node
+node -v
+cd /usr/local/bin/node
+node -v
+npm -v
+node -v
+node -v
+//command not found
+node -v
+//command not found
+node -v
+/Users/yxzuji/Downloads/node-v20.9.0\(1\).pkg 
+/bin/zsh -c "$(curl -fsSL https://gitee.com/cunkai/HomebrewCN/raw/master/Homebrew.sh)"
+brew install nvm
+/bin/zsh -c "$(curl -fsSL https://gitee.com/cunkai/HomebrewCN/raw/master/Homebrew.sh)"
+stall
+xcode-select --install
+cd ~/.nvm
+cd ~/.nvm
+cd /usr/local/bin/node
+cd/usr/local/bin/node
+cd/usr

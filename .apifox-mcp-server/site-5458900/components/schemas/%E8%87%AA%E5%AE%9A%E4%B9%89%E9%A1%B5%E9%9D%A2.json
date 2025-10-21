@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "自定义页面ID"
+    },
+    "enable": {
+      "type": "boolean",
+      "description": "是否可以查看自定义页面"
+    }
+  },
+  "required": [
+    "id",
+    "enable"
+  ]
+}

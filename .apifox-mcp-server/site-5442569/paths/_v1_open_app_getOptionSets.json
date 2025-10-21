@@ -1,0 +1,284 @@
+{
+  "post": {
+    "summary": "获取选项集",
+    "deprecated": false,
+    "description": "",
+    "tags": [],
+    "parameters": [],
+    "requestBody": {
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "appKey": {
+                "type": "string",
+                "title": "AppKey",
+                "description": ""
+              },
+              "sign": {
+                "type": "string",
+                "title": "签名",
+                "description": ""
+              }
+            },
+            "required": [
+              "appKey",
+              "sign"
+            ]
+          },
+          "example": {
+            "appKey": "5004e1f1c103fc82",
+            "sign": "MWQzYWJiNTNlYzZmNjZhNTA1NTExMGZhNzEyMjU3ZTMzM2Q2YWFmZWJkMTZjMWM1NTRjNDZiODUwNjc5OTUzNg=="
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "appId": {
+                        "type": "string",
+                        "title": "应用 ID",
+                        "description": ""
+                      },
+                      "projectId": {
+                        "type": "string",
+                        "title": "组织 ID",
+                        "description": ""
+                      },
+                      "collectionId": {
+                        "type": "string",
+                        "title": "选项集ID"
+                      },
+                      "name": {
+                        "type": "string",
+                        "title": "选项集名称"
+                      },
+                      "accountId": {
+                        "type": "string",
+                        "title": "accountId"
+                      },
+                      "worksheetIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "options": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "key": {
+                              "type": "string",
+                              "title": "选项id"
+                            },
+                            "value": {
+                              "type": "string",
+                              "title": "选项值，不允许重复"
+                            },
+                            "index": {
+                              "type": "integer",
+                              "title": "选项排序值: 必须为整数，越小越靠前"
+                            },
+                            "isDeleted": {
+                              "type": "boolean",
+                              "title": "该选项是否已被删除"
+                            },
+                            "color": {
+                              "type": "string",
+                              "title": "颜色值"
+                            },
+                            "score": {
+                              "type": "integer",
+                              "title": "选项分值"
+                            },
+                            "hide": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "key",
+                            "value",
+                            "index",
+                            "isDeleted",
+                            "color",
+                            "score",
+                            "hide"
+                          ]
+                        }
+                      },
+                      "colorful": {
+                        "type": "boolean"
+                      },
+                      "enableScore": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "code",
+                "data"
+              ]
+            },
+            "example": {
+              "code": 1,
+              "data": [
+                {
+                  "appId": "84ab0007-53be-42d0-abb1-ca48d5914823",
+                  "projectId": "28447959-cf7f-4ae9-9074-8977ce48e2a0",
+                  "collectionId": "052ca8d0-9a3e-43e5-ac6f-9158256e3345",
+                  "name": "订单状态",
+                  "accountId": "e2453de8-1a6a-4d4f-ba36-87fdff880a20",
+                  "worksheetIds": [],
+                  "options": [
+                    {
+                      "key": "54cb74a9-022c-484a-a7c2-68a67ec6ed92",
+                      "value": "待支付",
+                      "index": 1,
+                      "isDeleted": false,
+                      "color": "#C9E6FC",
+                      "score": 0,
+                      "hide": false
+                    },
+                    {
+                      "key": "8798bc55-51e7-48c8-8869-e53496263ebd",
+                      "value": "已取消",
+                      "index": 2,
+                      "isDeleted": false,
+                      "color": "#C3F2F2",
+                      "score": 0,
+                      "hide": false
+                    },
+                    {
+                      "key": "14b812fa-4701-455f-8589-9f96e90f1e94",
+                      "value": "已完成",
+                      "index": 3,
+                      "isDeleted": false,
+                      "color": "#00C345",
+                      "score": 0,
+                      "hide": false
+                    }
+                  ],
+                  "colorful": false,
+                  "enableScore": false
+                }
+              ]
+            }
+          }
+        },
+        "headers": {}
+      },
+      "401": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "title": "请求结果"
+                },
+                "code": {
+                  "type": "integer",
+                  "title": "代码"
+                },
+                "msg": {
+                  "type": "string",
+                  "title": "消息"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "title": "返回数据"
+                }
+              },
+              "required": [
+                "success",
+                "code",
+                "msg",
+                "data"
+              ]
+            }
+          }
+        },
+        "headers": {}
+      },
+      "404": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "title": "请求结果"
+                },
+                "code": {
+                  "type": "integer",
+                  "title": "代码"
+                },
+                "msg": {
+                  "type": "string",
+                  "title": "消息"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {},
+                  "title": "返回数据"
+                }
+              },
+              "required": [
+                "success",
+                "code",
+                "msg",
+                "data"
+              ],
+              "title": ""
+            },
+            "examples": {
+              "2": {
+                "summary": "异常示例",
+                "value": {
+                  "success": false,
+                  "code": 1001,
+                  "msg": "应用不存在",
+                  "data": {}
+                }
+              },
+              "3": {
+                "summary": "异常示例",
+                "value": {
+                  "success": false,
+                  "code": 1001,
+                  "msg": "应用不存在",
+                  "data": {}
+                }
+              }
+            }
+          }
+        },
+        "headers": {}
+      }
+    },
+    "security": []
+  }
+}

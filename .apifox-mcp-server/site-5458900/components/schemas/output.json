@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "字段id"
+    },
+    "name": {
+      "type": "string",
+      "description": "字段名称"
+    },
+    "type": {
+      "type": "integer",
+      "description": "字段类型"
+    },
+    "description": {
+      "type": "string",
+      "description": "描述"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "type",
+    "description"
+  ]
+}
