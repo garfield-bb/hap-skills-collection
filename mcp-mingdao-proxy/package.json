@@ -1,0 +1,35 @@
+{
+  "name": "@your-scope/mcp-mingdao-proxy",
+  "version": "0.1.0",
+  "description": "STDIO -> Streamable HTTP MCP proxy for Mingdao",
+  "type": "module",
+  "license": "MIT",
+  "author": "bubu <bjfwww@gmail.com>",
+  "bin": {
+    "mcp-mingdao": "bin/cli.js"
+  },
+  "keywords": [
+    "mcp",
+    "model context protocol",
+    "stdio",
+    "streamable-http",
+    "proxy"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@pyroprompts/mcp-stdio-to-streamable-http-adapter": "^0.1.0"
+  }
+}
