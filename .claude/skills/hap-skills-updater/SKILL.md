@@ -10,12 +10,14 @@ license: MIT
 
 ## 📋 核心技能列表
 
-HAP Skills Collection 目前包含以下 4 个核心技能：
+HAP Skills Collection 包含以下 4 个核心技能（需要从 GitHub 仓库更新）：
 
-1. **hap-v3-api** - HAP V3 API 使用技能
-2. **hap-view-plugin** - HAP 视图插件开发技能
-3. **hap-frontend-project** - HAP 前端项目搭建技能
-4. **hap-mcp-usage** - HAP MCP 使用指南
+1. **hap-v3-api** - HAP V3 API 使用技能 ✅
+2. **hap-view-plugin** - HAP 视图插件开发技能 ✅
+3. **hap-frontend-project** - HAP 前端项目搭建技能 ⚠️（如果不存在，需要从仓库获取）
+4. **hap-mcp-usage** - HAP MCP 使用指南 ✅
+
+**注意**: 某些技能可能尚未在本地创建，更新时会自动从 GitHub 仓库同步。
 
 ## 📁 技能目录结构
 
@@ -60,11 +62,17 @@ git clone https://github.com/garfield-bb/hap-skills-collection.git
 cd hap-skills-collection
 git pull origin main
 
-# 2. 复制技能到本地技能目录
-cp -r .claude/skills/* ~/.claude/skills/
+# 2. 确保本地技能目录存在
+mkdir -p ~/.claude/skills
 
-# 3. 验证更新
-ls -la ~/.claude/skills/hap-*/SKILL.md
+# 3. 复制所有技能到本地技能目录（包括缺失的技能）
+cp -r .claude/skills/hap-v3-api ~/.claude/skills/ 2>/dev/null || echo "hap-v3-api 已存在或不存在"
+cp -r .claude/skills/hap-view-plugin ~/.claude/skills/ 2>/dev/null || echo "hap-view-plugin 已存在或不存在"
+cp -r .claude/skills/hap-frontend-project ~/.claude/skills/ 2>/dev/null || echo "hap-frontend-project 已存在或不存在"
+cp -r .claude/skills/hap-mcp-usage ~/.claude/skills/ 2>/dev/null || echo "hap-mcp-usage 已存在或不存在"
+
+# 4. 验证更新（检查实际存在的技能）
+ls -la ~/.claude/skills/hap-*/SKILL.md 2>/dev/null
 ```
 
 #### 方式二：手动更新单个技能
@@ -167,11 +175,21 @@ ls -la ~/.claude/skills/hap-*/SKILL.md
 # 克隆仓库
 git clone https://github.com/garfield-bb/hap-skills-collection.git /tmp/hap-skills-collection
 
-# 复制技能文件
-cp -r /tmp/hap-skills-collection/.claude/skills/* ~/.claude/skills/
+# 确保本地技能目录存在
+mkdir -p ~/.claude/skills
 
-# 验证更新
-ls -la ~/.claude/skills/hap-*/SKILL.md
+# 复制 4 个核心技能文件（只复制存在的）
+for skill in hap-v3-api hap-view-plugin hap-frontend-project hap-mcp-usage; do
+  if [ -d "/tmp/hap-skills-collection/.claude/skills/$skill" ]; then
+    cp -r /tmp/hap-skills-collection/.claude/skills/$skill ~/.claude/skills/
+    echo "✅ 已更新 $skill"
+  else
+    echo "⚠️  $skill 在仓库中不存在，跳过"
+  fi
+done
+
+# 验证更新（只显示实际存在的技能）
+ls -la ~/.claude/skills/hap-*/SKILL.md 2>/dev/null
 ```
 
 ### 3. 验证更新结果
