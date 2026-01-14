@@ -432,26 +432,47 @@ AI:
 
 ### Cursor MCP 配置文件位置
 
-Cursor 的 MCP 配置存储在以下位置：
+Cursor 支持两种配置方式：
+
+#### 方式 1: 项目级配置（推荐）⭐
+
+- **位置**: 项目根目录下的 `.cursor/mcp.json`
+- **优点**: 
+  - 配置随项目版本控制（可选择性提交）
+  - 不同项目可使用不同 MCP 配置
+  - 团队协作时配置更灵活
+- **macOS/Linux**: `项目根目录/.cursor/mcp.json`
+- **Windows**: `项目根目录\.cursor\mcp.json`
+
+#### 方式 2: 全局配置
+
+- **位置**: Cursor 用户设置目录
+- **优点**: 所有项目共享同一配置
 - **macOS**: `~/.cursor/mcp.json`
 - **Windows**: `%USERPROFILE%\.cursor\mcp.json`
 - **Linux**: `~/.cursor/mcp.json`
 
-⚠️ **重要**: Cursor 的 MCP 配置存储在 `~/.cursor/mcp.json`，而不是 `settings.json` 文件中。
+**优先级**: 如果项目级和全局配置都存在，**项目级配置优先**。
+
+⚠️ **重要**: Cursor 的 MCP 配置存储在 `.cursor/mcp.json`（项目级）或 `~/.cursor/mcp.json`（全局），**不是** `settings.json` 文件中。
 
 ### 自动化配置步骤
 
 当用户提供 MCP 配置信息时（例如：`{"hap-mcp-应用名":{"url":"https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx"}}`），AI 应该：
 
-1. **查找配置文件**
-   - 首先尝试读取 `~/.cursor/mcp.json`
-   - 如果不存在，检查其他可能的配置文件位置
-   - 使用 `run_terminal_cmd` 查找配置文件：`find ~/.cursor -name "mcp*.json"`
+1. **确定配置位置**（按优先级）
+   - **优先检查项目根目录**是否存在 `.cursor/mcp.json`
+   - 如果用户在项目目录中操作，优先使用项目级配置
+   - 如果项目级配置不存在，检查全局配置 `~/.cursor/mcp.json`
+   - 如果用户明确要求全局配置，则使用全局配置
+   - 使用 `run_terminal_cmd` 检查：`ls -la .cursor/mcp.json 2>/dev/null || ls -la ~/.cursor/mcp.json 2>/dev/null`
 
 2. **读取现有配置**
+   - 如果使用项目级配置：读取 `项目根目录/.cursor/mcp.json`
+   - 如果使用全局配置：读取 `~/.cursor/mcp.json`
    - 使用 `read_file` 工具读取配置文件
    - 检查是否已存在 `mcpServers` 配置结构
-   - 如果文件不存在，创建新的配置结构
+   - 如果文件不存在，创建新文件（需要先创建 `.cursor` 目录）
 
 3. **解析用户提供的配置**
    - 提取服务器名称（如 `hap-mcp-自媒体运营`）
@@ -461,64 +482,96 @@ Cursor 的 MCP 配置存储在以下位置：
 4. **更新或添加配置**
    - 如果配置文件中已有 `mcpServers`，则在其中添加或更新服务器配置
    - 如果配置文件中没有 `mcpServers`，则创建新的配置结构
-   - **注意**: 应用执行 MCP 只需要 `url` 字段，不需要 `type` 字段
+   - **注意**: 应用执行 MCP 需要 `"type": "http"` 字段和 `url` 字段
 
 5. **保存配置文件**
+   - **项目级配置**: 保存到 `项目根目录/.cursor/mcp.json`（需要先创建 `.cursor` 目录）
+   - **全局配置**: 更新 `~/.cursor/mcp.json` 文件
    - 如果文件受保护无法直接编辑，使用 Python 脚本通过 JSON 操作更新：
    ```python
    import json
    import os
    
-   file_path = os.path.expanduser('~/.cursor/mcp.json')
-   with open(file_path, 'r', encoding='utf-8') as f:
-       data = json.load(f)
+   # 确定配置文件路径（项目级优先）
+   project_config = '.cursor/mcp.json'
+   global_config = os.path.expanduser('~/.cursor/mcp.json')
+   
+   # 优先使用项目级配置
+   if os.path.exists(project_config):
+       file_path = project_config
+   elif os.path.exists(os.path.dirname(project_config)) or os.getcwd():
+       # 在项目目录中，创建项目级配置
+       os.makedirs('.cursor', exist_ok=True)
+       file_path = project_config
+   else:
+       file_path = global_config
+       os.makedirs(os.path.dirname(file_path), exist_ok=True)
+   
+   # 读取现有配置或创建新配置
+   if os.path.exists(file_path):
+       with open(file_path, 'r', encoding='utf-8') as f:
+           data = json.load(f)
+   else:
+       data = {'mcpServers': {}}
    
    # 添加新的 MCP 服务器配置
+   if 'mcpServers' not in data:
+       data['mcpServers'] = {}
+   
    data['mcpServers']['hap-mcp-应用名'] = {
+       'type': 'http',
        'url': 'https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx'
    }
    
    # 写回文件
    with open(file_path, 'w', encoding='utf-8') as f:
        json.dump(data, f, ensure_ascii=False, indent=2)
+   
+   print(f'配置已保存到: {file_path}')
    ```
    - 使用 `run_terminal_cmd` 执行 Python 脚本更新配置
    - 保持 JSON 格式正确，注意逗号和缩进
 
+6. **验证配置**
+   - ✅ 验证 JSON 格式是否正确
+   - ✅ 确认文件已成功创建/更新
+   - ✅ 检查 `type` 字段是否为 `"http"`
+   - ✅ 提醒用户重启 Cursor 使配置生效
+   - ✅ 如果是项目级配置，提醒可以添加到 `.gitignore`（如果包含敏感信息）
+
 ### 配置格式示例
 
-#### 新增应用执行 MCP
+#### 项目级配置（推荐）
 
-如果用户提供：
-```json
-{"hap-mcp-自媒体运营":{"url":"https://api.mingdao.com/mcp?HAP-Appkey=601530a05105750f&HAP-Sign=MDc2ZTRmNTMxYjFmOTZlNzM5ODc4NGJlNmNiMzM0NTY0YWExODgxY2RjYTIxMGQzM2FlMGRiZDRlOTEyY2Y2ZA=="}}
-```
-
-AI 应该更新 `~/.cursor/mcp.json` 文件，在 `mcpServers` 中添加：
+在项目根目录创建 `.cursor/mcp.json`：
 ```json
 {
   "mcpServers": {
-    "应用 API - API 文档": {
-      "command": "npx -y apifox-mcp-server@latest --site-id=5442569",
-      "args": [],
-      "env": {}
-    },
     "hap-mcp-清华大学官网": {
-      "url": "https://api2.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx"
-    },
+      "type": "http",
+      "url": "https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx"
+    }
+  }
+}
+```
+
+#### 全局配置
+
+在用户设置目录的 `~/.cursor/mcp.json` 中添加：
+```json
+{
+  "mcpServers": {
     "hap-mcp-自媒体运营": {
+      "type": "http",
       "url": "https://api.mingdao.com/mcp?HAP-Appkey=601530a05105750f&HAP-Sign=MDc2ZTRmNTMxYjFmOTZlNzM5ODc4NGJlNmNiMzM0NTY0YWExODgxY2RjYTIxMGQzM2FlMGRiZDRlOTEyY2Y2ZA=="
-    },
-    "playwright": {
-      "command": "npx",
-      "args": ["@playwright/mcp@latest"]
     }
   }
 }
 ```
 
 **注意**: 
-- 应用执行 MCP 只需要 `url` 字段，**不需要** `type` 字段
+- 应用执行 MCP 需要 `"type": "http"` 字段和 `url` 字段
+- 项目级配置不需要嵌套在 `settings.json` 的其他配置中，是独立的 JSON 文件
 - 保留其他已存在的 MCP 配置，不要删除
 
 #### 更新现有 MCP 配置
@@ -533,50 +586,123 @@ AI 应该更新 `~/.cursor/mcp.json` 文件，在 `mcpServers` 中添加：
 **场景**: 用户说"把这个 MCP 配置都这里"并提供了配置信息
 
 **AI 操作流程**:
-1. 使用 `run_terminal_cmd` 查找配置文件：`find ~/.cursor -name "mcp*.json"`
-2. 读取 `~/.cursor/mcp.json` 查看现有配置
-3. 解析用户提供的 MCP 配置（提取服务器名和 URL）
-4. 使用 Python 脚本更新配置文件（因为文件可能受保护）：
+1. **确定配置位置**（优先项目级）
+   - 检查项目根目录是否存在 `.cursor/mcp.json`
+   - 如果不存在，检查是否在项目目录中（优先项目级配置）
+   - 如果用户明确要求全局配置，则使用全局配置
+
+2. **读取现有配置**
+   - 如果使用项目级配置：读取 `项目根目录/.cursor/mcp.json`
+   - 如果使用全局配置：读取 `~/.cursor/mcp.json`
+   - 如果文件不存在，创建新文件
+
+3. **解析用户提供的配置**
+   - 提取服务器名称（如 `hap-mcp-自媒体运营`）
+   - 提取 URL（包含 Appkey 和 Sign）
+
+4. **更新或添加配置**
+   - 如果配置文件中已有 `mcpServers`，则更新或添加新的服务器配置
+   - 如果配置文件中没有 `mcpServers`，则创建新的配置结构
+   - 对于应用执行 MCP，确保添加 `"type": "http"` 字段
+
+5. **保存配置文件**
+   - 项目级配置：保存到 `.cursor/mcp.json`（需要先创建 `.cursor` 目录）
+   - 全局配置：更新 `~/.cursor/mcp.json` 文件
+   - 使用 Python 脚本更新配置文件：
    ```bash
    python3 -c "
    import json
    import os
    
-   file_path = os.path.expanduser('~/.cursor/mcp.json')
-   with open(file_path, 'r', encoding='utf-8') as f:
-       data = json.load(f)
+   # 确定配置文件路径（项目级优先）
+   project_config = '.cursor/mcp.json'
+   global_config = os.path.expanduser('~/.cursor/mcp.json')
+   
+   # 优先使用项目级配置
+   if os.path.exists(project_config):
+       file_path = project_config
+   elif os.getcwd():
+       # 在项目目录中，创建项目级配置
+       os.makedirs('.cursor', exist_ok=True)
+       file_path = project_config
+   else:
+       file_path = global_config
+       os.makedirs(os.path.dirname(file_path), exist_ok=True)
+   
+   # 读取现有配置或创建新配置
+   if os.path.exists(file_path):
+       with open(file_path, 'r', encoding='utf-8') as f:
+           data = json.load(f)
+   else:
+       data = {'mcpServers': {}}
+   
+   # 添加新的 MCP 服务器配置
+   if 'mcpServers' not in data:
+       data['mcpServers'] = {}
    
    data['mcpServers']['hap-mcp-自媒体运营'] = {
+       'type': 'http',
        'url': 'https://api.mingdao.com/mcp?HAP-Appkey=601530a05105750f&HAP-Sign=MDc2ZTRmNTMxYjFmOTZlNzM5ODc4NGJlNmNiMzM0NTY0YWExODgxY2RjYTIxMGQzM2FlMGRiZDRlOTEyY2Y2ZA=='
    }
    
    with open(file_path, 'w', encoding='utf-8') as f:
        json.dump(data, f, ensure_ascii=False, indent=2)
    
-   print('配置已添加成功')
+   print(f'配置已保存到: {file_path}')
    "
    ```
-5. 验证配置是否正确添加
-6. 告知用户配置已完成，需要重启 Cursor 才能生效
+
+6. **验证配置**
+   - ✅ 验证 JSON 格式是否正确
+   - ✅ 确认文件已成功创建/更新
+   - ✅ 检查 `type` 字段是否为 `"http"`
+   - ✅ 提醒用户重启 Cursor 使配置生效
+   - ✅ 如果是项目级配置，提醒可以添加到 `.gitignore`（如果包含敏感信息）
+
+### 配置方式判断逻辑
+
+AI 应该按以下优先级选择配置位置：
+
+1. **项目级配置优先**
+   - 如果用户在项目目录中操作，优先使用项目级配置
+   - 创建或更新 `项目根目录/.cursor/mcp.json`
+
+2. **全局配置备选**
+   - 如果用户明确要求全局配置
+   - 或者项目级配置失败时使用
+
+3. **配置冲突处理**
+   - 如果项目级和全局配置都存在，优先使用项目级配置
+   - 提醒用户两种配置的区别
 
 ### 注意事项
 
 - ✅ **自动化执行**: 不要只告诉用户如何配置，应该直接帮用户配置好
-- ✅ **配置文件位置**: 使用 `~/.cursor/mcp.json`，不是 `settings.json`
+- ✅ **配置文件位置**: 优先使用项目级配置 `.cursor/mcp.json`，不是 `settings.json`
 - ✅ **格式检查**: 确保 JSON 格式正确，注意逗号、引号、括号匹配
 - ✅ **保留现有配置**: 更新时不要删除其他已存在的 MCP 配置
 - ✅ **文件保护**: 如果文件受保护无法直接编辑，使用 Python 脚本通过 JSON 操作更新
-- ✅ **配置格式**: 应用执行 MCP 只需要 `url` 字段，不需要 `type` 字段
+- ✅ **配置格式**: 应用执行 MCP 需要 `"type": "http"` 字段和 `url` 字段
+- ✅ **项目级优先**: 优先使用项目级配置，更灵活且可版本控制
 - ⚠️ **权限问题**: 如果文件无法写入，提示用户检查文件权限
 - ⚠️ **备份建议**: 更新前可以提醒用户配置文件包含敏感信息
 
 ### 配置后的提示
 
 配置完成后，AI 应该告知用户：
-- ✅ 配置已保存到 `~/.cursor/mcp.json` 文件
-- ✅ 配置位置和文件名
+- ✅ 配置已保存到文件（明确说明是项目级还是全局配置）
+- ✅ 配置位置和文件名（如：`项目根目录/.cursor/mcp.json` 或 `~/.cursor/mcp.json`）
 - ✅ 需要重启 Cursor 或重新加载 MCP 服务器才能生效
+- ✅ 如果是项目级配置，提醒可以添加到 `.gitignore`（如果包含敏感信息）
 - ⚠️ 提醒保护鉴权信息，不要分享配置
+
+### 版本说明
+
+**最后更新**: 2025-01-14  
+**Cursor 版本**: 最新版本  
+**配置方式**: 优先使用项目级配置（`.cursor/mcp.json`）
+
+如果发现配置方式有变化，请及时更新此文档。
 
 ---
 
