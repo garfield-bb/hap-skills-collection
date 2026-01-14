@@ -34,7 +34,6 @@
 - ✅ 使用 HAP V3 API 进行数据操作和业务编排
 - ✅ 搭建基于 HAP 的独立前端项目
 - ✅ 配置和管理 HAP MCP Server
-- ✅ 维护和更新 HAP API 文档
 
 ---
 
@@ -126,11 +125,13 @@ git clone https://github.com/garfield-bb/hap-skills-collection.git .hap-skills
 
 1. HAP V3 API 使用技能: ~/hap-skills-collection/.claude/skills/hap-v3-api/SKILL.md
 2. HAP 视图插件开发技能: ~/hap-skills-collection/.claude/skills/hap-view-plugin/SKILL.md
-3. HAP MCP 使用指南: ~/hap-skills-collection/.claude/skills/hap-mcp-usage/SKILL.md
+3. HAP 前端项目搭建技能: ~/hap-skills-collection/.claude/skills/hap-frontend-project/SKILL.md
+4. HAP MCP 使用指南: ~/hap-skills-collection/.claude/skills/hap-mcp-usage/SKILL.md
 
 当用户提到以下关键词时，请使用对应的技能：
 - "HAP API"、"V3 接口"、"查询数据" → 使用 HAP V3 API 技能
 - "视图插件"、"自定义视图"、"看板" → 使用视图插件开发技能
+- "搭建网站"、"前端项目"、"HAP 作为数据库" → 使用前端项目搭建技能
 - "MCP 配置"、"MCP Server" → 使用 MCP 使用指南
 ```
 
@@ -142,6 +143,7 @@ git clone https://github.com/garfield-bb/hap-skills-collection.git .hap-skills
 请参考以下技能文档：
 - HAP V3 API: .hap-skills/.claude/skills/hap-v3-api/SKILL.md
 - 视图插件开发: .hap-skills/.claude/skills/hap-view-plugin/SKILL.md
+- 前端项目搭建: .hap-skills/.claude/skills/hap-frontend-project/SKILL.md
 - MCP 使用指南: .hap-skills/.claude/skills/hap-mcp-usage/SKILL.md
 ```
 
@@ -180,6 +182,7 @@ Windsurf 是 Codeium 出品的 AI 编辑器，功能强大。
 请参考以下技能文档：
 - HAP V3 API: [技能路径]/hap-v3-api/SKILL.md
 - 视图插件开发: [技能路径]/hap-view-plugin/SKILL.md
+- 前端项目搭建: [技能路径]/hap-frontend-project/SKILL.md
 - MCP 使用指南: [技能路径]/hap-mcp-usage/SKILL.md
 ```
 
@@ -211,6 +214,8 @@ Codeium 是免费的 AI 编程助手，可以作为 VSCode 扩展使用。
 参考技能文档：
 - ~/hap-skills-collection/.claude/skills/hap-v3-api/SKILL.md
 - ~/hap-skills-collection/.claude/skills/hap-view-plugin/SKILL.md
+- ~/hap-skills-collection/.claude/skills/hap-frontend-project/SKILL.md
+- ~/hap-skills-collection/.claude/skills/hap-mcp-usage/SKILL.md
 ```
 
 ---
@@ -338,44 +343,6 @@ AI：[自动完成]
 
 ---
 
-#### 5. **HAP API 文档更新技能**
-
-> 维护和更新明道云 API 文档
-
-**适用场景：**
-- ✅ 新增、修改、删除接口
-- ✅ 同步中英文版本文档
-- ✅ 组织授权 API 管理
-- ✅ 应用 API 管理
-
-📁 [详细文档](./.claude/skills/hap-api-doc-updater/SKILL.md)
-
----
-
-#### 6. **HAP 作为数据库技能**
-
-> HAP + 前端项目搭建指南（简化版）
-
-📁 [详细文档](./.claude/skills/hap-as-database/SKILL.md)
-
----
-
-### 📝 内容创作技能
-
-#### 7. **微信公众号文章写作**
-
-> 自动化写作流程，支持资料搜索、爆款标题生成
-
-**核心能力：**
-- 🔍 资料搜索和整理
-- ✍️ 文章结构生成
-- 🎯 爆款标题生成
-- 🎨 排版优化
-
-📁 [详细文档](./.claude/skills/wechat-article-writer/SKILL.md)
-
----
-
 ## 💡 使用示例
 
 ### 示例 1: 使用 V3 API 查询数据
@@ -463,13 +430,7 @@ hap-skills-collection/
 │       │   └── SKILL.md
 │       ├── hap-frontend-project/      # 前端项目搭建技能
 │       │   └── SKILL.md
-│       ├── hap-mcp-usage/             # HAP MCP 使用技能
-│       │   └── SKILL.md
-│       ├── hap-api-doc-updater/       # API 文档更新技能
-│       │   └── SKILL.md
-│       ├── hap-as-database/           # HAP 作为数据库技能
-│       │   └── SKILL.md
-│       └── wechat-article-writer/     # 微信文章写作技能
+│       └── hap-mcp-usage/             # HAP MCP 使用技能
 │           └── SKILL.md
 └── mcp-mingdao-proxy/                 # MCP 代理工具
     └── ...
@@ -487,8 +448,6 @@ hap-skills-collection/
 | 🎨 **自定义视图开发** | HAP 视图插件开发技能 | 7步流程，4种模板，BI 看板指南 |
 | 🌐 **独立网站搭建** | HAP 前端项目搭建技能 | HAP 作为数据库，前后端分离 |
 | 🔧 **MCP 配置管理** | HAP MCP 使用指南 | 自动化配置，密钥管理 |
-| 📝 **API 文档维护** | HAP API 文档更新技能 | 中英文同步，接口管理 |
-| ✍️ **内容创作** | 微信公众号文章写作 | 资料搜索，爆款标题 |
 
 **快速决策：**
 
@@ -536,7 +495,7 @@ hap-skills-collection/
 ### v1.0.0 (2026-01-14)
 
 - ✅ 初始发布
-- ✅ 7 个核心技能
+- ✅ 4 个核心技能
 - ✅ 支持 Claude Code、Cursor、Windsurf、Codeium
 - ✅ 完整的安装和使用文档
 - ✅ Cursor MCP 自动化配置功能
