@@ -51,7 +51,7 @@
 | 平台 | 兼容性 | 安装方式 | 目录位置 | 推荐度 |
 |------|--------|----------|----------|--------|
 | **Claude Code** | ✓ 原生 | 脚本/手动 | `~/.claude/skills/` | ⭐⭐⭐⭐⭐ |
-| **TRAE** | ✓ 原生 | 脚本/手动 | `~/.trae/skills/` | ⭐⭐⭐⭐⭐ |
+| **TRAE** | ✓ 原生兼容 | 脚本/手动 | `~/.trae/skills/` | ⭐⭐⭐⭐⭐ |
 | **Cursor** | ✓ 原生兼容 | 脚本/手动 | `~/.cursor/skills/` | ⭐⭐⭐⭐⭐ |
 | **GitHub Copilot** | ✓ 原生兼容 | 脚本/手动 | `~/.copilot/skills/` | ⭐⭐⭐⭐ |
 | **Google Antigravity** | ✓ 原生兼容 | 脚本/手动 | `~/.gemini/antigravity/skills/` | ⭐⭐⭐⭐ |
