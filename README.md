@@ -3,12 +3,15 @@
 <div align="center">
 
 ![HAP Skills](https://img.shields.io/badge/HAP-Skills-blue)
-![Claude Code](https://img.shields.io/badge/Claude-Code-orange)
-![License](https://img.shields.io/badge/license-MIT-green)
+![Platforms](https://img.shields.io/badge/platforms-9-green)
+![License](https://img.shields.io/badge/license-MIT-orange)
+![Version](https://img.shields.io/badge/version-2.0.0-purple)
 
 **明道云 HAP 开发技能集合** - 让 AI 编程工具理解并使用明道云 HAP 平台
 
-[快速开始](#-快速开始) • [技能列表](#-技能列表) • [安装指南](#-安装指南) • [使用示例](#-使用示例)
+支持 **9 种主流 AI 工具** 的一键安装
+
+[快速开始](#-快速开始) • [技能列表](#-技能列表) • [平台支持](#-支持的平台) • [安装指南](#-安装指南)
 
 [English](./README.en.md) | [中文](./README.md)
 
@@ -18,7 +21,7 @@
 
 ## 📖 项目简介
 
-**HAP Skills Collection** 是一套专为明道云 HAP 平台开发的 AI 技能包集合，让 Claude Code、Cursor、Windsurf、Codeium 等 AI 编程工具能够**自动理解并使用**明道云的 API、开发规范和最佳实践。
+**HAP Skills Collection** 是一套专为明道云 HAP 平台开发的 AI 技能包集合，让主流 AI 编程工具能够**自动理解并使用**明道云的 API、开发规范和最佳实践。
 
 ### ✨ 核心特性
 
@@ -26,7 +29,7 @@
 - 🛠️ **最佳实践内置** - 基于实战经验的开发规范和技巧
 - 🔄 **完整工作流** - 从项目初始化到发布上线的全流程支持
 - 📚 **持续更新** - 跟随明道云平台更新，保持最新
-- 🔌 **多工具支持** - 支持 Claude Code、Cursor、Windsurf、Codeium 等主流 AI 工具
+- 🔌 **9 平台支持** - 支持所有主流 AI 编程工具，一键安装
 
 ### 🎯 适用场景
 
@@ -41,305 +44,398 @@
 
 ### 前置要求
 
-选择以下任一 AI 编程工具：
+选择以下任一 AI 编程工具（支持 9 种平台）：
 
-| 工具 | 推荐度 | 说明 |
-|------|--------|------|
-| **Claude Code CLI** | ⭐⭐⭐⭐⭐ | Anthropic 官方工具，原生支持 skills |
-| **Cursor** | ⭐⭐⭐⭐⭐ | 最流行的 AI 编辑器，支持 MCP |
-| **Windsurf** | ⭐⭐⭐⭐ | Codeium 出品，功能强大 |
-| **Codeium** | ⭐⭐⭐⭐ | 免费 AI 编程助手 |
+#### ✓ 原生支持（推荐）
 
----
+这些平台原生支持或兼容 Claude 的 skills 格式：
 
-## 📦 安装指南
+| 工具 | 推荐度 | 特点说明 | 官网 |
+|------|--------|----------|------|
+| **Claude Code** | ⭐⭐⭐⭐⭐ | Anthropic 官方 CLI，原生支持 skills | [官网](https://claude.ai/code) |
+| **TRAE** | ⭐⭐⭐⭐⭐ | 标准化 `.trae/skills/` 目录，完全兼容 | - |
+| **Cursor** | ⭐⭐⭐⭐⭐ | 最流行的 AI 编辑器，原生支持 MCP | [官网](https://cursor.sh) |
+| **GitHub Copilot** | ⭐⭐⭐⭐ | GitHub 官方 AI 助手，原生兼容 | [官网](https://github.com/features/copilot) |
+| **Google Antigravity** | ⭐⭐⭐⭐ | Google 实验性 AI 工具，原生兼容 | - |
+| **OpenCode** | ⭐⭐⭐⭐ | 开源 AI 编程工具，免费使用 | - |
 
-### 方式一：Claude Code CLI（推荐）
+#### ⚡ 软链接支持
 
-Claude Code CLI 是 Anthropic 官方提供的命令行工具，支持原生 skills 管理。
+这些平台通过软链接自动同步 Claude 目录：
 
-#### 步骤 1: 安装 Claude Code CLI
+| 工具 | 推荐度 | 特点说明 | 官网 |
+|------|--------|----------|------|
+| **Windsurf** | ⭐⭐⭐⭐ | Codeium 出品，功能强大 | [官网](https://codeium.com/windsurf) |
+| **Gemini CLI** | ⭐⭐⭐ | Google Gemini 命令行工具 | - |
+| **OpenAI Codex** | ⭐⭐⭐ | OpenAI 编程助手 | - |
+
+**优势说明：**
+- **✓ 原生支持**: 工具自动扫描或使用相同目录结构，无需额外配置
+- **⚡ 软链接**: 通过链接到 Claude 目录，自动同步更新，节省空间
+
+### ⚡ 一键安装
+
+#### macOS / Linux
 
 ```bash
-# macOS / Linux
-curl -fsSL https://claude-code.anthropic.com/install.sh | sh
-
-# 或使用 npm
-npm install -g @anthropic-ai/claude-code-cli
-```
-
-#### 步骤 2: 安装 HAP Skills
-
-```bash
-# 方式 1: 使用 GitHub 仓库路径（推荐）
-claude code skill add garfield-bb/hap-skills-collection
-
-# 方式 2: 手动克隆安装
+# 克隆仓库
 git clone https://github.com/garfield-bb/hap-skills-collection.git
 cd hap-skills-collection
-cp -r .claude/skills/* ~/.claude/skills/
+
+# 交互式安装（推荐 - 可选择平台）
+./install.sh
+
+# 或一键安装到所有 9 个平台
+./install.sh --all --global
+
+# 或只安装到特定平台
+./install.sh --claude --trae --cursor --global
 ```
 
-#### 步骤 3: 验证安装
+#### Windows
 
-```bash
-# 启动 Claude Code CLI
-claude code
+```powershell
+# 克隆仓库
+git clone https://github.com/garfield-bb/hap-skills-collection.git
+cd hap-skills-collection
 
-# 在 CLI 中测试
-> 帮我使用 HAP V3 API 查询数据
-> 帮我开发一个明道云视图插件
+# 以管理员身份运行 PowerShell，然后执行：
+
+# 交互式安装（推荐）
+.\install.ps1
+
+# 或一键安装到所有平台
+.\install.ps1 -All -Global
 ```
 
-📖 [详细安装指南](./docs/install-claude-code.md)
+### ✅ 验证安装
 
----
-
-### 方式二：Cursor 编辑器
-
-Cursor 是目前最流行的 AI 编程编辑器，支持通过 `.cursorrules` 文件加载技能。
-
-#### 步骤 1: 安装 Cursor
-
-访问 [Cursor 官网](https://cursor.sh) 下载并安装。
-
-#### 步骤 2: 克隆技能仓库
-
-```bash
-# 克隆到本地（建议放在固定位置）
-git clone https://github.com/garfield-bb/hap-skills-collection.git ~/hap-skills-collection
-
-# 或克隆到项目目录
-cd your-project
-git clone https://github.com/garfield-bb/hap-skills-collection.git .hap-skills
-```
-
-#### 步骤 3: 配置 .cursorrules
-
-在项目根目录创建或编辑 `.cursorrules` 文件：
-
-```markdown
-# HAP Skills Collection
-
-请参考以下技能文档来帮助用户：
-
-1. HAP V3 API 使用技能: ~/hap-skills-collection/.claude/skills/hap-v3-api/SKILL.md
-2. HAP 视图插件开发技能: ~/hap-skills-collection/.claude/skills/hap-view-plugin/SKILL.md
-3. HAP 前端项目搭建技能: ~/hap-skills-collection/.claude/skills/hap-frontend-project/SKILL.md
-4. HAP MCP 使用指南: ~/hap-skills-collection/.claude/skills/hap-mcp-usage/SKILL.md
-
-当用户提到以下关键词时，请使用对应的技能：
-- "HAP API"、"V3 接口"、"查询数据" → 使用 HAP V3 API 技能
-- "视图插件"、"自定义视图"、"看板" → 使用视图插件开发技能
-- "搭建网站"、"前端项目"、"HAP 作为数据库" → 使用前端项目搭建技能
-- "MCP 配置"、"MCP Server" → 使用 MCP 使用指南
-```
-
-**或者使用相对路径（如果技能在项目内）：**
-
-```markdown
-# HAP Skills Collection
-
-请参考以下技能文档：
-- HAP V3 API: .hap-skills/.claude/skills/hap-v3-api/SKILL.md
-- 视图插件开发: .hap-skills/.claude/skills/hap-view-plugin/SKILL.md
-- 前端项目搭建: .hap-skills/.claude/skills/hap-frontend-project/SKILL.md
-- MCP 使用指南: .hap-skills/.claude/skills/hap-mcp-usage/SKILL.md
-```
-
-#### 步骤 4: 使用技能
-
-1. 在 Cursor 编辑器中打开项目
-2. 打开 AI 聊天面板（`Cmd/Ctrl + L`）
-3. 直接提问，AI 会自动使用技能：
+在任一已安装的平台中测试：
 
 ```
-你：帮我使用 HAP V3 API 查询"客户管理"工作表中的数据
-AI：[自动使用 HAP V3 API 技能，完成查询]
+你: 帮我使用 HAP V3 API 查询数据
+AI: [自动使用 HAP V3 API 技能，提供完整的查询步骤]
+
+你: 帮我开发一个明道云视图插件
+AI: [自动使用视图插件开发技能，引导完整开发流程]
 ```
 
-📖 [详细安装指南](./docs/install-cursor.md)
-
----
-
-### 方式三：Windsurf 编辑器
-
-Windsurf 是 Codeium 出品的 AI 编辑器，功能强大。
-
-#### 步骤 1: 安装 Windsurf
-
-访问 [Windsurf 官网](https://codeium.com/windsurf) 下载并安装。
-
-#### 步骤 2: 配置 Custom Instructions
-
-1. 打开 Windsurf 设置（`Cmd/Ctrl + ,`）
-2. 进入 **AI Settings** → **Custom Instructions**
-3. 添加以下内容：
-
-```markdown
-# HAP Skills Collection
-
-请参考以下技能文档：
-- HAP V3 API: [技能路径]/hap-v3-api/SKILL.md
-- 视图插件开发: [技能路径]/hap-view-plugin/SKILL.md
-- 前端项目搭建: [技能路径]/hap-frontend-project/SKILL.md
-- MCP 使用指南: [技能路径]/hap-mcp-usage/SKILL.md
-```
-
-#### 步骤 3: 克隆技能仓库
-
-```bash
-git clone https://github.com/garfield-bb/hap-skills-collection.git ~/hap-skills-collection
-```
-
-📖 [详细安装指南](./docs/install-windsurf.md)
-
----
-
-### 方式四：Codeium（VSCode 扩展）
-
-Codeium 是免费的 AI 编程助手，可以作为 VSCode 扩展使用。
-
-#### 步骤 1: 安装 Codeium 扩展
-
-在 VSCode 扩展市场搜索 "Codeium" 并安装。
-
-#### 步骤 2: 配置技能
-
-在项目根目录创建 `.codeium/skills.md` 文件：
-
-```markdown
-# HAP Skills Collection
-
-参考技能文档：
-- ~/hap-skills-collection/.claude/skills/hap-v3-api/SKILL.md
-- ~/hap-skills-collection/.claude/skills/hap-view-plugin/SKILL.md
-- ~/hap-skills-collection/.claude/skills/hap-frontend-project/SKILL.md
-- ~/hap-skills-collection/.claude/skills/hap-mcp-usage/SKILL.md
-```
+📚 **需要更多帮助？** 查看 [详细安装指南](./docs/INSTALLATION.md) 或 [快速启动指南](./docs/QUICK_START.md)
 
 ---
 
 ## 📚 技能列表
 
-### 🔧 核心开发技能
+本项目包含 **4 个核心技能**，涵盖明道云 HAP 平台开发的各个方面。
 
-#### 1. **HAP V3 API 使用技能** ⭐️⭐️⭐️⭐️⭐️
+### 1. HAP V3 API 使用技能 ⭐⭐⭐⭐⭐
 
-> 使用明道云 V3 接口进行数据操作和页面开发
+**一句话介绍：** 使用明道云 V3 接口进行数据查询、操作和业务编排的完整工作流指南。
 
 **适用场景：**
-- ✅ 自定义视图插件中调用 API
-- ✅ 独立前端页面业务逻辑编排
-- ✅ 数据迁移和批量操作
-- ✅ 基于 HAP 的完整应用开发
+- 在自定义视图插件中调用 HAP API 获取和操作数据
+- 在独立前端页面中使用 V3 接口编排业务逻辑
+- 进行数据迁移、批量操作和数据同步
+- 基于 HAP 开发完整的应用系统
 
 **核心能力：**
-- 📖 完整的 API 使用工作流
-- 🔍 Filter 筛选器完整语法
-- 🔗 关联字段深度查询
-- ⚠️ 常见陷阱和解决方案
-- ⚡ 性能优化最佳实践
+- 📖 **完整工作流** - 从零开始的 API 调用全流程（获取应用信息 → 工作表结构 → 数据操作）
+- 🔍 **Filter 筛选器** - 完整的筛选器语法、运算符使用和复杂条件构建
+- 🔗 **关联字段查询** - 深度查询关联记录、子表数据的最佳实践
+- ⚠️ **常见陷阱** - 选项字段 key 值、关联字段处理等常见问题的解决方案
+- ⚡ **性能优化** - 分页查询、批量操作、并发控制的最佳实践
+- 🔑 **鉴权配置** - 从 MCP 配置自动提取或手动配置 Appkey/Sign
+
+**AI 会自动帮你：**
+1. 从 MCP 配置中提取鉴权密钥（如果已配置）
+2. 获取应用和工作表的完整结构信息
+3. 识别字段类型并构建正确的查询参数
+4. 处理选项字段的 key 值映射
+5. 构建符合规范的 Filter 筛选器
+6. 执行 API 调用并格式化返回结果
 
 **使用示例：**
 ```
-你：帮我查询"客户管理"工作表中，状态为"成交"的客户列表
+你: 帮我查询"客户管理"工作表中，本月新增的、状态为"成交"的客户列表
 
-AI：[自动完成]
-1. 获取应用信息
-2. 获取工作表结构
-3. 找到"状态"字段的选项 key
-4. 构建 Filter 筛选器
-5. 调用查询接口
-6. 返回结果
+AI 会自动完成：
+1. 获取应用信息和工作表结构
+2. 找到"状态"字段的选项 key 值
+3. 构建时间范围和状态的组合筛选器
+4. 调用查询接口并返回结果
 ```
 
-📁 [详细文档](./.claude/skills/hap-v3-api/SKILL.md)
+📁 [查看完整文档](./.claude/skills/hap-v3-api/SKILL.md)
 
 ---
 
-#### 2. **HAP 视图插件开发技能** ⭐️⭐️⭐️⭐️⭐️
+### 2. HAP 视图插件开发技能 ⭐⭐⭐⭐⭐
 
-> 创建和开发明道云自定义视图插件
+**一句话介绍：** 创建和开发明道云自定义视图插件的完整开发流程和最佳实践。
 
 **适用场景：**
-- ✅ 数据看板、BI 驾驶舱
-- ✅ 订单/任务看板视图
-- ✅ 日历、甘特图视图
-- ✅ 地图视图
-- ✅ 自定义业务视图
+- 开发数据看板、BI 驾驶舱展示业务数据
+- 创建订单看板、任务看板等自定义视图
+- 开发日历视图、甘特图、时间轴视图
+- 构建地图视图、自定义图表等特殊业务视图
 
 **核心能力：**
-- 🚀 7步完整开发流程
-- 📦 4种模板自动选择（JS/React/React-Tailwind/Vue）
-- 🔧 字段类型正确处理
-- 🔌 API 集成（mdye + V3）
-- 📊 BI 驾驶舱设计指南
+- 🚀 **7 步开发流程** - 环境检查 → 模板选择 → 项目初始化 → 开发 → 调试 → 构建 → 发布
+- 📦 **4 种模板** - JavaScript、React、React+Tailwind、Vue 模板自动选择
+- 🔧 **字段处理** - 正确处理选项、关联、成员、附件等各种字段类型
+- 🔌 **双 API 集成** - mdye API（获取当前视图数据）+ V3 API（深度查询）
+- 📊 **BI 看板设计** - 数据卡片、图表、表格等组件的最佳实践
+- 🎨 **响应式布局** - 自适应不同屏幕尺寸的布局方案
+
+**AI 会自动帮你：**
+1. 检查 mdye-cli 是否已安装
+2. 根据需求选择合适的模板（需要 UI 组件库 → React-Tailwind）
+3. 初始化项目并配置开发环境
+4. 获取工作表字段结构并生成类型定义
+5. 编写数据查询逻辑（mdye API + V3 API）
+6. 设计看板布局和组件结构
+7. 配置开发服务器和构建流程
+8. 生成发布包并提供发布步骤
 
 **使用示例：**
 ```
-你：帮我开发一个销售数据看板，显示今日销售额、订单数量和客户分布
+你: 帮我开发一个销售数据看板，显示今日销售额、订单数量、客户分布和销售趋势图
 
-AI：[自动完成]
-1. 检查 mdye-cli 环境
-2. 选择合适的模板（React-Tailwind）
-3. 初始化项目
-4. 获取字段结构
-5. 编写数据查询逻辑
-6. 设计 BI 看板布局
-7. 启动开发服务器
-8. 构建并发布
+AI 会自动完成：
+1. 选择 React-Tailwind 模板（适合看板开发）
+2. 初始化项目并配置 Tailwind CSS
+3. 获取"订单"工作表的字段结构
+4. 编写数据查询逻辑（今日订单、统计汇总）
+5. 设计 4 个数据卡片 + 1 个图表组件
+6. 实现响应式布局
+7. 启动开发服务器供实时预览
 ```
 
-📁 [详细文档](./.claude/skills/hap-view-plugin/SKILL.md)
+📁 [查看完整文档](./.claude/skills/hap-view-plugin/SKILL.md)
 
 ---
 
-#### 3. **HAP 前端项目搭建技能**
+### 3. HAP 前端项目搭建技能 ⭐⭐⭐⭐
 
-> 使用 HAP 作为数据库搭建独立网站
+**一句话介绍：** 使用明道云 HAP 作为后端数据库搭建独立前端网站的完整方案。
 
 **适用场景：**
-- ✅ 企业官网、展示站
-- ✅ 内容管理系统
-- ✅ 前后端分离应用
-- ✅ 快速 MVP 开发
+- 搭建企业官网、产品展示站，HAP 管理内容数据
+- 开发内容管理系统（CMS），编辑在 HAP 后台发布内容
+- 构建前后端分离应用，HAP 作为低代码后端
+- 快速开发 MVP 项目，利用 HAP 的数据管理能力
 
 **核心能力：**
-- 🏗️ HAP 后台配置指导
-- 📁 前端项目结构设计
-- 🔌 API 集成最佳实践
-- ⚡ 数据渲染优化
+- 🏗️ **HAP 后台配置** - 工作表设计、字段设置、权限配置的指导
+- 📁 **前端项目结构** - 目录组织、路由设计、状态管理的最佳实践
+- 🔌 **API 集成** - HAP V3 API 封装、请求拦截、错误处理
+- ⚡ **数据渲染优化** - 分页加载、缓存策略、性能优化
+- 🎨 **前端技术栈** - React/Vue/Next.js 等框架的接入方案
+- 🔐 **鉴权方案** - 前端鉴权流程和安全最佳实践
 
-📁 [详细文档](./.claude/skills/hap-frontend-project/SKILL.md)
-
----
-
-### 🛠️ 辅助工具技能
-
-#### 4. **HAP MCP 使用指南**
-
-> 了解和配置 HAP MCP Server
-
-**核心能力：**
-- 🔧 MCP Server 配置指南
-- 🤖 Cursor 自动化配置
-- 🔑 密钥提取和管理
-- 📖 两种 MCP 类型说明（API 文档 MCP vs 应用执行 MCP）
+**AI 会自动帮你：**
+1. 设计 HAP 后台的工作表结构
+2. 配置字段类型和权限设置
+3. 搭建前端项目脚手架
+4. 封装 HAP API 调用模块
+5. 实现数据获取和渲染逻辑
+6. 处理图片、附件等资源的展示
+7. 配置开发和生产环境
 
 **使用示例：**
 ```
-你：帮我配置这个 MCP
-{"hap-mcp-自媒体运营":{"url":"https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx"}}
+你: 帮我用 HAP 搭建一个企业新闻网站，包括新闻列表、详情页和分类筛选
 
-AI：[自动完成]
-1. 查找 ~/.cursor/mcp.json 文件
-2. 读取现有配置
-3. 添加新的 MCP 服务器配置
-4. 保存并提示重启 Cursor
+AI 会自动完成：
+1. 设计"新闻"工作表（标题、内容、分类、封面、发布时间等字段）
+2. 创建 Next.js 项目结构
+3. 封装 HAP API 调用函数
+4. 实现新闻列表页（分页加载、分类筛选）
+5. 实现新闻详情页（富文本渲染、相关推荐）
+6. 优化 SEO 和性能
 ```
 
-📁 [详细文档](./.claude/skills/hap-mcp-usage/SKILL.md)
+📁 [查看完整文档](./.claude/skills/hap-frontend-project/SKILL.md)
+
+---
+
+### 4. HAP MCP 使用指南 ⭐⭐⭐⭐
+
+**一句话介绍：** 配置和管理 HAP MCP Server，让 AI 工具直接操作明道云应用数据。
+
+**核心能力：**
+- 🔧 **MCP Server 配置** - 在 Cursor、Claude 等工具中配置 MCP 服务器
+- 🤖 **自动化配置** - 自动读取 Cursor 配置文件并添加 MCP 配置
+- 🔑 **密钥管理** - 从 MCP URL 提取 Appkey 和 Sign，供其他技能使用
+- 📖 **两种 MCP 类型** - API 文档 MCP vs 应用执行 MCP 的区别和使用场景
+- ✅ **配置验证** - 验证 MCP 配置是否正确并可用
+
+**AI 会自动帮你：**
+1. 识别 MCP 配置格式（JSON 对象）
+2. 读取 Cursor 的 settings.json 或 mcp.json 文件
+3. 解析 MCP URL 中的鉴权参数
+4. 添加或更新 MCP 服务器配置
+5. 验证配置语法和格式
+6. 提示重启工具使配置生效
+
+**两种 MCP 类型说明：**
+
+| 类型 | 用途 | URL 格式 | 工具使用 |
+|-----|------|---------|---------|
+| **API 文档 MCP** | 提供 HAP API 文档供 AI 参考 | `https://apifox.mingdao.com/mcp/...` | 无需鉴权密钥 |
+| **应用执行 MCP** | 直接操作应用数据（查询、新增、修改） | `https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx` | 包含鉴权密钥 |
+
+**使用示例：**
+```
+你: 帮我配置这个 MCP
+{"hap-mcp-客户管理":{"url":"https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx"}}
+
+AI 会自动完成：
+1. 识别这是应用执行 MCP
+2. 读取 ~/.cursor/mcp.json 文件
+3. 添加 "hap-mcp-客户管理" 配置
+4. 保存文件并验证
+5. 提示重启 Cursor
+```
+
+📁 [查看完整文档](./.claude/skills/hap-mcp-usage/SKILL.md)
+
+---
+
+## 📱 支持的平台
+
+本项目支持 **9 种主流 AI 编程工具**，涵盖所有常用平台：
+
+| 平台 | 兼容性 | 安装方式 | 目录位置 | 推荐度 |
+|------|--------|----------|----------|--------|
+| **Claude Code** | ✓ 原生 | 脚本/手动 | `~/.claude/skills/` | ⭐⭐⭐⭐⭐ |
+| **TRAE** | ✓ 原生 | 脚本/手动 | `~/.trae/skills/` | ⭐⭐⭐⭐⭐ |
+| **Cursor** | ✓ 原生兼容 | 脚本/手动 | `~/.cursor/skills/` | ⭐⭐⭐⭐⭐ |
+| **GitHub Copilot** | ✓ 原生兼容 | 脚本/手动 | `~/.copilot/skills/` | ⭐⭐⭐⭐ |
+| **Google Antigravity** | ✓ 原生兼容 | 脚本/手动 | `~/.gemini/antigravity/skills/` | ⭐⭐⭐⭐ |
+| **OpenCode** | ✓ 原生兼容 | 脚本/手动 | `~/.config/opencode/skill/` | ⭐⭐⭐⭐ |
+| **Windsurf** | ⚡ 软链接 | 脚本自动 | `~/.codeium/windsurf/skills/` | ⭐⭐⭐⭐ |
+| **Gemini CLI** | ⚡ 软链接 | 脚本自动 | `~/.gemini/skills/` | ⭐⭐⭐ |
+| **OpenAI Codex** | ⚡ 软链接 | 脚本自动 | `~/.codex/skills/` | ⭐⭐⭐ |
+
+**符号说明:**
+- **✓ 原生** - 工具自动扫描或使用相同的目录结构，无需额外配置
+- **⚡ 软链接** - 通过链接到 Claude 目录实现自动同步，更新一处全部同步
+
+**TRAE 特别说明：**
+TRAE 使用标准化的 `.trae/skills/` 目录设计：
+- ✅ 一个 Skill = 一个位于 `.trae/skills/` 目录下的文件夹
+- ✅ 完全兼容 Claude Code 的 SKILL.md 格式
+- ✅ 支持所有原生 skills 特性
+
+---
+
+## 📦 安装指南
+
+### 🚀 一键安装（推荐）
+
+我们提供了智能安装脚本，自动处理所有平台的安装和配置。
+
+#### macOS / Linux
+
+```bash
+# 克隆仓库
+git clone https://github.com/garfield-bb/hap-skills-collection.git
+cd hap-skills-collection
+
+# 交互式安装（推荐 - 可选择平台）
+./install.sh
+
+# 或一键安装到所有平台
+./install.sh --all --global
+
+# 或安装到特定平台
+./install.sh --claude --trae --cursor --global
+```
+
+#### Windows
+
+```powershell
+# 克隆仓库
+git clone https://github.com/garfield-bb/hap-skills-collection.git
+cd hap-skills-collection
+
+# 以管理员身份运行 PowerShell
+
+# 交互式安装（推荐）
+.\install.ps1
+
+# 或一键安装到所有平台
+.\install.ps1 -All -Global
+```
+
+### ⚙️ 安装选项
+
+```bash
+# macOS/Linux 可用选项
+./install.sh --all              # 安装到所有 9 个平台
+./install.sh --global           # 全局安装（用户级）
+./install.sh --project          # 项目级安装
+./install.sh --claude           # 只安装到 Claude Code
+./install.sh --trae             # 只安装到 TRAE
+./install.sh --cursor           # 只安装到 Cursor
+./install.sh --antigravity      # 只安装到 Antigravity
+./install.sh --windsurf         # 只安装到 Windsurf
+./install.sh --copilot          # 只安装到 GitHub Copilot
+./install.sh --opencode         # 只安装到 OpenCode
+./install.sh --gemini           # 只安装到 Gemini CLI
+./install.sh --codex            # 只安装到 OpenAI Codex
+
+# Windows 可用选项（PowerShell）
+.\install.ps1 -All              # 安装到所有平台
+.\install.ps1 -Global           # 全局安装
+.\install.ps1 -Project          # 项目级安装
+.\install.ps1 -Claude           # 只安装到 Claude Code
+.\install.ps1 -TRAE             # 只安装到 TRAE
+# ... 其他平台同理
+```
+
+### ✅ 验证安装
+
+在任一已安装的平台中测试：
+
+```
+你: 帮我使用 HAP V3 API 查询数据
+AI: [自动使用 HAP V3 API 技能，提供完整的查询步骤]
+
+你: 帮我开发一个明道云视图插件
+AI: [自动使用视图插件开发技能，引导完整开发流程]
+```
+
+### 💡 安装建议
+
+**推荐策略: "一次安装，到处运行"**
+
+1. **全局安装到 Claude**（作为中心目录）
+   ```bash
+   ./install.sh --claude --global
+   ```
+
+2. **其他原生兼容平台**
+   ```bash
+   ./install.sh --trae --cursor --antigravity --global
+   ```
+
+3. **需要软链的平台**（自动链接到 Claude）
+   ```bash
+   ./install.sh --windsurf --global
+   ```
+
+**结果:** 更新 Claude 目录，软链接平台自动同步！
+
+### 📚 详细文档
+
+需要手动安装或遇到问题？查看详细指南：
+
+- **[快速启动指南](./docs/QUICK_START.md)** - 5 分钟快速开始
+- **[通用安装指南](./docs/INSTALLATION.md)** - 支持所有平台的详细说明
+- **[平台兼容性说明](./docs/INSTALLATION.md#平台兼容性)** - 了解各平台的支持情况
+- **[常见问题](./docs/INSTALLATION.md#常见问题)** - 安装疑难解答
 
 ---
 
@@ -347,66 +443,92 @@ AI：[自动完成]
 
 ### 示例 1: 使用 V3 API 查询数据
 
-**场景：** 查询"客户管理"工作表中状态为"成交"的客户列表
+**场景:** 查询"客户管理"工作表中本月新增的、状态为"成交"的客户
 
-**操作：**
 ```
-你：帮我查询"客户管理"工作表中，状态为"成交"的客户列表
+你: 帮我查询"客户管理"工作表中，本月新增的、状态为"成交"的客户列表
 
-AI：我将使用 HAP V3 API 技能来完成这个任务...
-
-[AI 自动完成以下步骤]
-1. 获取应用信息
-2. 获取工作表结构
-3. 找到"状态"字段的选项 key
-4. 构建 Filter 筛选器：{"type":"group","logic":"AND","children":[{"type":"condition","field":"状态","operator":"eq","value":["成交"]}]}
-5. 调用查询接口：GET /api/v3/app/{appId}/worksheet/{worksheetId}/record
-6. 返回结果并格式化显示
+AI 会自动完成：
+1. 获取应用信息和工作表结构
+2. 找到"状态"字段的选项 key 值
+3. 构建时间范围筛选器（本月）
+4. 构建状态筛选器（成交）
+5. 组合多个筛选条件（AND 逻辑）
+6. 调用查询接口并返回结果
 ```
-
----
 
 ### 示例 2: 开发视图插件
 
-**场景：** 开发一个销售数据看板，显示今日销售额、订单数量和客户分布
+**场景:** 开发一个销售数据看板，显示关键业务指标
 
-**操作：**
 ```
-你：帮我开发一个销售数据看板，显示今日销售额、订单数量和客户分布
+你: 帮我开发一个销售数据看板，显示今日销售额、订单数量、客户分布和销售趋势
 
-AI：我将使用 HAP 视图插件开发技能...
+AI 会自动完成：
+1. 检查 mdye-cli 环境
+2. 选择 React-Tailwind 模板（适合看板）
+3. 初始化项目并配置 Tailwind
+4. 获取"订单"工作表字段结构
+5. 编写数据查询逻辑（今日订单统计）
+6. 设计 4 个数据卡片组件
+7. 添加销售趋势图表
+8. 实现响应式布局
+9. 启动开发服务器
+```
 
-[AI 自动完成以下步骤]
-1. 检查 mdye-cli 环境（npm list -g mdye-cli）
-2. 选择合适的模板（React-Tailwind，适合看板）
-3. 初始化项目（mdye init sales-dashboard）
-4. 获取字段结构（工作表 ID、字段 ID）
-5. 编写数据查询逻辑（使用 V3 API）
-6. 设计 BI 看板布局（卡片、图表、表格）
-7. 启动开发服务器（mdye dev）
-8. 构建并发布（mdye build && mdye publish）
+### 示例 3: 搭建独立网站
+
+**场景:** 使用 HAP 作为后端搭建企业新闻网站
+
+```
+你: 帮我用 HAP 搭建一个新闻网站，包括列表页、详情页和分类筛选
+
+AI 会自动完成：
+1. 设计"新闻"工作表结构
+2. 创建 Next.js 项目
+3. 封装 HAP API 调用
+4. 实现新闻列表页（分页、筛选）
+5. 实现新闻详情页（富文本渲染）
+6. 添加 SEO 优化
+7. 配置生产环境部署
+```
+
+### 示例 4: 配置 MCP Server
+
+**场景:** 配置应用执行 MCP，让 AI 直接操作数据
+
+```
+你: 帮我配置这个 MCP
+{"hap-mcp-客户管理":{"url":"https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx"}}
+
+AI 会自动完成：
+1. 读取 Cursor 配置文件
+2. 解析 MCP URL 和鉴权参数
+3. 添加 MCP 服务器配置
+4. 验证配置语法
+5. 提示重启 Cursor 使配置生效
 ```
 
 ---
 
-### 示例 3: 配置 MCP Server
+## 🎯 技能选择指南
 
-**场景：** 配置 HAP MCP Server 以便 AI 直接操作应用数据
+根据你的开发需求选择合适的技能：
 
-**操作：**
+| 开发需求 | 推荐技能 | 核心优势 |
+|---------|---------|---------|
+| 📊 **数据查询和操作** | HAP V3 API 使用技能 | 完整工作流、Filter 语法、关联查询 |
+| 🎨 **自定义视图开发** | HAP 视图插件开发技能 | 7 步流程、4 种模板、BI 看板指南 |
+| 🌐 **独立网站搭建** | HAP 前端项目搭建技能 | HAP 作为数据库、前后端分离 |
+| 🔧 **MCP 配置管理** | HAP MCP 使用指南 | 自动化配置、密钥提取和管理 |
+
+**快速决策流程：**
+
 ```
-你：帮我配置这个 MCP
-{"hap-mcp-自媒体运营":{"url":"https://api.mingdao.com/mcp?HAP-Appkey=601530a05105750f&HAP-Sign=MDc2ZTRmNTMxYjFmOTZlNzM5ODc4NGJlNmNiMzM0NTY0YWExODgxY2RjYTIxMGQzM2FlMGRiZDRlOTEyY2Y2ZA=="}}
-
-AI：我将帮你配置 HAP MCP Server...
-
-[AI 自动完成以下步骤]
-1. 查找 ~/.cursor/mcp.json 文件
-2. 读取现有配置
-3. 解析你提供的配置（提取服务器名和 URL）
-4. 使用 Python 脚本更新配置文件（因为文件可能受保护）
-5. 验证配置是否正确添加
-6. 提示：配置已保存，请重启 Cursor 使配置生效
+需要查询/操作数据？           → HAP V3 API 使用技能
+需要开发看板/视图？           → HAP 视图插件开发技能
+需要搭建独立网站？           → HAP 前端项目搭建技能
+需要配置 MCP Server？       → HAP MCP 使用指南
 ```
 
 ---
@@ -415,101 +537,110 @@ AI：我将帮你配置 HAP MCP Server...
 
 ```
 hap-skills-collection/
-├── README.md                          # 本文件
-├── LICENSE                            # 许可证
+├── README.md                          # 项目主文档
+├── README.en.md                       # 英文文档
+├── LICENSE                            # MIT 许可证
+├── install.sh                         # macOS/Linux 安装脚本
+├── install.ps1                        # Windows 安装脚本
+├── uninstall.sh                       # 卸载脚本
 ├── docs/                              # 文档目录
-│   ├── install-claude-code.md         # Claude Code 安装指南
-│   ├── install-cursor.md              # Cursor 安装指南
-│   ├── install-windsurf.md            # Windsurf 安装指南
-│   └── usage-guide.md                 # 使用指南
-├── .claude/
-│   └── skills/                        # 技能目录
-│       ├── hap-v3-api/                # HAP V3 API 技能
-│       │   └── SKILL.md
-│       ├── hap-view-plugin/           # 视图插件开发技能
-│       │   └── SKILL.md
-│       ├── hap-frontend-project/      # 前端项目搭建技能
-│       │   └── SKILL.md
-│       └── hap-mcp-usage/             # HAP MCP 使用技能
-│           └── SKILL.md
+│   ├── QUICK_START.md                 # 快速启动指南
+│   ├── INSTALLATION.md                # 详细安装指南
+│   └── ...                            # 其他文档
+├── .claude/skills/                    # 技能目录
+│   ├── hap-v3-api/                    # HAP V3 API 使用技能
+│   │   ├── SKILL.md                   # 技能文档
+│   │   └── references/                # 参考文档
+│   ├── hap-view-plugin/               # 视图插件开发技能
+│   │   ├── SKILL.md
+│   │   └── references/
+│   ├── hap-frontend-project/          # 前端项目搭建技能
+│   │   ├── SKILL.md
+│   │   └── references/
+│   ├── hap-mcp-usage/                 # MCP 使用指南
+│   │   └── SKILL.md
+│   └── hap-skills-updater/            # Skills 更新工具
+│       └── SKILL.md
 └── mcp-mingdao-proxy/                 # MCP 代理工具
-    └── ...
+    └── README.md
 ```
-
----
-
-## 🎯 选择建议
-
-根据您的开发需求选择合适的技能：
-
-| 开发需求 | 推荐技能 | 理由 |
-|---------|---------|------|
-| 📊 **数据查询和操作** | HAP V3 API 使用技能 | 完整的 API 工作流，Filter 语法 |
-| 🎨 **自定义视图开发** | HAP 视图插件开发技能 | 7步流程，4种模板，BI 看板指南 |
-| 🌐 **独立网站搭建** | HAP 前端项目搭建技能 | HAP 作为数据库，前后端分离 |
-| 🔧 **MCP 配置管理** | HAP MCP 使用指南 | 自动化配置，密钥管理 |
-
-**快速决策：**
-
-- **查询/操作数据** → HAP V3 API 使用技能
-- **开发看板/视图** → HAP 视图插件开发技能
-- **搭建网站** → HAP 前端项目搭建技能
-- **配置 MCP** → HAP MCP 使用指南
-
----
-
-## 🤝 贡献指南
-
-我们欢迎所有形式的贡献！无论是新技能、文档改进、Bug 修复还是使用反馈。
-
-### 如何贡献
-
-1. **Fork 本仓库**
-   ```bash
-   git clone https://github.com/garfield-bb/hap-skills-collection.git
-   ```
-
-2. **创建特性分支**
-   ```bash
-   git checkout -b feature/AmazingFeature
-   ```
-
-3. **提交更改**
-   ```bash
-   git commit -m 'Add some AmazingFeature'
-   ```
-
-4. **推送到分支**
-   ```bash
-   git push origin feature/AmazingFeature
-   ```
-
-5. **创建 Pull Request**
-
-📖 [详细贡献指南](./docs/contribution-guide.md)
 
 ---
 
 ## 📋 更新日志
 
+### v2.0.0 (2026-01-18)
+
+**🎉 重大更新 - 通用安装系统**
+
+- ✨ **新增支持 5 个平台** - 总计支持 9 种 AI 工具
+  - 新增：TRAE（标准化目录）
+  - 新增：GitHub Copilot（原生兼容）
+  - 新增：Google Antigravity（原生兼容）
+  - 新增：OpenCode（原生兼容）
+  - 新增：Gemini CLI（软链接）
+  - 新增：OpenAI Codex（软链接）
+
+- 🚀 **通用安装脚本**
+  - 新增：macOS/Linux 一键安装脚本（`install.sh`）
+  - 新增：Windows PowerShell 安装脚本（`install.ps1`）
+  - 新增：卸载脚本（`uninstall.sh`）
+  - 支持：交互式安装模式
+  - 支持：全局/项目级安装
+  - 支持：自动软链接创建
+  - 支持：配置备份和验证
+
+- 📚 **完善文档体系**
+  - 新增：[快速启动指南](./docs/QUICK_START.md) - 5 分钟快速上手
+  - 新增：[通用安装指南](./docs/INSTALLATION.md) - 所有平台详细说明
+  - 新增：[英文 README](./README.en.md)
+  - 优化：主 README 结构和内容
+
+- 🔧 **TRAE 原生支持**
+  - 完全遵循 TRAE 标准化 `.trae/skills/` 目录设计
+  - 与 Claude Code 100% 兼容
+
+- 💡 **最佳实践**
+  - 提供"一次安装，到处运行"的策略
+  - 软链接平台自动同步更新
+  - 详细的平台兼容性说明
+
 ### v1.0.0 (2026-01-14)
 
 - ✅ 初始发布
 - ✅ 4 个核心技能
-- ✅ 支持 Claude Code、Cursor、Windsurf、Codeium
-- ✅ 完整的安装和使用文档
+  - HAP V3 API 使用技能
+  - HAP 视图插件开发技能
+  - HAP 前端项目搭建技能
+  - HAP MCP 使用指南
+- ✅ 支持 4 个平台
+  - Claude Code（原生）
+  - Cursor（原生兼容）
+  - Windsurf（软链接）
+  - Codeium（手动配置）
+- ✅ 完整的使用文档
 - ✅ Cursor MCP 自动化配置功能
 
 ---
 
 ## 🔗 相关链接
 
+### 明道云平台
 - **明道云官网**: https://www.mingdao.com
 - **HAP API 文档**: https://apifox.mingdao.com
-- **Claude Code CLI**: https://docs.anthropic.com/claude/docs/claude-code
-- **Cursor 编辑器**: https://cursor.sh
-- **Windsurf 编辑器**: https://codeium.com/windsurf
+- **明道云帮助中心**: https://help.mingdao.com
+
+### 支持的 AI 工具
+- **Claude Code**: https://claude.ai/code
+- **Cursor**: https://cursor.sh
+- **GitHub Copilot**: https://github.com/features/copilot
+- **Windsurf**: https://codeium.com/windsurf
 - **Codeium**: https://codeium.com
+
+### 本项目
+- **GitHub 仓库**: https://github.com/garfield-bb/hap-skills-collection
+- **问题反馈**: https://github.com/garfield-bb/hap-skills-collection/issues
+- **功能建议**: https://github.com/garfield-bb/hap-skills-collection/discussions
 
 ---
 
