@@ -31,12 +31,16 @@
 - 📚 **持续更新** - 跟随明道云平台更新，保持最新
 - 🔌 **9 平台支持** - 支持所有主流 AI 编程工具，一键安装
 
-### 🎯 适用场景
+### 🎯 包含技能
 
-- ✅ 开发明道云自定义视图插件（数据看板、BI 驾驶舱）
-- ✅ 使用 HAP V3 API 进行数据操作和业务编排
-- ✅ 搭建基于 HAP 的独立前端项目
-- ✅ 配置和管理 HAP MCP Server
+本项目包含 **4 个核心技能**，涵盖 HAP 平台开发的各个场景：
+
+| 技能 | 适用场景 |
+|------|----------|
+| 🔧 **HAP MCP 使用技能** | 自动化配置 MCP；搭建自动化流程；搭建应用 / 操作数据 |
+| 📊 **HAP V3 API 使用技能** | 需要通过 API 进行数据查询与数据操作 |
+| 🎨 **HAP 视图插件开发技能** | 自动化搭建并发布视图插件（扩展页面、对外分享） |
+| 🌐 **HAP 前端项目搭建技能** | 以 HAP 作为数据库 / 中后台服务，搭建独立前端展示页面 |
 
 ---
 
@@ -44,38 +48,21 @@
 
 本项目支持 **9 种主流 AI 编程工具**，涵盖所有常用平台：
 
-### ✓ 原生支持（推荐）
-
-这些平台原生支持或兼容 Claude 的 skills 格式：
-
-| 工具 | 推荐度 | 特点说明 | 官网 |
-|------|--------|----------|------|
-| **Claude Code** | ⭐⭐⭐⭐⭐ | Anthropic 官方 CLI，原生支持 skills | [官网](https://claude.ai/code) |
-| **TRAE** | ⭐⭐⭐⭐⭐ | 标准化 `.trae/skills/` 目录，完全兼容 | - |
-| **Cursor** | ⭐⭐⭐⭐⭐ | 最流行的 AI 编辑器，原生支持 MCP | [官网](https://cursor.sh) |
-| **GitHub Copilot** | ⭐⭐⭐⭐ | GitHub 官方 AI 助手，原生兼容 | [官网](https://github.com/features/copilot) |
-| **Google Antigravity** | ⭐⭐⭐⭐ | Google 实验性 AI 工具，原生兼容 | - |
-| **OpenCode** | ⭐⭐⭐⭐ | 开源 AI 编程工具，免费使用 | - |
-
-### ⚡ 软链接支持
-
-这些平台通过软链接自动同步 Claude 目录：
-
-| 工具 | 推荐度 | 特点说明 | 官网 |
-|------|--------|----------|------|
-| **Windsurf** | ⭐⭐⭐⭐ | Codeium 出品，功能强大 | [官网](https://codeium.com/windsurf) |
-| **Gemini CLI** | ⭐⭐⭐ | Google Gemini 命令行工具 | - |
-| **OpenAI Codex** | ⭐⭐⭐ | OpenAI 编程助手 | - |
+| 平台 | 兼容性 | 安装方式 | 目录位置 | 推荐度 |
+|------|--------|----------|----------|--------|
+| **Claude Code** | ✓ 原生 | 脚本/手动 | `~/.claude/skills/` | ⭐⭐⭐⭐⭐ |
+| **TRAE** | ✓ 原生 | 脚本/手动 | `~/.trae/skills/` | ⭐⭐⭐⭐⭐ |
+| **Cursor** | ✓ 原生兼容 | 脚本/手动 | `~/.cursor/skills/` | ⭐⭐⭐⭐⭐ |
+| **GitHub Copilot** | ✓ 原生兼容 | 脚本/手动 | `~/.copilot/skills/` | ⭐⭐⭐⭐ |
+| **Google Antigravity** | ✓ 原生兼容 | 脚本/手动 | `~/.gemini/antigravity/skills/` | ⭐⭐⭐⭐ |
+| **OpenCode** | ✓ 原生兼容 | 脚本/手动 | `~/.config/opencode/skill/` | ⭐⭐⭐⭐ |
+| **Windsurf** | ⚡ 软链接 | 脚本自动 | `~/.codeium/windsurf/skills/` | ⭐⭐⭐⭐ |
+| **Gemini CLI** | ⚡ 软链接 | 脚本自动 | `~/.gemini/skills/` | ⭐⭐⭐ |
+| **OpenAI Codex** | ⚡ 软链接 | 脚本自动 | `~/.codex/skills/` | ⭐⭐⭐ |
 
 **符号说明:**
-- **✓ 原生支持** - 工具自动扫描或使用相同目录结构，无需额外配置
-- **⚡ 软链接** - 通过链接到 Claude 目录，自动同步更新，节省空间
-
-**TRAE 特别说明：**
-TRAE 使用标准化的 `.trae/skills/` 目录设计：
-- ✅ 一个 Skill = 一个位于 `.trae/skills/` 目录下的文件夹
-- ✅ 完全兼容 Claude Code 的 SKILL.md 格式
-- ✅ 支持所有原生 skills 特性
+- **✓ 原生** - 工具自动扫描或使用相同的目录结构，无需额外配置
+- **⚡ 软链接** - 通过链接到 Claude 目录实现自动同步，更新一处全部同步
 
 ---
 
