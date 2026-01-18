@@ -118,6 +118,10 @@ HAP 提供两种不同类型的 MCP，**作用和使用场景完全不同**，�
 - ⚠️ 操作会影响真实业务数据
 
 ### 配置方式（应用专属配置）
+
+**Cursor 自动化配置：**
+- 配置文件位置：`~/.cursor/mcp.json`
+- 配置格式示例：
 ```json
 {
   "mcpServers": {
@@ -127,6 +131,8 @@ HAP 提供两种不同类型的 MCP，**作用和使用场景完全不同**，�
   }
 }
 ```
+- ✅ 配置完成后会自动生效，无需重启 Cursor
+- ✅ **配置后必须验证**：调用 MCP 工具测试配置是否正常工作
 
 ### 配置特征识别
 - ✅ 服务器名称通常是 `hap-mcp-xxx`（应用名称）
@@ -161,194 +167,6 @@ HAP 提供两种不同类型的 MCP，**作用和使用场景完全不同**，�
 
 ## 🤖 AI 助手使用指南
 
-### 多 MCP 配置时的处理流程 ⭐重要
-
-当存在多个 HAP 应用 MCP 配置时，**必须遵循以下流程**，避免操作到错误的应用：
-
-```
-用户请求
-  ↓
-1. 识别当前连接的 MCP 应用
-  ↓
-2. 分析用户需求，确定目标应用
-  ↓
-3. 对比当前连接 vs 目标应用
-  ↓
-4. 如果不匹配 → 与用户确认
-  ↓
-5. 确认后执行操作
-```
-
-#### Step 1: 识别当前连接的 MCP 应用
-
-**必须首先执行：**
-```python
-# 调用 get_app_info 确认当前连接的应用
-mcp_hap-mcp-_get_app_info()
-# 返回：应用名称（name）、应用ID（appId）等信息
-```
-
-**关键信息：**
-- 应用名称（name）- 用于对比和确认
-- 应用ID（appId）- 用于验证
-- 组织ID（organizationId）
-
-#### Step 2: 分析用户需求，确定目标应用
-
-**分析维度：**
-
-1. **用户明确提到应用名称**
-   - 例如："在自媒体运营应用中..."
-   - → 直接使用指定的应用
-
-2. **用户提到业务场景**
-   - 例如："小红书运营"、"自媒体运营"
-   - → 根据场景匹配对应的应用（需要检查 MCP 配置）
-
-3. **用户提供 MCP 配置**
-   - 例如：`{"hap-mcp-自媒体运营": {"url": "..."}}`
-   - → **从配置中提取应用名称**：`hap-mcp-{应用名称}` → 去掉 `hap-mcp-` 前缀
-   - → 使用配置中指定的应用
-
-4. **上下文推断**
-   - 根据对话历史、项目名称等推断
-   - → **必须与用户确认**
-
-#### Step 3: 对比并确认
-
-**如果当前连接 ≠ 目标应用：**
-
-```
-❌ 错误做法：
-- 直接操作（可能操作到错误的应用）
-- 假设用户意图（容易出错）
-
-✅ 正确做法：
-- 明确告知用户当前连接的应用
-- 询问是否切换到目标应用
-- 或确认是否在当前应用中操作
-```
-
-**确认话术模板：**
-```
-当前连接的是「[应用名称]」应用，但根据您的需求，应该使用「[目标应用名称]」应用。
-
-请确认：
-1. 切换到「[目标应用名称]」应用进行操作？
-2. 还是在当前「[应用名称]」应用中操作？
-
-（如果用户提供了 MCP 配置，也可以说明：您提供的 MCP 配置指向「[应用名称]」应用）
-```
-
-#### Step 4: 执行操作
-
-**确认后执行：**
-- 如果用户确认切换 → 使用对应的 MCP 配置（注意：MCP 连接由系统管理，可能需要用户手动切换或重启 Cursor）
-- 如果用户确认在当前应用 → 继续操作
-- 如果用户提供新配置 → 先更新 MCP 配置，再操作
-
-#### 实际案例
-
-**案例 1: 用户提供 MCP 配置**
-```
-用户：{"hap-mcp-自媒体运营":{"url":"..."}}
-
-处理流程：
-1. ✅ 读取 MCP 配置，识别应用名称：自媒体运营
-2. ✅ 调用 get_app_info() 确认当前连接的应用
-3. ✅ 对比：当前连接 vs 自媒体运营
-4. ✅ 如果不匹配，询问用户：
-   您提供的 MCP 配置指向「自媒体运营」应用。
-   当前连接的是「[当前应用]」应用。
-   
-   是否切换到「自媒体运营」应用进行操作？
-5. ✅ 确认后执行操作
-```
-
-**案例 2: 用户提到业务场景**
-```
-用户：帮我创建小红书运营的数据表
-
-处理流程：
-1. ✅ 调用 get_app_info() 确认当前连接的应用
-2. ✅ 分析需求：小红书运营 → 可能对应「自媒体运营」应用
-3. ✅ 检查 MCP 配置，查找可能匹配的应用
-4. ✅ 询问用户：
-   根据您的需求「小红书运营」，我找到了以下可能的应用：
-   - 自媒体运营（hap-mcp-自媒体运营）
-   
-   当前连接的是「[当前应用]」应用。
-   
-   请确认在哪个应用中创建数据表？
-5. ✅ 确认后执行操作
-```
-
-**案例 3: 用户未明确指定**
-```
-用户：帮我创建一些数据表
-
-处理流程：
-1. ✅ 调用 get_app_info() 确认当前连接的应用
-2. ✅ 明确告知用户：
-   当前连接的是「[应用名称]」应用。
-   我将在此应用中创建数据表。
-   
-   如果需要在其他应用中操作，请告诉我应用名称。
-3. ✅ 等待用户确认或提供更多信息
-4. ✅ 确认后执行操作
-```
-
-#### 检查清单
-
-在执行任何 HAP MCP 操作前，必须完成：
-
-- [ ] **Step 1**: 调用 `get_app_info()` 确认当前连接的应用
-- [ ] **Step 2**: 分析用户需求，确定目标应用
-- [ ] **Step 3**: 对比当前连接 vs 目标应用
-- [ ] **Step 4**: 如果不匹配，与用户确认
-- [ ] **Step 5**: 确认后执行操作
-
-#### 常见错误及避免方法
-
-**❌ 错误 1: 直接操作，不确认**
-```
-用户：创建数据表
-AI: 直接创建（可能创建到错误的应用）
-
-✅ 正确做法：
-用户：创建数据表
-AI: 
-1. 先确认当前应用
-2. 询问用户是否在当前应用中创建
-3. 确认后创建
-```
-
-**❌ 错误 2: 假设用户意图**
-```
-用户：创建小红书笔记表
-AI: 假设用户要在"自媒体运营"应用中创建，直接操作
-
-✅ 正确做法：
-用户：创建小红书笔记表
-AI: 
-1. 确认当前连接的应用
-2. 询问：在「[当前应用]」应用中创建，还是「自媒体运营」应用中创建？
-3. 确认后创建
-```
-
-**❌ 错误 3: 忽略 MCP 配置中的应用名称**
-```
-用户提供：{"hap-mcp-自媒体运营": {...}}
-AI: 直接使用，不检查应用名称
-
-✅ 正确做法：
-用户提供：{"hap-mcp-自媒体运营": {...}}
-AI: 
-1. 识别 MCP 配置中的应用名称：自媒体运营（去掉 hap-mcp- 前缀）
-2. 确认当前连接的应用
-3. 对比并询问用户确认
-```
-
 ### 决策树
 
 ```
@@ -357,21 +175,13 @@ AI:
   │   └─ 使用 API 文档 MCP (ApiBox)
   │
   ├─ 需要"查询真实数据"/"操作记录"
-  │   ├─ Step 1: 调用 get_app_info() 确认当前应用
-  │   ├─ Step 2: 分析需求，确定目标应用
-  │   ├─ Step 3: 对比当前连接 vs 目标应用
-  │   ├─ Step 4: 如果不匹配 → 与用户确认
-  │   └─ Step 5: 确认后使用应用执行 MCP (Application)
+  │   └─ 使用应用执行 MCP (Application)
   │
   ├─ 开发阶段的代码生成
   │   └─ 使用 API 文档 MCP (ApiBox)
   │
   └─ 生产环境的数据处理
-      ├─ Step 1: 调用 get_app_info() 确认当前应用
-      ├─ Step 2: 分析需求，确定目标应用
-      ├─ Step 3: 对比当前连接 vs 目标应用
-      ├─ Step 4: 如果不匹配 → 与用户确认
-      └─ Step 5: 确认后使用应用执行 MCP (Application)
+      └─ 使用应用执行 MCP (Application)
 ```
 
 ### 常见场景示例
@@ -432,277 +242,123 @@ AI:
 
 ### Cursor MCP 配置文件位置
 
-Cursor 支持两种配置方式：
+Cursor 的 MCP 配置支持两种方式，**项目级配置优先于全局配置**：
 
-#### 方式 1: 项目级配置（推荐）⭐
+**项目级配置**（推荐用于项目专属 MCP）：
+- 在项目根目录创建：`.cursor/mcp.json`
+- 仅对当前项目有效
+- 适合团队协作或项目特定的 MCP 配置
 
-- **位置**: 项目根目录下的 `.cursor/mcp.json`
-- **优点**: 
-  - 配置随项目版本控制（可选择性提交）
-  - 不同项目可使用不同 MCP 配置
-  - 团队协作时配置更灵活
-- **macOS/Linux**: `项目根目录/.cursor/mcp.json`
-- **Windows**: `项目根目录\.cursor\mcp.json`
-
-#### 方式 2: 全局配置
-
-- **位置**: Cursor 用户设置目录
-- **优点**: 所有项目共享同一配置
+**全局配置**（适用于所有项目）：
 - **macOS**: `~/.cursor/mcp.json`
 - **Windows**: `%USERPROFILE%\.cursor\mcp.json`
 - **Linux**: `~/.cursor/mcp.json`
+- 对所有项目都有效
+- 适合个人常用 MCP 配置
 
-**优先级**: 如果项目级和全局配置都存在，**项目级配置优先**。
+**优先级**：如果项目级和全局配置都存在同名 MCP，项目级配置会覆盖全局配置。
 
-⚠️ **重要**: Cursor 的 MCP 配置存储在 `.cursor/mcp.json`（项目级）或 `~/.cursor/mcp.json`（全局），**不是** `settings.json` 文件中。
+**⚠️ 重要说明**：旧版 Cursor 使用 `settings.json` 配置 MCP，现在已改为使用 `.cursor/mcp.json`。
 
 ### 自动化配置步骤
 
 当用户提供 MCP 配置信息时（例如：`{"hap-mcp-应用名":{"url":"https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx"}}`），AI 应该：
 
-1. **确定配置位置**（按优先级）
-   - **优先检查项目根目录**是否存在 `.cursor/mcp.json`
-   - 如果用户在项目目录中操作，优先使用项目级配置
-   - 如果项目级配置不存在，检查全局配置 `~/.cursor/mcp.json`
-   - 如果用户明确要求全局配置，则使用全局配置
-   - 使用 `run_terminal_cmd` 检查：`ls -la .cursor/mcp.json 2>/dev/null || ls -la ~/.cursor/mcp.json 2>/dev/null`
+1. **确定配置位置**
+   - **优先使用项目级配置**：在项目根目录创建或更新 `.cursor/mcp.json`
+   - 如果用户明确要求全局配置，则使用全局 `~/.cursor/mcp.json`
+   - 如果没有 `.cursor` 目录，先创建它
 
-2. **读取现有配置**
-   - 如果使用项目级配置：读取 `项目根目录/.cursor/mcp.json`
-   - 如果使用全局配置：读取 `~/.cursor/mcp.json`
-   - 使用 `read_file` 工具读取配置文件
-   - 检查是否已存在 `mcpServers` 配置结构
-   - 如果文件不存在，创建新文件（需要先创建 `.cursor` 目录）
+2. **读取现有配置文件（如果存在）**
+   - 使用 `read_file` 工具读取现有配置文件
+   - 检查是否已存在 `mcpServers` 配置
 
 3. **解析用户提供的配置**
-   - 提取服务器名称（如 `hap-mcp-自媒体运营`）
-   - 提取 URL（包含 Appkey 和 Sign）
-   - 解析 JSON 格式的配置对象
-
-4. **更新或添加配置**
-   - 如果配置文件中已有 `mcpServers`，则在其中添加或更新服务器配置
-   - 如果配置文件中没有 `mcpServers`，则创建新的配置结构
-   - **注意**: 应用执行 MCP 需要 `"type": "http"` 字段和 `url` 字段
-
-5. **保存配置文件**
-   - **项目级配置**: 保存到 `项目根目录/.cursor/mcp.json`（需要先创建 `.cursor` 目录）
-   - **全局配置**: 更新 `~/.cursor/mcp.json` 文件
-   - 如果文件受保护无法直接编辑，使用 Python 脚本通过 JSON 操作更新：
-   ```python
-   import json
-   import os
-   
-   # 确定配置文件路径（项目级优先）
-   project_config = '.cursor/mcp.json'
-   global_config = os.path.expanduser('~/.cursor/mcp.json')
-   
-   # 优先使用项目级配置
-   if os.path.exists(project_config):
-       file_path = project_config
-   elif os.path.exists(os.path.dirname(project_config)) or os.getcwd():
-       # 在项目目录中，创建项目级配置
-       os.makedirs('.cursor', exist_ok=True)
-       file_path = project_config
-   else:
-       file_path = global_config
-       os.makedirs(os.path.dirname(file_path), exist_ok=True)
-   
-   # 读取现有配置或创建新配置
-   if os.path.exists(file_path):
-       with open(file_path, 'r', encoding='utf-8') as f:
-           data = json.load(f)
-   else:
-       data = {'mcpServers': {}}
-   
-   # 添加新的 MCP 服务器配置
-   if 'mcpServers' not in data:
-       data['mcpServers'] = {}
-   
-   data['mcpServers']['hap-mcp-应用名'] = {
-       'type': 'http',
-       'url': 'https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx'
-   }
-   
-   # 写回文件
-   with open(file_path, 'w', encoding='utf-8') as f:
-       json.dump(data, f, ensure_ascii=False, indent=2)
-   
-   print(f'配置已保存到: {file_path}')
-   ```
-   - 使用 `run_terminal_cmd` 执行 Python 脚本更新配置
-   - 保持 JSON 格式正确，注意逗号和缩进
-
-6. **验证配置**
-   - ✅ 验证 JSON 格式是否正确
-   - ✅ 确认文件已成功创建/更新
-   - ✅ 检查 `type` 字段是否为 `"http"`
-   - ✅ 提醒用户重启 Cursor 使配置生效
-   - ✅ 如果是项目级配置，提醒可以添加到 `.gitignore`（如果包含敏感信息）
-
-### 配置格式示例
-
-#### 项目级配置（推荐）
-
-在项目根目录创建 `.cursor/mcp.json`：
-```json
-{
-  "mcpServers": {
-    "hap-mcp-清华大学官网": {
-      "type": "http",
-      "url": "https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx"
-    }
-  }
-}
-```
-
-#### 全局配置
-
-在用户设置目录的 `~/.cursor/mcp.json` 中添加：
-```json
-{
-  "mcpServers": {
-    "hap-mcp-自媒体运营": {
-      "type": "http",
-      "url": "https://api.mingdao.com/mcp?HAP-Appkey=601530a05105750f&HAP-Sign=MDc2ZTRmNTMxYjFmOTZlNzM5ODc4NGJlNmNiMzM0NTY0YWExODgxY2RjYTIxMGQzM2FlMGRiZDRlOTEyY2Y2ZA=="
-    }
-  }
-}
-```
-
-**注意**: 
-- 应用执行 MCP 需要 `"type": "http"` 字段和 `url` 字段
-- 项目级配置不需要嵌套在 `settings.json` 的其他配置中，是独立的 JSON 文件
-- 保留其他已存在的 MCP 配置，不要删除
-
-#### 更新现有 MCP 配置
-
-如果配置已存在，AI 应该：
-- 使用 Python 脚本更新对应的 URL（因为文件可能受保护）
-- 保持其他配置不变
-- 确保 JSON 格式正确
-
-### 实际操作示例
-
-**场景**: 用户说"把这个 MCP 配置都这里"并提供了配置信息
-
-**AI 操作流程**:
-1. **确定配置位置**（优先项目级）
-   - 检查项目根目录是否存在 `.cursor/mcp.json`
-   - 如果不存在，检查是否在项目目录中（优先项目级配置）
-   - 如果用户明确要求全局配置，则使用全局配置
-
-2. **读取现有配置**
-   - 如果使用项目级配置：读取 `项目根目录/.cursor/mcp.json`
-   - 如果使用全局配置：读取 `~/.cursor/mcp.json`
-   - 如果文件不存在，创建新文件
-
-3. **解析用户提供的配置**
-   - 提取服务器名称（如 `hap-mcp-自媒体运营`）
+   - 提取服务器名称（如 `hap-mcp-清华大学官网`）
    - 提取 URL（包含 Appkey 和 Sign）
 
 4. **更新或添加配置**
    - 如果配置文件中已有 `mcpServers`，则更新或添加新的服务器配置
    - 如果配置文件中没有 `mcpServers`，则创建新的配置结构
-   - 对于应用执行 MCP，确保添加 `"type": "http"` 字段
+   - **注意**：`.cursor/mcp.json` 中 `url` 类型的 MCP **不需要**添加 `"type": "http"` 字段（这是旧 `settings.json` 格式）
 
 5. **保存配置文件**
-   - 项目级配置：保存到 `.cursor/mcp.json`（需要先创建 `.cursor` 目录）
-   - 全局配置：更新 `~/.cursor/mcp.json` 文件
-   - 使用 Python 脚本更新配置文件：
-   ```bash
-   python3 -c "
-   import json
-   import os
-   
-   # 确定配置文件路径（项目级优先）
-   project_config = '.cursor/mcp.json'
-   global_config = os.path.expanduser('~/.cursor/mcp.json')
-   
-   # 优先使用项目级配置
-   if os.path.exists(project_config):
-       file_path = project_config
-   elif os.getcwd():
-       # 在项目目录中，创建项目级配置
-       os.makedirs('.cursor', exist_ok=True)
-       file_path = project_config
-   else:
-       file_path = global_config
-       os.makedirs(os.path.dirname(file_path), exist_ok=True)
-   
-   # 读取现有配置或创建新配置
-   if os.path.exists(file_path):
-       with open(file_path, 'r', encoding='utf-8') as f:
-           data = json.load(f)
-   else:
-       data = {'mcpServers': {}}
-   
-   # 添加新的 MCP 服务器配置
-   if 'mcpServers' not in data:
-       data['mcpServers'] = {}
-   
-   data['mcpServers']['hap-mcp-自媒体运营'] = {
-       'type': 'http',
-       'url': 'https://api.mingdao.com/mcp?HAP-Appkey=601530a05105750f&HAP-Sign=MDc2ZTRmNTMxYjFmOTZlNzM5ODc4NGJlNmNiMzM0NTY0YWExODgxY2RjYTIxMGQzM2FlMGRiZDRlOTEyY2Y2ZA=='
-   }
-   
-   with open(file_path, 'w', encoding='utf-8') as f:
-       json.dump(data, f, ensure_ascii=False, indent=2)
-   
-   print(f'配置已保存到: {file_path}')
-   "
-   ```
+   - 使用 `write` 工具创建或更新 `.cursor/mcp.json` 文件
+   - 保持 JSON 格式正确，注意逗号和缩进
 
-6. **验证配置**
-   - ✅ 验证 JSON 格式是否正确
-   - ✅ 确认文件已成功创建/更新
-   - ✅ 检查 `type` 字段是否为 `"http"`
-   - ✅ 提醒用户重启 Cursor 使配置生效
-   - ✅ 如果是项目级配置，提醒可以添加到 `.gitignore`（如果包含敏感信息）
+6. **验证配置状态**（重要！）
+   - 配置完成后，必须验证配置是否正常工作
+   - 通过调用 MCP 工具测试，如：
+     - 调用 `get_time` 获取当前时间
+     - 调用 `get_app_info` 获取应用信息
+   - 如果验证成功，说明配置已自动生效，无需重启 Cursor
 
-### 配置方式判断逻辑
+### 配置格式示例
 
-AI 应该按以下优先级选择配置位置：
+#### 新增应用执行 MCP
 
-1. **项目级配置优先**
-   - 如果用户在项目目录中操作，优先使用项目级配置
-   - 创建或更新 `项目根目录/.cursor/mcp.json`
+如果用户提供：
+```json
+{"hap-mcp-清华大学官网":{"url":"https://api.mingdao.com/mcp?HAP-Appkey=6802bfa5da37d75f&HAP-Sign=MWZmZWU1YmMyMzE4ZTAxYjY3NTViYjM5NzhlNTdhOTIwZWFhYTc2Y2I2YzljNWMzNDFmMjk4NTM2N2M0YTg2OA=="}}
+```
 
-2. **全局配置备选**
-   - 如果用户明确要求全局配置
-   - 或者项目级配置失败时使用
+AI 应该在项目根目录创建或更新 `.cursor/mcp.json` 文件：
+```json
+{
+  "mcpServers": {
+    "hap-mcp-清华大学官网": {
+      "url": "https://api.mingdao.com/mcp?HAP-Appkey=6802bfa5da37d75f&HAP-Sign=MWZmZWU1YmMyMzE4ZTAxYjY3NTViYjM5NzhlNTdhOTIwZWFhYTc2Y2I2YzljNWMzNDFmMjk4NTM2N2M0YTg2OA=="
+    }
+  }
+}
+```
 
-3. **配置冲突处理**
-   - 如果项目级和全局配置都存在，优先使用项目级配置
-   - 提醒用户两种配置的区别
+**重要说明**：
+- `.cursor/mcp.json` 格式中，`url` 类型的 MCP **不需要** `"type": "http"` 字段
+- `"type": "http"` 只在旧的 `settings.json` 配置方式中需要
+
+#### 更新现有 MCP 配置
+
+如果配置已存在，AI 应该：
+- 使用 `search_replace` 工具更新对应的 URL
+- 保持其他配置不变
+- 确保 JSON 格式正确
+
+### 实际操作示例
+
+**场景**: 用户说"帮我配置这个 MCP"并提供了配置信息
+
+**AI 操作流程**:
+1. 检查项目根目录是否存在 `.cursor` 目录，不存在则创建
+2. 读取或创建 `.cursor/mcp.json` 文件（优先使用项目级配置）
+3. 检查现有配置结构（如果文件已存在）
+4. 解析用户提供的 MCP 配置
+5. 更新或添加 `mcpServers` 配置项
+6. 保存文件到 `.cursor/mcp.json`
+7. **验证配置状态**：调用 MCP 工具（如 `get_time` 或 `get_app_info`）测试配置是否正常工作
+8. 告知用户配置已完成，配置已自动生效无需重启 Cursor
 
 ### 注意事项
 
 - ✅ **自动化执行**: 不要只告诉用户如何配置，应该直接帮用户配置好
-- ✅ **配置文件位置**: 优先使用项目级配置 `.cursor/mcp.json`，不是 `settings.json`
+- ✅ **配置位置**: 优先使用项目级 `.cursor/mcp.json`，而非全局 `settings.json`（旧方式）
 - ✅ **格式检查**: 确保 JSON 格式正确，注意逗号、引号、括号匹配
 - ✅ **保留现有配置**: 更新时不要删除其他已存在的 MCP 配置
-- ✅ **文件保护**: 如果文件受保护无法直接编辑，使用 Python 脚本通过 JSON 操作更新
-- ✅ **配置格式**: 应用执行 MCP 需要 `"type": "http"` 字段和 `url` 字段
-- ✅ **项目级优先**: 优先使用项目级配置，更灵活且可版本控制
+- ✅ **格式区别**: `.cursor/mcp.json` 中 `url` 类型 MCP **不需要** `"type": "http"` 字段
+- ✅ **配置验证**: 配置完成后必须验证配置状态，通过调用 MCP 工具测试
+- ✅ **自动生效**: 配置完成后会自动生效，无需重启 Cursor
+- ⚠️ **目录创建**: 如果 `.cursor` 目录不存在，需要先创建它
 - ⚠️ **权限问题**: 如果文件无法写入，提示用户检查文件权限
 - ⚠️ **备份建议**: 更新前可以提醒用户配置文件包含敏感信息
 
 ### 配置后的提示
 
 配置完成后，AI 应该告知用户：
-- ✅ 配置已保存到文件（明确说明是项目级还是全局配置）
-- ✅ 配置位置和文件名（如：`项目根目录/.cursor/mcp.json` 或 `~/.cursor/mcp.json`）
-- ✅ 需要重启 Cursor 或重新加载 MCP 服务器才能生效
-- ✅ 如果是项目级配置，提醒可以添加到 `.gitignore`（如果包含敏感信息）
+- ✅ 配置已保存到 `.cursor/mcp.json`（项目级配置）
+- ✅ 配置位置：项目根目录下的 `.cursor/mcp.json`
+- ✅ 可能需要重启 Cursor 才能生效
 - ⚠️ 提醒保护鉴权信息，不要分享配置
-
-### 版本说明
-
-**最后更新**: 2025-01-14  
-**Cursor 版本**: 最新版本  
-**配置方式**: 优先使用项目级配置（`.cursor/mcp.json`）
-
-如果发现配置方式有变化，请及时更新此文档。
+- 📝 提示：项目级配置会覆盖全局配置，仅对当前项目有效
 
 ---
 
@@ -716,8 +372,8 @@ AI 应该按以下优先级选择配置位置：
 ### 应用执行 MCP
 - ⚠️ 包含鉴权信息，需要保密
 - ⚠️ 不要分享配置或提交到公开仓库
-- ⚠️ 建议使用 `.claude/settings.local.json` 存储
-- ⚠️ 确保添加到 `.gitignore`
+- ⚠️ **配置文件位置**: 项目级 `.cursor/mcp.json` 或全局 `~/.cursor/mcp.json`
+- ⚠️ 如果 `.cursor/mcp.json` 包含敏感信息，确保添加到 `.gitignore`
 
 ---
 
@@ -729,42 +385,21 @@ AI 应该按以下优先级选择配置位置：
    - 学习 API → API 文档 MCP
    - 操作数据 → 应用执行 MCP
 
-2. **多 MCP 配置时的处理** ⭐重要：
-   - **必须首先调用** `get_app_info()` 确认当前连接的应用
-   - **分析用户需求**，确定目标应用（从用户描述、MCP 配置、业务场景等推断）
-   - **对比当前连接 vs 目标应用**
-   - **如果不匹配，必须与用户确认**，不要假设用户意图
-   - **确认后执行操作**
-
-3. **配置 MCP**: 
-   - **如果用户提供配置信息** → **自动化配置**，直接更新 Cursor 全局设置文件
+2. **配置 MCP**: 
+   - **如果用户提供配置信息** → **自动化配置**，在项目根目录创建或更新 `.cursor/mcp.json`
    - **如果用户询问如何配置** → 提供配置说明，并询问是否需要帮助自动化配置
-   - **如果用户说"配置 MCP"** → 主动读取并更新配置文件
-   - 检查配置文件格式和必需参数
-   - **从 MCP 配置中提取应用名称**：`hap-mcp-{应用名称}` → 去掉 `hap-mcp-` 前缀
+   - **如果用户说"配置 MCP"** → 优先使用项目级 `.cursor/mcp.json`，而非全局 `settings.json`
+   - 检查配置文件格式和必需参数（注意 `.cursor/mcp.json` 不需要 `type` 字段）
+   - **配置完成后必须验证配置状态**：通过调用 MCP 工具（如 `get_time` 或 `get_app_info`）验证配置是否正常工作
 
-4. **指导使用**: 根据场景选择正确的 MCP
+3. **指导使用**: 根据场景选择正确的 MCP
    - 开发阶段 → API 文档 MCP
    - 生产环境 → 应用执行 MCP
 
-5. **安全提醒**: 涉及应用执行 MCP 时
+4. **安全提醒**: 涉及应用执行 MCP 时
    - 提醒保护鉴权信息
    - 警告数据操作的影响
    - 配置文件包含敏感信息，不要分享
-
-### 核心原则总结
-
-**多 MCP 配置时的黄金法则：**
-1. ✅ **先确认，后操作** - 永远先确认当前连接的应用
-2. ✅ **多问一句** - 不确定时，与用户确认
-3. ✅ **明确告知** - 清楚说明当前状态和目标状态
-4. ✅ **避免假设** - 不要假设用户意图
-
-**关键检查点：**
-- 当前连接的应用是什么？（调用 `get_app_info()`）
-- 用户需求对应的应用是什么？（分析用户描述、MCP 配置）
-- 两者是否一致？
-- 如果不一致，是否已与用户确认？
 
 ---
 
