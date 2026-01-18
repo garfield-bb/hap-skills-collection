@@ -51,6 +51,107 @@ cd /path/to/hap-skills-collection
 ls -la .claude/skills/*/SKILL.md
 ```
 
+### 步骤 1.5: 检查并安装 HAP API 文档 MCP（新增）
+
+**重要**: 在安装/更新技能时，必须检查用户是否已安装 **应用 API - API 文档 MCP**。
+
+#### 检查 MCP 是否已安装
+
+根据用户当前使用的平台检查 MCP 配置文件：
+
+**Claude Code**:
+```bash
+# 检查是否已配置
+claude mcp list | grep "应用 API - API 文档"
+```
+
+**Cursor**:
+```bash
+# 检查配置文件
+cat ~/.cursor/mcp.json | grep "应用 API - API 文档"
+# 或项目级
+cat .cursor/mcp.json | grep "应用 API - API 文档"
+```
+
+**TRAE**:
+```bash
+# 检查配置文件
+cat ~/.trae/mcp.json | grep "应用 API - API 文档"
+# 或项目级
+cat .trae/mcp.json | grep "应用 API - API 文档"
+```
+
+**其他平台**: 同理检查对应平台的配置文件
+
+#### 如果未安装，自动安装 API 文档 MCP
+
+**MCP 配置信息**:
+```json
+{
+  "mcpServers": {
+    "应用 API - API 文档": {
+      "command": "npx",
+      "args": ["-y", "apifox-mcp-server@latest", "--site-id=5442569"]
+    }
+  }
+}
+```
+
+**自动安装步骤**:
+
+1. **识别平台**: 确定用户使用的 AI 工具（Claude Code / Cursor / TRAE 等）
+
+2. **读取现有配置**: 增量更新，保留用户已有的 MCP 配置
+
+3. **添加 API 文档 MCP**:
+   - Claude Code: `claude mcp add "应用 API - API 文档" --command npx --args "-y,apifox-mcp-server@latest,--site-id=5442569"`
+   - Cursor/TRAE 等: 编辑 `mcp.json` 文件添加配置
+
+4. **验证安装**: 检查配置文件是否包含 "应用 API - API 文档"
+
+5. **提示重启**: 告知用户需要重启工具使配置生效
+
+**示例 - Cursor 平台**:
+```bash
+# 读取现有配置
+EXISTING_CONFIG=$(cat ~/.cursor/mcp.json 2>/dev/null || echo '{"mcpServers":{}}')
+
+# 添加 API 文档 MCP（增量更新）
+cat > ~/.cursor/mcp.json <<EOF
+{
+  "mcpServers": {
+    $(echo "$EXISTING_CONFIG" | jq -r '.mcpServers | to_entries | map("\"\(.key)\": \(.value|tojson)") | join(",")'),
+    "应用 API - API 文档": {
+      "command": "npx",
+      "args": ["-y", "apifox-mcp-server@latest", "--site-id=5442569"]
+    }
+  }
+}
+EOF
+
+# 验证安装
+cat ~/.cursor/mcp.json | grep "应用 API - API 文档"
+```
+
+**告知用户**:
+```
+✅ HAP API 文档 MCP 已安装
+
+📋 配置信息：
+- 平台：Cursor
+- MCP 名称：应用 API - API 文档
+- 配置文件：~/.cursor/mcp.json
+- 已保留其他 MCP 配置
+
+💡 下一步：
+- 重启 Cursor 使配置生效
+- 现在可以使用 MCP 查询 HAP API 文档了
+
+📖 用途说明：
+- 让 AI 读懂 HAP 接口文档（只读，不执行操作）
+- 查询 API 文档、学习接口结构、生成 API 调用代码
+```
+
 ### 步骤 2: 更新技能文件
 
 #### 方式一：从 GitHub 仓库更新（推荐）
@@ -112,6 +213,15 @@ head -10 ~/.claude/skills/hap-v3-api/SKILL.md
 - [ ] 技能名称和描述正确
 - [ ] 文件编码为 UTF-8
 - [ ] 没有语法错误
+- [ ] **HAP API 文档 MCP 已安装（新增）**
+
+### ✅ MCP 配置检查（新增）
+
+- [ ] 检查平台的 MCP 配置文件
+- [ ] 确认是否已安装 "应用 API - API 文档"
+- [ ] 如果未安装，自动安装 API 文档 MCP
+- [ ] 增量更新，保留用户已有的 MCP 配置
+- [ ] 提示用户重启工具使配置生效
 
 ### ✅ 内容检查项
 
@@ -167,6 +277,9 @@ cp -r .claude/skills/* ~/.claude/skills/
 
 # 验证更新
 ls -la ~/.claude/skills/hap-*/SKILL.md
+
+# ⚠️ 重要：检查并安装 HAP API 文档 MCP
+# （见步骤 1.5）
 ```
 
 **如果用户没有本地仓库：**
@@ -190,7 +303,15 @@ done
 
 # 验证更新（只显示实际存在的技能）
 ls -la ~/.claude/skills/hap-*/SKILL.md 2>/dev/null
+
+# ⚠️ 重要：检查并安装 HAP API 文档 MCP
+# （见步骤 1.5）
 ```
+
+**⚠️ 关键提醒**:
+- 更新技能后，**必须检查** HAP API 文档 MCP 是否已安装
+- 如果未安装，**自动帮用户安装**（见步骤 1.5）
+- 安装后提示用户重启工具使配置生效
 
 ### 3. 验证更新结果
 
@@ -199,6 +320,8 @@ ls -la ~/.claude/skills/hap-*/SKILL.md 2>/dev/null
 - ✅ 验证文件大小是否合理（不应该为 0）
 - ✅ 检查文件修改时间是否为最新
 - ✅ 读取文件前几行验证格式正确
+- ✅ **检查 HAP API 文档 MCP 是否已安装（新增）**
+- ✅ **如果未安装，自动安装 API 文档 MCP**
 
 ### 4. 告知用户
 
@@ -206,7 +329,36 @@ ls -la ~/.claude/skills/hap-*/SKILL.md 2>/dev/null
 - ✅ 已更新的技能列表（4 个核心技能）
 - ✅ 更新来源（GitHub 仓库）
 - ✅ 技能文件位置（~/.claude/skills/）
+- ✅ **HAP API 文档 MCP 安装状态**（已安装 / 已跳过 / 刚安装）
 - ⚠️ 可能需要重启 AI 工具才能生效
+
+**完整的用户反馈示例**:
+```
+✅ HAP Skills 更新完成！
+
+📋 已更新技能：
+1. ✅ hap-v3-api - HAP V3 API 使用技能
+2. ✅ hap-view-plugin - HAP 视图插件开发技能
+3. ✅ hap-frontend-project - HAP 前端项目搭建技能
+4. ✅ hap-mcp-usage - HAP MCP 使用指南
+
+📦 MCP 配置：
+✅ 应用 API - API 文档 MCP 已安装
+   - 平台：Cursor
+   - 配置文件：~/.cursor/mcp.json
+   - 用途：让 AI 读懂 HAP 接口文档
+
+💡 下一步：
+- 重启 Cursor 使所有配置生效
+- 现在可以使用最新的 HAP 技能了
+
+📚 技能位置：
+~/.claude/skills/
+├── hap-v3-api/
+├── hap-view-plugin/
+├── hap-frontend-project/
+└── hap-mcp-usage/
+```
 
 ## 🔍 技能文件格式规范
 
