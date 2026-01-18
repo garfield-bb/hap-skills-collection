@@ -40,13 +40,11 @@
 
 ---
 
-## 🚀 快速开始
+## 📱 支持的平台
 
-### 前置要求
+本项目支持 **9 种主流 AI 编程工具**，涵盖所有常用平台：
 
-选择以下任一 AI 编程工具（支持 9 种平台）：
-
-#### ✓ 原生支持（推荐）
+### ✓ 原生支持（推荐）
 
 这些平台原生支持或兼容 Claude 的 skills 格式：
 
@@ -59,7 +57,7 @@
 | **Google Antigravity** | ⭐⭐⭐⭐ | Google 实验性 AI 工具，原生兼容 | - |
 | **OpenCode** | ⭐⭐⭐⭐ | 开源 AI 编程工具，免费使用 | - |
 
-#### ⚡ 软链接支持
+### ⚡ 软链接支持
 
 这些平台通过软链接自动同步 Claude 目录：
 
@@ -69,43 +67,56 @@
 | **Gemini CLI** | ⭐⭐⭐ | Google Gemini 命令行工具 | - |
 | **OpenAI Codex** | ⭐⭐⭐ | OpenAI 编程助手 | - |
 
-**优势说明：**
-- **✓ 原生支持**: 工具自动扫描或使用相同目录结构，无需额外配置
-- **⚡ 软链接**: 通过链接到 Claude 目录，自动同步更新，节省空间
+**符号说明:**
+- **✓ 原生支持** - 工具自动扫描或使用相同目录结构，无需额外配置
+- **⚡ 软链接** - 通过链接到 Claude 目录，自动同步更新，节省空间
 
-### ⚡ 一键安装
+**TRAE 特别说明：**
+TRAE 使用标准化的 `.trae/skills/` 目录设计：
+- ✅ 一个 Skill = 一个位于 `.trae/skills/` 目录下的文件夹
+- ✅ 完全兼容 Claude Code 的 SKILL.md 格式
+- ✅ 支持所有原生 skills 特性
 
-#### macOS / Linux
+---
+
+## 🚀 快速开始
+
+### 💡 推荐策略："一次安装，到处运行"
+
+**默认规则：全局安装到 Claude Code**
+
+1. **为什么选择 Claude？**
+   - ✅ Anthropic 官方工具，最标准的实现
+   - ✅ 原生支持 skills，兼容性最好
+   - ✅ 其他平台可以直接兼容或软链接
+
+2. **"一次安装，到处运行"的优势：**
+   - 🎯 **一次安装** - 只需在 `~/.claude/skills/` 安装一次
+   - 🔄 **自动同步** - 原生兼容平台自动识别，软链接平台自动同步
+   - 💾 **节省空间** - 避免多次复制，统一维护
+   - ⚡ **更新简单** - 更新 Claude 目录，所有平台立即生效
+
+3. **实施步骤：**
 
 ```bash
-# 克隆仓库
+# 1. 克隆仓库
 git clone https://github.com/garfield-bb/hap-skills-collection.git
 cd hap-skills-collection
 
-# 交互式安装（推荐 - 可选择平台）
-./install.sh
+# 2. 一键全局安装（默认推荐）
+./install.sh --all --global  # macOS/Linux
+.\install.ps1 -All -Global   # Windows（管理员权限）
 
-# 或一键安装到所有 9 个平台
-./install.sh --all --global
-
-# 或只安装到特定平台
-./install.sh --claude --trae --cursor --global
-```
-
-#### Windows
-
-```powershell
-# 克隆仓库
-git clone https://github.com/garfield-bb/hap-skills-collection.git
-cd hap-skills-collection
-
-# 以管理员身份运行 PowerShell，然后执行：
-
-# 交互式安装（推荐）
-.\install.ps1
-
-# 或一键安装到所有平台
-.\install.ps1 -All -Global
+# 结果：
+# ✅ Claude Code:     ~/.claude/skills/          (主目录)
+# ✅ TRAE:            ~/.trae/skills/            (独立副本)
+# ✅ Cursor:          ~/.cursor/skills/          (独立副本)
+# ✅ Copilot:         ~/.copilot/skills/         (独立副本)
+# ✅ Antigravity:     ~/.gemini/antigravity/skills/ (独立副本)
+# ✅ OpenCode:        ~/.config/opencode/skill/  (独立副本)
+# ⚡ Windsurf:        ~/.codeium/windsurf/skills/ → ~/.claude/skills/ (软链接)
+# ⚡ Gemini CLI:      ~/.gemini/skills/          → ~/.claude/skills/ (软链接)
+# ⚡ Codex:           ~/.codex/skills/           → ~/.claude/skills/ (软链接)
 ```
 
 ### ✅ 验证安装
@@ -300,137 +311,9 @@ AI 会自动完成：
 
 📁 [查看完整文档](./.claude/skills/hap-mcp-usage/SKILL.md)
 
----
-
-## 📱 支持的平台
-
-本项目支持 **9 种主流 AI 编程工具**，涵盖所有常用平台：
-
-| 平台 | 兼容性 | 安装方式 | 目录位置 | 推荐度 |
-|------|--------|----------|----------|--------|
-| **Claude Code** | ✓ 原生 | 脚本/手动 | `~/.claude/skills/` | ⭐⭐⭐⭐⭐ |
-| **TRAE** | ✓ 原生 | 脚本/手动 | `~/.trae/skills/` | ⭐⭐⭐⭐⭐ |
-| **Cursor** | ✓ 原生兼容 | 脚本/手动 | `~/.cursor/skills/` | ⭐⭐⭐⭐⭐ |
-| **GitHub Copilot** | ✓ 原生兼容 | 脚本/手动 | `~/.copilot/skills/` | ⭐⭐⭐⭐ |
-| **Google Antigravity** | ✓ 原生兼容 | 脚本/手动 | `~/.gemini/antigravity/skills/` | ⭐⭐⭐⭐ |
-| **OpenCode** | ✓ 原生兼容 | 脚本/手动 | `~/.config/opencode/skill/` | ⭐⭐⭐⭐ |
-| **Windsurf** | ⚡ 软链接 | 脚本自动 | `~/.codeium/windsurf/skills/` | ⭐⭐⭐⭐ |
-| **Gemini CLI** | ⚡ 软链接 | 脚本自动 | `~/.gemini/skills/` | ⭐⭐⭐ |
-| **OpenAI Codex** | ⚡ 软链接 | 脚本自动 | `~/.codex/skills/` | ⭐⭐⭐ |
-
-**符号说明:**
-- **✓ 原生** - 工具自动扫描或使用相同的目录结构，无需额外配置
-- **⚡ 软链接** - 通过链接到 Claude 目录实现自动同步，更新一处全部同步
-
-**TRAE 特别说明：**
-TRAE 使用标准化的 `.trae/skills/` 目录设计：
-- ✅ 一个 Skill = 一个位于 `.trae/skills/` 目录下的文件夹
-- ✅ 完全兼容 Claude Code 的 SKILL.md 格式
-- ✅ 支持所有原生 skills 特性
-
----
-
-## 📦 安装指南
-
-### 🚀 一键安装（推荐）
-
-我们提供了智能安装脚本，自动处理所有平台的安装和配置。
-
-#### macOS / Linux
-
-```bash
-# 克隆仓库
-git clone https://github.com/garfield-bb/hap-skills-collection.git
-cd hap-skills-collection
-
-# 交互式安装（推荐 - 可选择平台）
-./install.sh
-
-# 或一键安装到所有平台
-./install.sh --all --global
-
-# 或安装到特定平台
-./install.sh --claude --trae --cursor --global
-```
-
-#### Windows
-
-```powershell
-# 克隆仓库
-git clone https://github.com/garfield-bb/hap-skills-collection.git
-cd hap-skills-collection
-
-# 以管理员身份运行 PowerShell
-
-# 交互式安装（推荐）
-.\install.ps1
-
-# 或一键安装到所有平台
-.\install.ps1 -All -Global
-```
-
-### ⚙️ 安装选项
-
-```bash
-# macOS/Linux 可用选项
-./install.sh --all              # 安装到所有 9 个平台
-./install.sh --global           # 全局安装（用户级）
-./install.sh --project          # 项目级安装
-./install.sh --claude           # 只安装到 Claude Code
-./install.sh --trae             # 只安装到 TRAE
-./install.sh --cursor           # 只安装到 Cursor
-./install.sh --antigravity      # 只安装到 Antigravity
-./install.sh --windsurf         # 只安装到 Windsurf
-./install.sh --copilot          # 只安装到 GitHub Copilot
-./install.sh --opencode         # 只安装到 OpenCode
-./install.sh --gemini           # 只安装到 Gemini CLI
-./install.sh --codex            # 只安装到 OpenAI Codex
-
-# Windows 可用选项（PowerShell）
-.\install.ps1 -All              # 安装到所有平台
-.\install.ps1 -Global           # 全局安装
-.\install.ps1 -Project          # 项目级安装
-.\install.ps1 -Claude           # 只安装到 Claude Code
-.\install.ps1 -TRAE             # 只安装到 TRAE
-# ... 其他平台同理
-```
-
-### ✅ 验证安装
-
-在任一已安装的平台中测试：
-
-```
-你: 帮我使用 HAP V3 API 查询数据
-AI: [自动使用 HAP V3 API 技能，提供完整的查询步骤]
-
-你: 帮我开发一个明道云视图插件
-AI: [自动使用视图插件开发技能，引导完整开发流程]
-```
-
-### 💡 安装建议
-
-**推荐策略: "一次安装，到处运行"**
-
-1. **全局安装到 Claude**（作为中心目录）
-   ```bash
-   ./install.sh --claude --global
-   ```
-
-2. **其他原生兼容平台**
-   ```bash
-   ./install.sh --trae --cursor --antigravity --global
-   ```
-
-3. **需要软链的平台**（自动链接到 Claude）
-   ```bash
-   ./install.sh --windsurf --global
-   ```
-
-**结果:** 更新 Claude 目录，软链接平台自动同步！
-
 ### 📚 详细文档
 
-需要手动安装或遇到问题？查看详细指南：
+需要更多帮助？查看详细指南：
 
 - **[快速启动指南](./docs/QUICK_START.md)** - 5 分钟快速开始
 - **[通用安装指南](./docs/INSTALLATION.md)** - 支持所有平台的详细说明
