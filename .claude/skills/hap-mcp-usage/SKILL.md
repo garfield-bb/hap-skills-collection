@@ -95,6 +95,11 @@ HAP 提供两种不同类型的 MCP，**作用和使用场景完全不同**：
 - **URL**: 包含 `HAP-Appkey` 和 `HAP-Sign` 的完整 URL
 - **MCP 类型**: 根据配置格式判断是 API 文档 MCP 还是应用执行 MCP
 
+**重要**: 如果服务器名称包含中文，需要为 Codex 平台生成英文名称：
+- **原始名称**: `hap-mcp-客户管理` → 保留（用于其他平台）
+- **英文名称**: `hap-mcp-customer-management` → 用于 Codex
+- **转换规则**: 将中文部分翻译成英文拼音或英文单词，保持 kebab-case 格式
+
 ### Step 3: 根据平台自动化配置
 
 根据识别到的平台，执行对应的配置步骤：
@@ -215,16 +220,32 @@ gemini mcp add <server-name> --url "<server-url>"
 
 **配置文件**: `~/.codex/config.toml`
 
-**配置格式** (TOML):
-```toml
-[mcp_servers."hap-mcp-应用名"]
-url = "https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx"
-```
+**⚠️ 重要限制**: Codex 的 TOML 格式**不支持中文 key 名称**
 
 **自动化步骤**:
-1. 读取现有 `config.toml`
-2. 添加 MCP 服务器配置（TOML 格式）
-3. 保存文件
+1. **中文名称转换**: 如果服务器名称包含中文，转换为英文
+   - 示例: `hap-mcp-客户管理` → `hap-mcp-customer-management`
+   - 规则: 中文翻译成英文单词或拼音，使用 kebab-case 格式
+2. 读取现有 `config.toml`
+3. 添加 MCP 服务器配置（使用英文名称）
+4. 保存文件
+
+**配置格式** (TOML):
+```toml
+# ✅ 正确 - 使用英文名称
+[mcp_servers."hap-mcp-customer-management"]
+url = "https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx"
+
+# ❌ 错误 - 中文名称不支持
+# [mcp_servers."hap-mcp-客户管理"]
+# url = "https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx"
+```
+
+**名称转换示例**:
+- `hap-mcp-客户管理` → `hap-mcp-customer-management`
+- `hap-mcp-订单系统` → `hap-mcp-order-system`
+- `hap-mcp-人力资源` → `hap-mcp-hr` 或 `hap-mcp-human-resources`
+- `hap-mcp-财务管理` → `hap-mcp-finance-management`
 
 ### Step 4: 验证 MCP 连通性
 
@@ -317,6 +338,7 @@ if (result.success) {
 
 - ✅ **自动化执行**: 直接帮用户配置，不要只告诉步骤
 - ✅ **平台识别**: 准确识别用户使用的工具
+- ✅ **中文转换**: Codex 平台必须将中文服务器名称转换为英文
 - ✅ **格式检查**: 确保 JSON/TOML 格式正确
 - ✅ **验证连通**: 配置后立即验证 MCP 是否可用
 - ✅ **保留配置**: 更新时不删除其他已存在的 MCP
@@ -326,6 +348,7 @@ if (result.success) {
 
 - ❌ 不要只告诉用户如何配置，要直接执行
 - ❌ 不要跳过连通性验证步骤
+- ❌ 不要在 Codex 中使用中文服务器名称（必须转换为英文）
 - ❌ 不要使用错误的配置格式（如 Cursor 添加 `type: http`）
 - ❌ 不要覆盖用户的其他 MCP 配置
 - ❌ 不要忘记提示用户重启工具
@@ -382,15 +405,32 @@ claude mcp add hap-mcp-客户管理 --url "https://api.mingdao.com/mcp?HAP-Appke
 claude mcp list
 ```
 
-### 示例 3: Codex TOML 配置
+### 示例 3: Codex TOML 配置（中文名称转换）
 
-**用户提供**: 同上
+**用户提供**:
+```json
+{"hap-mcp-客户管理":{"url":"https://api.mingdao.com/mcp?HAP-Appkey=abc123&HAP-Sign=xyz789"}}
+```
 
 **AI 执行**:
-编辑 `~/.codex/config.toml`:
+1. 识别服务器名称包含中文: `hap-mcp-客户管理`
+2. 转换为英文名称: `hap-mcp-customer-management`
+3. 编辑 `~/.codex/config.toml`:
 ```toml
-[mcp_servers."hap-mcp-客户管理"]
+[mcp_servers."hap-mcp-customer-management"]
 url = "https://api.mingdao.com/mcp?HAP-Appkey=abc123&HAP-Sign=xyz789"
+```
+4. 向用户说明名称转换:
+```
+✅ MCP 配置成功！
+
+📋 配置信息：
+- 平台：Codex
+- 原始名称：hap-mcp-客户管理
+- 转换后名称：hap-mcp-customer-management（Codex 不支持中文 key）
+- 配置文件：~/.codex/config.toml
+
+💡 说明：Codex 的 TOML 格式不支持中文 key 名称，已自动转换为英文。
 ```
 
 ---
