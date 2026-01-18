@@ -250,6 +250,45 @@ HAP 提供两种不同类型的 MCP，**作用和使用场景完全不同**，�
 
 ---
 
+## 🤖 AI 执行步骤（思考 Todo List）
+
+**当用户询问 HAP MCP 相关问题时，AI 应按照以下步骤思考和执行：**
+
+### 步骤 1: 识别用户需求类型
+- [ ] 判断用户想使用哪种 MCP？
+  - 学习 API/查询文档 → API 文档 MCP (ApiFox MCP)
+  - 查询真实数据/操作记录 → 应用执行 MCP (HAP Application MCP)
+  - 提供配置 JSON → 配置应用执行 MCP
+
+### 步骤 2: 检查配置状态
+- [ ] 检查用户是否已正确配置 MCP？
+  - 对于 API 文档 MCP：检查是否有 Apifox MCP 配置
+  - 对于应用执行 MCP：检查 `~/.cursor/mcp.json` 文件
+  - 验证配置格式是否正确（URL、Appkey、Sign 等）
+
+### 步骤 3: 执行配置（如需要）
+- [ ] 如果用户提供 MCP 配置 JSON：
+  - [ ] 识别配置类型（应用执行 MCP）
+  - [ ] 读取 `~/.cursor/mcp.json` 文件
+  - [ ] 将新配置添加到 `mcpServers` 对象
+  - [ ] **立即验证配置**：调用 `mcp_hap-mcp-_get_app_info` 或 `mcp_hap-mcp-_get_time`
+  - [ ] **实际使用该 MCP**：获取应用信息并展示给用户
+  - [ ] 反馈验证结果
+
+### 步骤 4: 使用 MCP 工具
+- [ ] 根据场景调用相应的 MCP 工具：
+  - API 文档查询 → 使用 ApiFox MCP 工具查询接口文档
+  - 数据操作 → 使用 HAP Application MCP 工具（get_app_info、get_record_list 等）
+- [ ] 处理返回结果并展示给用户
+
+### 步骤 5: 安全提醒（如需要）
+- [ ] 如果涉及应用执行 MCP：
+  - [ ] 提醒用户保护鉴权信息
+  - [ ] 警告数据操作的影响
+  - [ ] 提醒不要将配置提交到公开仓库
+
+---
+
 ## 📚 使用原则
 
 当用户询问 HAP MCP 相关问题时：
