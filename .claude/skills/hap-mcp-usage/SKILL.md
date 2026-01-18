@@ -1,397 +1,406 @@
 ---
 name: hap-mcp-usage
-description: 明道云 HAP MCP 使用指南技能。当用户提到"HAP MCP"、"MCP 配置"、"MCP 使用"、"API 文档 MCP"、"应用执行 MCP"等需求时使用。帮助用户理解和正确使用两种 HAP MCP，并在 Cursor 中自动化配置 MCP 服务器。
+description: 明道云 HAP MCP 自动化配置技能。当用户提到"配置 MCP"、"HAP MCP"、"MCP 配置"、"添加 MCP"、"MCP 连接"等需求时**立即触发**。支持 9 种 AI 工具的自动化配置，配置完成后自动验证连通性。
 license: MIT
 ---
 
-# HAP MCP Usage Skill
+# HAP MCP 自动化配置技能
 
-本技能帮助用户理解和正确使用明道云 HAP 的两种 MCP 服务。
+本技能帮助用户在 9 种 AI 工具中**自动化配置** HAP MCP 服务器，并验证连通性。
+
+## 🎯 技能触发场景
+
+当用户说以下任何内容时，**立即使用本技能**：
+- "配置这个 MCP"
+- "添加 MCP 服务器"
+- "帮我配置 HAP MCP"
+- "设置 MCP 连接"
+- 提供了包含 `hap-mcp-` 的配置信息
+- 提供了包含 `HAP-Appkey` 和 `HAP-Sign` 的 URL
 
 ## 关于 HAP MCP
 
-HAP 提供两种不同类型的 MCP，**作用和使用场景完全不同**，需要明确区分。
+HAP 提供两种不同类型的 MCP，**作用和使用场景完全不同**：
 
----
+### 🔷 类型 1: HAP API 文档 MCP
 
-## 🔷 类型 1: HAP API 文档 MCP (ApiFox MCP)
+**作用**: 让 AI 读懂 HAP 接口文档（只读，不执行操作）
 
-### 作用
-让 AI 模型"读懂 HAP 的接口文档"。
-
-### 特点
-- 📖 **只读的接口文档服务**，不会执行任何操作
-- 📚 帮助理解 HAP API V3 的结构、参数、示例
-- 🎓 类似于"API 使用手册"
-
-### 重要限制
-⚠️ 该 MCP 仅支持读取 **V3 分组**下的 API 接口
-- **原因**: V2 API 即将淘汰，官方已不再推荐使用
-
-### 使用场景
-- 📖 学习和理解 HAP API 的结构
-- 🛠️ 开发前的 API 调研和方案设计
-- 📝 生成 API 调用代码
-- 🔍 查找合适的接口用于业务编排
-
-### 典型案例
-```
-场景: 有个客户案例管理应用，想基于应用数据做个可视化页面
-
-步骤:
-1. 通过 ApiBox MCP 读取 HAP 接口文档
-2. 了解有哪些 API 可用（获取数据、筛选、统计等）
-3. 在 IDE 中生成调用代码
-4. 实现对应用数据的实时展示
-
-关键点: 只读文档，不会修改任何数据
-```
-
-### 特点总结
-- ✅ 暴露接口定义、文档、示例
-- ✅ 帮助理解 API 结构和用法
-- ✅ 适合开发阶段的研发助手
-- ❌ MCP 本身不能直接执行业务操作
-- ❌ MCP 本身不能访问真实数据
-- ℹ️ 用户可根据文档自行配置密钥并编排请求来操作数据
-
-### 配置方式（官方固定配置）
-```json
-{
-  "mcpServers": {
-    "应用 API - API 文档": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "apifox-mcp-server@latest",
-        "--site-id=5442569"
-      ]
-    }
-  }
-}
-```
-
-### 何时使用
-- 用户说"我想了解 HAP 有哪些 API"
-- 用户说"帮我查查 HAP 接口文档"
-- 用户说"怎么调用 HAP 的获取数据接口"
-- 开发阶段需要 API 参考
-
----
-
-## 🔶 类型 2: HAP 应用执行 MCP (HAP Application MCP)
-
-### 作用
-让 AI 模型"执行 HAP 应用接口"。
-
-### 特点
-- ⚡ **可执行的业务工具**，会真实操作数据
-- 🔧 直接调用 HAP API 进行增删改查
-- 🔐 带有应用鉴权信息，可以访问真实业务数据
-
-### 使用场景
-- 🔍 直接查询应用中的真实数据
-- ✏️ 创建、修改、删除业务记录
-- 📊 统计和分析应用数据
-- 🔄 执行业务流程和工作流
-- 🎯 系统集成和数据编排
-
-### 典型案例
-```
-场景: 编排场景中，需要查询客户数据并更新订单状态
-
-步骤:
-1. 使用 HAP Application MCP 获取应用结构
-2. 查询符合条件的客户记录
-3. 分析数据并进行字段映射
-4. 直接更新订单表中的状态字段
-
-关键点: 真实数据操作，有权限控制
-```
-
-### 特点总结
-- ✅ 可执行真实的业务操作
-- ✅ 访问应用中的真实数据
-- ✅ 带权限和安全控制
-- ✅ 适合生产环境的智能管家
-- ⚠️ 需要 Appkey 和 Sign 鉴权
-- ⚠️ 操作会影响真实业务数据
-
-### 配置方式（应用专属配置）
-```json
-{
-  "mcpServers": {
-    "hap-mcp-API测试": {
-      "url": "https://api.mingdao.com/mcp?HAP-Appkey=539f83a2********&HAP-Sign=YmYwZmMyM2M0ZDdjNDUxMGMzMTY2MTQ5Y2MxNDhmMTZlM2Q3NjE1OTNiYzdlOGJh********"
-    }
-  }
-}
-```
-
-### 配置特征识别
-- ✅ 服务器名称通常是 `hap-mcp-xxx`（应用名称）
-- ✅ 使用 `url` 字段而非 `command`
-- ✅ URL 中包含 `HAP-Appkey` 和 `HAP-Sign` 参数
-- ✅ 指向 `api.mingdao.com/mcp` 端点
-
-### 何时使用
-- 用户说"查询 XXX 应用的数据"
-- 用户说"帮我创建一条 XXX 记录"
-- 用户说"统计 XXX 的数量"
-- 用户说"更新 XXX 的状态"
-- 需要真实操作业务数据时
-
----
-
-## 🎯 两种 MCP 的对比
-
-| 维度 | API 文档 MCP (ApiBox) | 应用执行 MCP (Application) |
-|-----|---------------------|-------------------------|
-| **作用** | 提供接口文档查询 | 直接执行业务操作 |
-| **类型** | 只读文档服务 | 可执行工具 |
-| **数据** | 接口定义、参数、示例 | 真实业务数据 |
-| **权限** | 无需鉴权（公开文档） | 需要 Appkey + Sign |
-| **适用阶段** | 开发/设计/学习阶段 | 生产/执行阶段 |
-| **配置方式** | 官方固定（npx） | 应用专属（url） |
-| **安全性** | 低风险（仅查询文档） | 高风险（操作真实数据） |
-| **角色定位** | API 参考手册 + 研发助手 | 业务执行器 + 智能管家 |
-| **能否操作数据** | MCP本身不能，但可查文档后自行编排 | MCP 可直接操作数据 |
-
----
-
-## 🤖 AI 助手使用指南
-
-### 决策树
-
-```
-用户请求
-  ├─ 询问"有哪些 API"/"如何调用"
-  │   └─ 使用 API 文档 MCP (ApiBox)
-  │
-  ├─ 需要"查询真实数据"/"操作记录"
-  │   └─ 使用应用执行 MCP (Application)
-  │
-  ├─ 开发阶段的代码生成
-  │   └─ 使用 API 文档 MCP (ApiBox)
-  │
-  └─ 生产环境的数据处理
-      └─ 使用应用执行 MCP (Application)
-```
-
-### 常见场景示例
-
-#### 场景 1: "HAP 有哪些获取数据的 API?"
-- **使用**: API 文档 MCP
-- **原因**: 查询接口定义
-
-#### 场景 2: "查询客户管理应用中的所有客户"
-- **使用**: 应用执行 MCP
-- **原因**: 访问真实数据
-
-#### 场景 3: "帮我写个调用 HAP API 的代码"
-- **使用**: API 文档 MCP
-- **原因**: 生成开发代码
-
-#### 场景 4: "把这条订单的状态改为已完成"
-- **使用**: 应用执行 MCP
-- **原因**: 执行业务操作
-
----
-
-## ⚙️ 配置建议
-
-### 开发者场景（推荐两个都配置）
-
+**配置格式**（官方固定）:
 ```json
 {
   "mcpServers": {
     "应用 API - API 文档": {
       "command": "npx",
       "args": ["-y", "apifox-mcp-server@latest", "--site-id=5442569"]
-    },
-    "hap-mcp-客户管理": {
+    }
+  }
+}
+```
+
+**适用场景**:
+- 📖 查询 HAP API 文档
+- 🛠️ 学习接口结构和参数
+- 📝 生成 API 调用代码
+
+### 🔶 类型 2: HAP 应用执行 MCP
+
+**作用**: 让 AI 执行 HAP 应用接口（可操作真实数据）
+
+**配置格式**（应用专属）:
+```json
+{
+  "mcpServers": {
+    "hap-mcp-应用名": {
       "url": "https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx"
     }
   }
 }
 ```
 
-### 纯使用者场景（只需应用执行 MCP）
+**适用场景**:
+- 🔍 查询应用真实数据
+- ✏️ 创建/修改/删除记录
+- 📊 数据统计和分析
+- 🔄 执行工作流
 
+---
+
+## 🤖 AI 执行步骤（自动化配置）
+
+当用户提供 MCP 配置时，AI 必须按以下步骤自动化完成配置：
+
+### Step 1: 识别当前 AI 工具平台
+
+首先确定用户当前使用的是哪个 AI 工具（从以下 9 个平台中识别）：
+
+1. **Claude Code** - Anthropic 官方 CLI
+2. **TRAE** - 标准化 `.trae/` 目录
+3. **Cursor** - 最流行的 AI 编辑器
+4. **GitHub Copilot** - GitHub 官方工具
+5. **Google Antigravity** - Google 实验工具
+6. **OpenCode** - 开源 AI 工具
+7. **Windsurf** - Codeium 出品
+8. **Gemini CLI** - Google Gemini 命令行
+9. **Codex** - OpenAI 编程助手
+
+**识别方法**:
+- 如果用户明确提到工具名称，使用该工具
+- 否则，询问用户："您当前使用的是哪个 AI 工具？（Claude Code / Cursor / TRAE / 其他）"
+
+### Step 2: 解析 MCP 配置信息
+
+从用户提供的配置中提取：
+- **服务器名称**: 如 `hap-mcp-客户管理`
+- **URL**: 包含 `HAP-Appkey` 和 `HAP-Sign` 的完整 URL
+- **MCP 类型**: 根据配置格式判断是 API 文档 MCP 还是应用执行 MCP
+
+### Step 3: 根据平台自动化配置
+
+根据识别到的平台，执行对应的配置步骤：
+
+#### 🔧 Claude Code
+
+**配置方式**: 命令行
+```bash
+# 添加 HTTP MCP 服务器
+claude mcp add <server-name> --url "<server-url>"
+
+# 示例
+claude mcp add hap-mcp-客户管理 --url "https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx"
+```
+
+**验证命令**:
+```bash
+claude mcp list
+```
+
+#### 🔧 Cursor
+
+**配置文件**: `.cursor/mcp.json`（项目级，推荐）或 `~/.cursor/mcp.json`（全局）
+
+**自动化步骤**:
+1. 检查并创建 `.cursor` 目录（如果不存在）
+2. 读取现有配置文件（如果存在）
+3. 添加或更新 MCP 配置
+4. 保存到 `.cursor/mcp.json`
+
+**配置格式**:
 ```json
 {
   "mcpServers": {
-    "hap-mcp-客户管理": {
+    "hap-mcp-应用名": {
       "url": "https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx"
     }
   }
 }
 ```
 
----
+**注意**: 不需要 `"type": "http"` 字段（旧格式）
 
-## 🛠️ Cursor 自动化配置指南
+#### 🔧 TRAE
 
-当用户在 Cursor 中需要配置或更新 HAP MCP 时，AI 助手应该**自动化完成配置**，而不是只告诉用户如何手动配置。
+**配置文件**: `.trae/mcp.json`（项目级）或 `~/.trae/mcp.json`（全局）
 
-### Cursor MCP 配置文件位置
+**自动化步骤**:
+1. 检查并创建 `.trae` 目录
+2. 读取或创建 `mcp.json`
+3. 添加 MCP 配置（格式同 Cursor）
+4. 保存文件
 
-Cursor 的 MCP 配置支持两种方式，**项目级配置优先于全局配置**：
+#### 🔧 GitHub Copilot
 
-**项目级配置**（推荐用于项目专属 MCP）：
-- 在项目根目录创建：`.cursor/mcp.json`
-- 仅对当前项目有效
-- 适合团队协作或项目特定的 MCP 配置
+**配置文件**: `~/.copilot/mcp.json`
 
-**全局配置**（适用于所有项目）：
-- **macOS**: `~/.cursor/mcp.json`
-- **Windows**: `%USERPROFILE%\.cursor\mcp.json`
-- **Linux**: `~/.cursor/mcp.json`
-- 对所有项目都有效
-- 适合个人常用 MCP 配置
+**自动化步骤**:
+1. 检查并创建 `~/.copilot` 目录
+2. 读取或创建 `mcp.json`
+3. 添加 MCP 配置
+4. 保存文件
 
-**优先级**：如果项目级和全局配置都存在同名 MCP，项目级配置会覆盖全局配置。
+**配置格式**: 同 Cursor
 
-**⚠️ 重要说明**：旧版 Cursor 使用 `settings.json` 配置 MCP，现在已改为使用 `.cursor/mcp.json`。
+#### 🔧 Google Antigravity
 
-### 自动化配置步骤
+**配置文件**: `~/.gemini/antigravity/config.json`
 
-当用户提供 MCP 配置信息时（例如：`{"hap-mcp-应用名":{"url":"https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx"}}`），AI 应该：
+**自动化步骤**:
+1. 检查并创建目录
+2. 读取或创建配置文件
+3. 在 `mcpServers` 部分添加配置
+4. 保存文件
 
-1. **确定配置位置**
-   - **优先使用项目级配置**：在项目根目录创建或更新 `.cursor/mcp.json`
-   - 如果用户明确要求全局配置，则使用全局 `~/.cursor/mcp.json`
-   - 如果没有 `.cursor` 目录，先创建它
+**配置格式**: 同 Cursor
 
-2. **读取现有配置文件（如果存在）**
-   - 使用 `read_file` 工具读取现有配置文件
-   - 检查是否已存在 `mcpServers` 配置
+#### 🔧 OpenCode
 
-3. **解析用户提供的配置**
-   - 提取服务器名称（如 `hap-mcp-清华大学官网`）
-   - 提取 URL（包含 Appkey 和 Sign）
+**配置文件**: `~/.config/opencode/mcp.json`
 
-4. **更新或添加配置**
-   - 如果配置文件中已有 `mcpServers`，则更新或添加新的服务器配置
-   - 如果配置文件中没有 `mcpServers`，则创建新的配置结构
-   - **注意**：`.cursor/mcp.json` 中 `url` 类型的 MCP **不需要**添加 `"type": "http"` 字段（这是旧 `settings.json` 格式）
+**自动化步骤**:
+1. 检查并创建目录
+2. 读取或创建配置文件
+3. 添加 MCP 配置
+4. 保存文件
 
-5. **保存配置文件**
-   - 使用 `write` 工具创建或更新 `.cursor/mcp.json` 文件
-   - 保持 JSON 格式正确，注意逗号和缩进
+**配置格式**: 同 Cursor
 
-### 配置格式示例
+#### 🔧 Windsurf
 
-#### 新增应用执行 MCP
+**配置文件**: `~/.codeium/windsurf/mcp.json`
 
-如果用户提供：
-```json
-{"hap-mcp-清华大学官网":{"url":"https://api.mingdao.com/mcp?HAP-Appkey=6802bfa5da37d75f&HAP-Sign=MWZmZWU1YmMyMzE4ZTAxYjY3NTViYjM5NzhlNTdhOTIwZWFhYTc2Y2I2YzljNWMzNDFmMjk4NTM2N2M0YTg2OA=="}}
+**自动化步骤**:
+1. 检查并创建目录
+2. 读取或创建配置文件
+3. 添加 MCP 配置
+4. 保存文件
+
+**配置格式**: 同 Cursor
+
+#### 🔧 Gemini CLI
+
+**配置文件**: `~/.gemini/config.json`
+
+**配置方式**: 命令行或配置文件
+
+**命令行方式**:
+```bash
+gemini mcp add <server-name> --url "<server-url>"
 ```
 
-AI 应该在项目根目录创建或更新 `.cursor/mcp.json` 文件：
+**配置文件方式**: 同 Cursor，在 `mcpServers` 中添加
+
+**参考文档**: https://github.com/google-gemini/gemini-cli/blob/main/docs/tools/mcp-server.md
+
+#### 🔧 OpenAI Codex
+
+**配置文件**: `~/.codex/config.toml`
+
+**配置格式** (TOML):
+```toml
+[mcp_servers."hap-mcp-应用名"]
+url = "https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx"
+```
+
+**自动化步骤**:
+1. 读取现有 `config.toml`
+2. 添加 MCP 服务器配置（TOML 格式）
+3. 保存文件
+
+### Step 4: 验证 MCP 连通性
+
+**重要**: 配置完成后，**必须自动验证** MCP 是否可以正常连接。
+
+**验证方法**:
+1. 调用 MCP 工具：`get_app_info`（获取应用信息）
+2. 检查返回结果：
+   - ✅ 成功：返回应用信息（应用名称、工作表列表等）
+   - ❌ 失败：返回错误信息（鉴权失败、网络错误等）
+
+**验证示例**:
+```javascript
+// 调用 MCP 工具验证连通性
+const result = await mcpClient.call('get_app_info');
+
+if (result.success) {
+  console.log('✅ MCP 连接成功！');
+  console.log('应用名称：', result.appName);
+  console.log('工作表数量：', result.worksheets.length);
+} else {
+  console.error('❌ MCP 连接失败：', result.error);
+}
+```
+
+### Step 5: 向用户报告结果
+
+配置完成后，向用户报告：
+
+**成功时**:
+```
+✅ MCP 配置成功！
+
+📋 配置信息：
+- 平台：Cursor
+- 服务器名称：hap-mcp-客户管理
+- 配置文件：.cursor/mcp.json
+
+✅ 连通性验证通过：
+- 应用名称：客户管理系统
+- 工作表数量：5 个
+
+💡 下一步：
+- 重启 Cursor 使配置生效
+- 现在可以使用 MCP 工具操作数据了
+```
+
+**失败时**:
+```
+❌ MCP 配置已保存，但连通性验证失败
+
+📋 配置信息：
+- 平台：Cursor
+- 配置文件：.cursor/mcp.json
+
+❌ 连接错误：
+- 错误信息：鉴权失败，请检查 Appkey 和 Sign
+
+🔧 解决方案：
+1. 检查 Appkey 和 Sign 是否正确
+2. 确认应用是否已启用 MCP 功能
+3. 重启 Cursor 后重试
+```
+
+---
+
+## 📋 配置文件位置速查表
+
+| 平台 | 项目级配置 | 全局配置 | 格式 |
+|------|-----------|---------|------|
+| **Claude Code** | - | 命令行配置 | 命令 |
+| **Cursor** | `.cursor/mcp.json` | `~/.cursor/mcp.json` | JSON |
+| **TRAE** | `.trae/mcp.json` | `~/.trae/mcp.json` | JSON |
+| **GitHub Copilot** | - | `~/.copilot/mcp.json` | JSON |
+| **Antigravity** | - | `~/.gemini/antigravity/config.json` | JSON |
+| **OpenCode** | - | `~/.config/opencode/mcp.json` | JSON |
+| **Windsurf** | - | `~/.codeium/windsurf/mcp.json` | JSON |
+| **Gemini CLI** | - | `~/.gemini/config.json` | JSON |
+| **Codex** | - | `~/.codex/config.toml` | TOML |
+
+**推荐策略**:
+- 支持项目级配置的平台（Cursor, TRAE）：优先使用项目级
+- 其他平台：使用全局配置
+
+---
+
+## ⚠️ 重要注意事项
+
+### 配置时必须做到
+
+- ✅ **自动化执行**: 直接帮用户配置，不要只告诉步骤
+- ✅ **平台识别**: 准确识别用户使用的工具
+- ✅ **格式检查**: 确保 JSON/TOML 格式正确
+- ✅ **验证连通**: 配置后立即验证 MCP 是否可用
+- ✅ **保留配置**: 更新时不删除其他已存在的 MCP
+- ✅ **错误处理**: 如果配置或验证失败，提供清晰的错误信息
+
+### 配置时不要做
+
+- ❌ 不要只告诉用户如何配置，要直接执行
+- ❌ 不要跳过连通性验证步骤
+- ❌ 不要使用错误的配置格式（如 Cursor 添加 `type: http`）
+- ❌ 不要覆盖用户的其他 MCP 配置
+- ❌ 不要忘记提示用户重启工具
+
+### 配置优先级
+
+1. **项目级配置** - 如果平台支持（Cursor, TRAE）
+2. **全局配置** - 其他平台或用户明确要求
+
+### 安全提示
+
+- 🔐 提醒用户保护 `HAP-Appkey` 和 `HAP-Sign`
+- 🔐 不要将配置文件提交到 Git（建议添加到 `.gitignore`）
+- 🔐 定期检查和更新鉴权信息
+
+---
+
+## 📚 配置示例
+
+### 示例 1: Cursor 项目级配置
+
+**用户提供**:
+```json
+{"hap-mcp-客户管理":{"url":"https://api.mingdao.com/mcp?HAP-Appkey=abc123&HAP-Sign=xyz789"}}
+```
+
+**AI 执行**:
+1. 创建 `.cursor` 目录（如果不存在）
+2. 读取或创建 `.cursor/mcp.json`
+3. 添加配置:
 ```json
 {
   "mcpServers": {
-    "hap-mcp-清华大学官网": {
-      "url": "https://api.mingdao.com/mcp?HAP-Appkey=6802bfa5da37d75f&HAP-Sign=MWZmZWU1YmMyMzE4ZTAxYjY3NTViYjM5NzhlNTdhOTIwZWFhYTc2Y2I2YzljNWMzNDFmMjk4NTM2N2M0YTg2OA=="
+    "hap-mcp-客户管理": {
+      "url": "https://api.mingdao.com/mcp?HAP-Appkey=abc123&HAP-Sign=xyz789"
     }
   }
 }
 ```
+4. 调用 `get_app_info` 验证连通性
+5. 报告结果给用户
 
-**重要说明**：
-- `.cursor/mcp.json` 格式中，`url` 类型的 MCP **不需要** `"type": "http"` 字段
-- `"type": "http"` 只在旧的 `settings.json` 配置方式中需要
+### 示例 2: Claude Code 命令行配置
 
-#### 更新现有 MCP 配置
+**用户提供**: 同上
 
-如果配置已存在，AI 应该：
-- 使用 `search_replace` 工具更新对应的 URL
-- 保持其他配置不变
-- 确保 JSON 格式正确
+**AI 执行**:
+```bash
+claude mcp add hap-mcp-客户管理 --url "https://api.mingdao.com/mcp?HAP-Appkey=abc123&HAP-Sign=xyz789"
+```
 
-### 实际操作示例
+验证:
+```bash
+claude mcp list
+```
 
-**场景**: 用户说"帮我配置这个 MCP"并提供了配置信息
+### 示例 3: Codex TOML 配置
 
-**AI 操作流程**:
-1. 检查项目根目录是否存在 `.cursor` 目录，不存在则创建
-2. 读取或创建 `.cursor/mcp.json` 文件（优先使用项目级配置）
-3. 检查现有配置结构（如果文件已存在）
-4. 解析用户提供的 MCP 配置
-5. 更新或添加 `mcpServers` 配置项
-6. 保存文件到 `.cursor/mcp.json`
-7. 告知用户配置已完成，可能需要重启 Cursor
+**用户提供**: 同上
 
-### 注意事项
-
-- ✅ **自动化执行**: 不要只告诉用户如何配置，应该直接帮用户配置好
-- ✅ **配置位置**: 优先使用项目级 `.cursor/mcp.json`，而非全局 `settings.json`（旧方式）
-- ✅ **格式检查**: 确保 JSON 格式正确，注意逗号、引号、括号匹配
-- ✅ **保留现有配置**: 更新时不要删除其他已存在的 MCP 配置
-- ✅ **格式区别**: `.cursor/mcp.json` 中 `url` 类型 MCP **不需要** `"type": "http"` 字段
-- ⚠️ **目录创建**: 如果 `.cursor` 目录不存在，需要先创建它
-- ⚠️ **权限问题**: 如果文件无法写入，提示用户检查文件权限
-- ⚠️ **备份建议**: 更新前可以提醒用户配置文件包含敏感信息
-
-### 配置后的提示
-
-配置完成后，AI 应该告知用户：
-- ✅ 配置已保存到 `.cursor/mcp.json`（项目级配置）
-- ✅ 配置位置：项目根目录下的 `.cursor/mcp.json`
-- ✅ 可能需要重启 Cursor 才能生效
-- ⚠️ 提醒保护鉴权信息，不要分享配置
-- 📝 提示：项目级配置会覆盖全局配置，仅对当前项目有效
+**AI 执行**:
+编辑 `~/.codex/config.toml`:
+```toml
+[mcp_servers."hap-mcp-客户管理"]
+url = "https://api.mingdao.com/mcp?HAP-Appkey=abc123&HAP-Sign=xyz789"
+```
 
 ---
 
-## 🔐 安全提示
+## 🎯 总结
 
-### API 文档 MCP
-- ✅ 安全，可以公开配置
-- ✅ 不包含敏感信息
-- ✅ 可以提交到代码仓库
+本技能的核心价值：
+1. **自动化** - 用户只需提供配置，AI 自动完成所有步骤
+2. **全平台支持** - 支持 9 种主流 AI 工具
+3. **验证保障** - 配置后立即验证连通性，确保可用
+4. **错误处理** - 清晰的错误信息和解决方案
 
-### 应用执行 MCP
-- ⚠️ 包含鉴权信息，需要保密
-- ⚠️ 不要分享配置或提交到公开仓库
-- ⚠️ **配置文件位置**: 项目级 `.cursor/mcp.json` 或全局 `~/.cursor/mcp.json`
-- ⚠️ 如果 `.cursor/mcp.json` 包含敏感信息，确保添加到 `.gitignore`
-
----
-
-## 📚 使用原则
-
-当用户询问 HAP MCP 相关问题时：
-
-1. **首先确认**: 用户想用哪种 MCP？
-   - 学习 API → API 文档 MCP
-   - 操作数据 → 应用执行 MCP
-
-2. **配置 MCP**: 
-   - **如果用户提供配置信息** → **自动化配置**，在项目根目录创建或更新 `.cursor/mcp.json`
-   - **如果用户询问如何配置** → 提供配置说明，并询问是否需要帮助自动化配置
-   - **如果用户说"配置 MCP"** → 优先使用项目级 `.cursor/mcp.json`，而非全局 `settings.json`
-   - 检查配置文件格式和必需参数（注意 `.cursor/mcp.json` 不需要 `type` 字段）
-
-3. **指导使用**: 根据场景选择正确的 MCP
-   - 开发阶段 → API 文档 MCP
-   - 生产环境 → 应用执行 MCP
-
-4. **安全提醒**: 涉及应用执行 MCP 时
-   - 提醒保护鉴权信息
-   - 警告数据操作的影响
-   - 配置文件包含敏感信息，不要分享
-
----
-
-## 📖 相关资源
-
-- HAP 官方文档: https://help.mingdao.com
-- HAP API 文档: https://api.mingdao.com/docs
-- MCP 协议规范: https://modelcontextprotocol.io
-
----
-
-**当用户提到 MCP 时，请使用此 skill 确保正确理解和使用两种不同的 MCP 类型。**
+**记住**: 用户说"配置 MCP"时，不要问"需要我帮您配置吗？"，而是立即执行配置流程！
