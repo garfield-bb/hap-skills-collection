@@ -160,8 +160,10 @@ function Copy-Skills {
     # 创建目标目录
     New-Item -ItemType Directory -Force -Path $TargetDir | Out-Null
 
-    # 复制技能文件
-    Copy-Item -Path "$SkillsSource\*" -Destination $TargetDir -Recurse -Force
+    # 复制技能文件，排除 hap-skills-updater（内部工具）
+    Get-ChildItem -Path $SkillsSource -Directory | Where-Object { $_.Name -ne "hap-skills-updater" } | ForEach-Object {
+        Copy-Item -Path $_.FullName -Destination $TargetDir -Recurse -Force
+    }
 
     Write-Success "$PlatformName : 技能已复制到 $TargetDir"
 }

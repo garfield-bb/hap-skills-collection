@@ -1,21 +1,20 @@
 ---
 name: hap-skills-updater
-description: HAP Skills Collection 技能更新和维护技能。当用户提到"更新技能"、"维护技能"、"更新 hap-skills"、"更新 skill"等需求时使用。帮助用户更新和维护 HAP Skills Collection 中的 4 个核心技能。
+description: HAP Skills Collection 技能更新和维护技能。当用户提到"更新技能"、"维护技能"、"更新 hap-skills"、"更新 skill"等需求时使用。帮助用户更新和维护 HAP Skills Collection 中的 3 个核心技能。
 license: MIT
 ---
 
 # HAP Skills Collection 技能更新和维护
 
-本技能帮助用户更新和维护 HAP Skills Collection 中的 4 个核心技能。
+本技能帮助用户更新和维护 HAP Skills Collection 中的 3 个核心技能。
 
 ## 📋 核心技能列表
 
-HAP Skills Collection 包含以下 4 个核心技能（需要从 GitHub 仓库更新）：
+HAP Skills Collection 包含以下 3 个核心技能（需要从 GitHub 仓库更新）：
 
 1. **hap-v3-api** - HAP V3 API 使用技能 ✅
 2. **hap-view-plugin** - HAP 视图插件开发技能 ✅
-3. **hap-frontend-project** - HAP 前端项目搭建技能 ⚠️（如果不存在，需要从仓库获取）
-4. **hap-mcp-usage** - HAP MCP 使用指南 ✅
+3. **hap-mcp-usage** - HAP MCP 使用指南 ✅
 
 **注意**: 某些技能可能尚未在本地创建，更新时会自动从 GitHub 仓库同步。
 
@@ -26,8 +25,6 @@ HAP Skills Collection 包含以下 4 个核心技能（需要从 GitHub 仓库�
 ├── hap-v3-api/
 │   └── SKILL.md
 ├── hap-view-plugin/
-│   └── SKILL.md
-├── hap-frontend-project/
 │   └── SKILL.md
 └── hap-mcp-usage/
     └── SKILL.md
@@ -43,7 +40,6 @@ HAP Skills Collection 包含以下 4 个核心技能（需要从 GitHub 仓库�
 # 检查技能文件是否存在
 ls -la ~/.claude/skills/hap-v3-api/SKILL.md
 ls -la ~/.claude/skills/hap-view-plugin/SKILL.md
-ls -la ~/.claude/skills/hap-frontend-project/SKILL.md
 ls -la ~/.claude/skills/hap-mcp-usage/SKILL.md
 
 # 或者如果是从 GitHub 仓库克隆的
@@ -169,7 +165,6 @@ mkdir -p ~/.claude/skills
 # 3. 复制所有技能到本地技能目录（包括缺失的技能）
 cp -r .claude/skills/hap-v3-api ~/.claude/skills/ 2>/dev/null || echo "hap-v3-api 已存在或不存在"
 cp -r .claude/skills/hap-view-plugin ~/.claude/skills/ 2>/dev/null || echo "hap-view-plugin 已存在或不存在"
-cp -r .claude/skills/hap-frontend-project ~/.claude/skills/ 2>/dev/null || echo "hap-frontend-project 已存在或不存在"
 cp -r .claude/skills/hap-mcp-usage ~/.claude/skills/ 2>/dev/null || echo "hap-mcp-usage 已存在或不存在"
 
 # 4. 验证更新（检查实际存在的技能）
@@ -184,8 +179,8 @@ ls -la ~/.claude/skills/hap-*/SKILL.md 2>/dev/null
 # 更新单个技能
 cp /path/to/hap-skills-collection/.claude/skills/hap-v3-api/SKILL.md ~/.claude/skills/hap-v3-api/SKILL.md
 
-# 更新所有 4 个技能
-for skill in hap-v3-api hap-view-plugin hap-frontend-project hap-mcp-usage; do
+# 更新所有 3 个技能
+for skill in hap-v3-api hap-view-plugin hap-mcp-usage; do
   cp /path/to/hap-skills-collection/.claude/skills/$skill/SKILL.md ~/.claude/skills/$skill/SKILL.md
 done
 ```
@@ -237,12 +232,6 @@ head -10 ~/.claude/skills/hap-v3-api/SKILL.md
   - [ ] 字段类型处理正确
   - [ ] API 集成说明完整
 
-- [ ] **hap-frontend-project**:
-  - [ ] HAP 后台配置指导完整
-  - [ ] 前端项目结构清晰
-  - [ ] API 集成最佳实践正确
-  - [ ] 数据渲染优化说明
-
 - [ ] **hap-mcp-usage**:
   - [ ] 两种 MCP 类型说明清晰
   - [ ] Cursor 自动化配置流程正确
@@ -291,8 +280,8 @@ git clone https://github.com/garfield-bb/hap-skills-collection.git /tmp/hap-skil
 # 确保本地技能目录存在
 mkdir -p ~/.claude/skills
 
-# 复制 4 个核心技能文件（只复制存在的）
-for skill in hap-v3-api hap-view-plugin hap-frontend-project hap-mcp-usage; do
+# 复制 3 个核心技能文件（只复制存在的）
+for skill in hap-v3-api hap-view-plugin hap-mcp-usage; do
   if [ -d "/tmp/hap-skills-collection/.claude/skills/$skill" ]; then
     cp -r /tmp/hap-skills-collection/.claude/skills/$skill ~/.claude/skills/
     echo "✅ 已更新 $skill"
@@ -316,7 +305,7 @@ ls -la ~/.claude/skills/hap-*/SKILL.md 2>/dev/null
 ### 3. 验证更新结果
 
 更新后，AI 应该：
-- ✅ 检查所有 4 个技能文件是否存在
+- ✅ 检查所有 3 个技能文件是否存在
 - ✅ 验证文件大小是否合理（不应该为 0）
 - ✅ 检查文件修改时间是否为最新
 - ✅ 读取文件前几行验证格式正确
@@ -326,7 +315,7 @@ ls -la ~/.claude/skills/hap-*/SKILL.md 2>/dev/null
 ### 4. 告知用户
 
 更新完成后，AI 应该告知用户：
-- ✅ 已更新的技能列表（4 个核心技能）
+- ✅ 已更新的技能列表（3 个核心技能）
 - ✅ 更新来源（GitHub 仓库）
 - ✅ 技能文件位置（~/.claude/skills/）
 - ✅ **HAP API 文档 MCP 安装状态**（已安装 / 已跳过 / 刚安装）
@@ -339,8 +328,7 @@ ls -la ~/.claude/skills/hap-*/SKILL.md 2>/dev/null
 📋 已更新技能：
 1. ✅ hap-v3-api - HAP V3 API 使用技能
 2. ✅ hap-view-plugin - HAP 视图插件开发技能
-3. ✅ hap-frontend-project - HAP 前端项目搭建技能
-4. ✅ hap-mcp-usage - HAP MCP 使用指南
+3. ✅ hap-mcp-usage - HAP MCP 使用指南
 
 📦 MCP 配置：
 ✅ 应用 API - API 文档 MCP 已安装
@@ -356,7 +344,6 @@ ls -la ~/.claude/skills/hap-*/SKILL.md 2>/dev/null
 ~/.claude/skills/
 ├── hap-v3-api/
 ├── hap-view-plugin/
-├── hap-frontend-project/
 └── hap-mcp-usage/
 ```
 
@@ -387,7 +374,7 @@ license: MIT
 记录每次更新的内容：
 
 ### 2026-01-14
-- ✅ 初始版本，包含 4 个核心技能
+- ✅ 初始版本，包含 3 个核心技能
 - ✅ 建立更新流程和检查清单
 
 ## 🛠️ 故障排查
@@ -401,7 +388,6 @@ license: MIT
 # 创建技能目录
 mkdir -p ~/.claude/skills/hap-v3-api
 mkdir -p ~/.claude/skills/hap-view-plugin
-mkdir -p ~/.claude/skills/hap-frontend-project
 mkdir -p ~/.claude/skills/hap-mcp-usage
 
 # 从仓库复制文件
@@ -454,4 +440,4 @@ cp /path/to/hap-skills-collection/.claude/skills/*/SKILL.md ~/.claude/skills/*/
 
 ---
 
-**注意**: 此技能仅用于更新和维护 HAP Skills Collection 中的 4 个核心技能。如果需要添加新技能或修改技能内容，请参考各技能的 SKILL.md 文件。
+**注意**: 此技能仅用于更新和维护 HAP Skills Collection 中的 3 个核心技能。如果需要添加新技能或修改技能内容，请参考各技能的 SKILL.md 文件。

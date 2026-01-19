@@ -94,8 +94,13 @@ copy_skills() {
     # 创建目标目录
     mkdir -p "$target_dir"
 
-    # 复制技能文件
-    cp -rf "$SKILLS_SOURCE/"* "$target_dir/"
+    # 复制技能文件，排除 hap-skills-updater（内部工具）
+    for skill_dir in "$SKILLS_SOURCE"/*; do
+        local skill_name=$(basename "$skill_dir")
+        if [ "$skill_name" != "hap-skills-updater" ]; then
+            cp -rf "$skill_dir" "$target_dir/"
+        fi
+    done
 
     print_success "$platform_name: 技能已复制到 $target_dir"
 }
