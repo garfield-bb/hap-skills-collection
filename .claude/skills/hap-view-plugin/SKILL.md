@@ -1309,6 +1309,155 @@ if (typeof value === 'number' || !isNaN(value)) {
 - 删除旧的冲突项目
 - 重新初始化项目
 
+## 🤖 AI 助手执行指南
+
+当用户请求开发明道云视图插件时,AI 必须按照以下流程执行:
+
+### 1. 前置环境检查(必须执行)
+
+**Step 1.1: 检查 Node.js 版本**
+
+```bash
+node --version
+```
+
+- ✅ 如果版本 >= 16.20: 继续下一步
+- ❌ 如果版本 < 16.20 或未安装:
+  - 告知用户需要安装 Node.js 16.20 或更高版本
+  - 提供安装链接: https://nodejs.org/
+  - 等待用户安装完成后再继续
+
+**Step 1.2: 检查 mdye-cli 是否已安装**
+
+```bash
+mdye --version
+```
+
+- ✅ 如果显示版本号: mdye-cli 已安装,跳过安装步骤
+- ❌ 如果命令不存在: **自动帮用户安装 mdye-cli**
+
+**Step 1.3: 自动安装 mdye-cli(如果未安装)**
+
+**Mac OS 用户:**
+```bash
+sudo npm install -g mdye-cli
+```
+
+**Windows/Linux 用户:**
+```bash
+npm install -g mdye-cli
+```
+
+**安装后验证:**
+```bash
+mdye --version
+```
+
+**告知用户:**
+```
+✅ mdye-cli 工具已安装
+
+📋 安装信息:
+- 工具名称: mdye-cli
+- 版本: [显示版本号]
+- 用途: 明道云视图插件开发专用命令行工具
+
+💡 下一步:
+- 现在可以开始创建视图插件项目了
+```
+
+### 2. 模板选择(根据需求自动选择)
+
+根据用户需求选择合适的模板:
+
+| 用户需求 | 推荐模板 | 说明 |
+|---------|---------|------|
+| 简单展示、学习示例 | `--template React` | React 基础模板,适合快速上手 |
+| 需要 UI 组件库 | `--template React-Tailwind` | 包含 Tailwind CSS,适合快速构建界面 |
+| 复杂业务逻辑 | `--template React` | 基础模板,可自行添加需要的库 |
+| Vue 技术栈 | `--template Vue` | Vue 模板(如果可用) |
+
+**默认推荐**: `--template React-Tailwind`(适合大多数场景)
+
+### 3. 项目初始化(自动执行)
+
+**Step 3.1: 询问或生成插件 ID**
+
+- 如果用户提供了插件 ID: 直接使用
+- 如果用户未提供: 使用示例 ID 或询问用户
+
+**Step 3.2: 初始化项目**
+
+```bash
+mdye init view --id [插件ID] --template React-Tailwind
+```
+
+**Step 3.3: 进入项目目录并安装依赖**
+
+```bash
+cd mdye_view_[插件后缀]/
+npm i
+```
+
+**如果 npm 安装失败:**
+- 建议使用淘宝镜像: `npm config set registry https://registry.npmmirror.com`
+- 清理缓存: `npm cache clean --force`
+- 重新安装: `npm i`
+
+### 4. 启动开发环境(自动执行)
+
+```bash
+mdye start
+```
+
+**启动后告知用户:**
+```
+✅ 视图插件开发环境已启动！
+
+📋 项目信息:
+- 项目目录: mdye_view_[插件后缀]/
+- 开发服务器: http://localhost:3000/
+- 调试地址: http://localhost:3000/bundle.js
+
+💡 下一步:
+1. 将调试地址粘贴到明道云视图配置的开发调试输入框
+2. 在项目中编辑代码,支持热重载
+3. 开发完成后运行 `npm run build` 生成发布包
+
+📖 开发指南:
+- 主入口文件: src/index.jsx
+- 样式文件: src/styles.less
+- API 使用: 参考技能文档中的 API 使用指南
+```
+
+### 5. 开发过程中的辅助
+
+**用户请求数据查询时:**
+- 使用 `api.getFilterRows()` 获取工作表数据
+- 正确处理关联字段(参考"常见问题"部分)
+- 处理选项字段(使用 key 值而非 value)
+
+**用户请求数据操作时:**
+- 使用 `api.addWorksheetRow()` 新增记录
+- 使用 `api.updateWorksheetRow()` 更新记录
+- 使用 `api.deleteWorksheetRows()` 删除记录
+
+**用户遇到问题时:**
+- 参考"常见问题与解决方案"部分
+- 提供详细的诊断步骤和解决方案
+
+### 6. AI 执行原则
+
+- ✅ **主动检查**: 开发前必须检查 Node.js 和 mdye-cli
+- ✅ **自动安装**: 检测到工具未安装时,自动帮用户安装
+- ✅ **选择模板**: 根据用户需求自动选择合适的模板
+- ✅ **完整流程**: 从环境检查到启动开发环境,一气呵成
+- ✅ **错误处理**: 遇到错误时提供详细诊断和解决方案
+- ❌ **不要跳过**: 不要跳过前置环境检查步骤
+- ❌ **不要假设**: 不要假设用户已安装所有工具
+
+---
+
 ## 参考资源
 
 - 明道云开发者文档
