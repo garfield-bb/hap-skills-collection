@@ -105,7 +105,17 @@ AI: [Automatically applies view plugin development skill]
 - API integration (mdye + V3)
 - BI dashboard design guide
 
-### 3. **HAP MCP Usage Guide**
+### 3. **HAP Frontend Project Setup**
+
+> Build independent websites using HAP as database
+
+**Features:**
+- HAP backend configuration
+- Frontend project structure
+- API integration best practices
+- Data rendering optimization
+
+### 4. **HAP MCP Usage Guide**
 
 > Configure and manage HAP MCP Server
 
