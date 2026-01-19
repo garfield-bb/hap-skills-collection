@@ -429,7 +429,7 @@ hap-skills-collection/
 │   │   └── references/
 │   ├── hap-mcp-usage/                 # MCP 使用指南
 │   │   └── SKILL.md
-│   └── hap-skills-updater/            # Skills 更新工具
+│   └── hap-skills-updater/            # Skills 更新工具（内部使用，不安装到用户系统）
 │       └── SKILL.md
 └── mcp-mingdao-proxy/                 # MCP 代理工具
     └── README.md
