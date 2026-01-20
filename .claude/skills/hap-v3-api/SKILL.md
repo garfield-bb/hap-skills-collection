@@ -28,6 +28,73 @@ license: MIT
 
 ---
 
+## ⚠️ 重要：何时使用此技能
+
+**使用优先级规则**:
+
+### 优先级 1: 已配置 HAP MCP → 直接使用 MCP 工具 ✅
+
+如果用户已经配置了 HAP 应用执行 MCP，AI 应该**直接使用 MCP 工具**，而不是编写 API 请求代码。
+
+**MCP 工具优势**:
+- ✅ 无需手动处理鉴权
+- ✅ 无需编写请求代码
+- ✅ MCP 工具自动处理所有细节
+- ✅ 更简洁、更可靠
+
+**可用的 MCP 工具**:
+- `get_app_info` - 获取应用信息
+- `get_app_worksheets_list` - 获取工作表列表
+- `get_worksheet_structure` - 获取工作表结构
+- `get_record_list` - 查询记录列表
+- `get_record_pivot_data` - 获取透视表数据
+- `create_record` - 创建记录
+- `update_record` - 更新记录
+- `delete_record` - 删除记录
+- `batch_create_records` - 批量创建记录
+- `batch_update_records` - 批量更新记录
+- `batch_delete_records` - 批量删除记录
+- 等等...（完整列表请参考 MCP 工具文档）
+
+**示例 - 使用 MCP 工具查询数据**:
+```javascript
+// ✅ 正确 - 直接使用 MCP 工具
+const records = await mcpClient.call('get_record_list', {
+  worksheet_id: 'xxx',
+  pageSize: 100,
+  pageIndex: 1,
+  filter: {
+    type: 'group',
+    logic: 'AND',
+    children: [
+      {
+        type: 'condition',
+        field: 'status',
+        operator: 'eq',
+        value: ['已成交']
+      }
+    ]
+  }
+});
+
+// ❌ 错误 - 不要编写 API 请求代码
+// fetch('https://api.mingdao.com/v3/open/worksheet/getFilterRows', ...)
+```
+
+### 优先级 2: 仅在以下情况使用 HAP V3 API 编写代码
+
+**何时使用 V3 API 代码**:
+1. ✅ 用户**明确需要编写代码实现**（如在视图插件、独立前端项目中集成）
+2. ✅ 用户需要在代码中**编排复杂的业务逻辑**
+3. ✅ **未配置 HAP MCP** 或 MCP 不可用
+
+**示例场景**:
+- "帮我在 React 组件中集成 HAP API 查询数据" → ✅ 使用 V3 API 代码
+- "帮我写一个函数，批量导入数据到 HAP" → ✅ 使用 V3 API 代码
+- "帮我查询客户管理表中的数据"（已配置 MCP）→ ❌ 不要写代码，使用 MCP 工具
+
+---
+
 ## 快速开始
 
 ### 1. 获取 API 凭证
@@ -36,64 +103,147 @@ license: MIT
 
 如果用户已经配置了 HAP 应用执行 MCP，AI 助手应该**自动从 MCP 配置中提取鉴权密钥**，而不是让用户手动输入。
 
+**⚠️ 重要**: AI 必须**自动检测用户当前使用的 IDE**，然后读取对应的配置文件。不要假设用户使用 Cursor。
+
 #### 自动化提取步骤
 
-1. **读取 Cursor 全局设置文件**
-   - **macOS**: `~/Library/Application Support/Cursor/User/settings.json`
-   - **Windows**: `%APPDATA%\Cursor\User\settings.json`
-   - **Linux**: `~/.config/Cursor/User/settings.json`
+**Step 1: 自动检测当前使用的 IDE 平台**
 
-2. **查找 MCP 配置**
-   - 在 `mcpServers` 对象中查找以 `hap-mcp-` 开头的服务器配置
-   - 识别应用执行 MCP（包含 `url` 字段且 URL 指向 `api.mingdao.com/mcp`）
+AI 必须**自动检测**用户当前使用的 IDE，不要假设或询问。检测方法（按优先级）：
 
-3. **从 URL 中解析参数**
-   - MCP 配置格式示例：
-   ```json
-   {
-     "mcpServers": {
-       "hap-mcp-应用名": {
-         "url": "https://api.mingdao.com/mcp?HAP-Appkey=6802bfa5da37d75f&HAP-Sign=MWZmZWU1YmMyMzE4ZTAxYjY3NTViYjM5NzhlNTdhOTIwZWFhYTc2Y2I2YzljNWMzNDFmMjk4NTM2N2M0YTg2OA==",
-         "type": "http"
-       }
-     }
-   }
-   ```
+1. **检测当前运行的 IDE**（最高优先级）
+   - 检查环境变量：`$TERM_PROGRAM`（可能值：`cursor`, `claude`, `trae` 等）
+   - 检查会话变量：`$CLAUDE_SESSION`, `$TRAE_SESSION`, `$ANTIGRAVITY_SESSION` 等
+   - 检查进程：`pgrep -x "Cursor"`, `pgrep -x "Claude"` 等
 
-4. **提取鉴权密钥**
-   - 从 URL 的查询参数中提取 `HAP-Appkey` 的值
-   - 从 URL 的查询参数中提取 `HAP-Sign` 的值
-   - 注意：URL 参数可能经过 URL 编码，需要正确解码
+2. **检查已安装的 IDE**（如果第1步失败）
+   - 检查配置目录：`~/.cursor`, `~/.claude`, `~/.trae` 等是否存在
+   - 如果检测到多个，按流行度选择：Cursor → Claude Code → TRAE → 其他
+
+3. **检查项目级配置**（如果前2步失败）
+   - 检查当前项目目录：`.cursor/`, `.trae/`, `.claude/` 等
+
+**支持的 IDE 平台和配置路径**：
+
+| IDE 平台 | 全局配置文件路径 | 项目级配置路径 |
+|---------|----------------|--------------|
+| **Claude Code** | `~/.claude/config.json` 或通过 `claude mcp list` 命令 | `.claude/config.json` |
+| **Cursor** | `~/.cursor/mcp.json` 或 `~/Library/Application Support/Cursor/User/settings.json` (macOS) | `.cursor/mcp.json` |
+| **TRAE** | `~/.trae/mcp.json` | `.trae/mcp.json` |
+| **GitHub Copilot** | `~/.copilot/mcp.json` | `.github/mcp.json` |
+| **Antigravity** | `~/.gemini/antigravity/config.json` | `.agent/config.json` |
+| **OpenCode** | `~/.config/opencode/mcp.json` | `.opencode/mcp.json` |
+| **Windsurf** | `~/.codeium/windsurf/mcp.json` | `.windsurf/mcp.json` |
+| **Gemini CLI** | `~/.gemini/config.json` | `.gemini/config.json` |
+| **Codex** | `~/.codex/config.toml` | `.codex/config.toml` |
+| **Manus** | `~/.manus/mcp.json` | - |
+| **Coze** | `~/.coze/mcp_config.json` | - |
+
+**Step 2: 读取对应平台的 MCP 配置文件**
+
+根据检测到的平台，读取对应的配置文件。
+
+**Step 3: 查找 HAP MCP 配置**
+
+- 在配置对象中查找以 `hap-mcp-` 开头的服务器配置
+- 识别应用执行 MCP（包含 `url` 字段且 URL 指向 `api.mingdao.com/mcp`）
+
+**MCP 配置格式示例**：
+```json
+{
+  "mcpServers": {
+    "hap-mcp-应用名": {
+      "url": "https://api.mingdao.com/mcp?HAP-Appkey=6802bfa5da37d75f&HAP-Sign=MWZmZWU1YmMyMzE4ZTAxYjY3NTViYjM5NzhlNTdhOTIwZWFhYTc2Y2I2YzljNWMzNDFmMjk4NTM2N2M0YTg2OA=="
+    }
+  }
+}
+```
+
+**Step 4: 从 URL 中解析鉴权参数**
+
+- 从 URL 的查询参数中提取 `HAP-Appkey` 的值
+- 从 URL 的查询参数中提取 `HAP-Sign` 的值
+- 注意：URL 参数可能经过 URL 编码，需要正确解码
 
 #### 代码示例（AI 助手操作）
 
 ```javascript
-// 1. 读取配置文件
-const settingsPath = process.platform === 'darwin' 
-  ? `${process.env.HOME}/Library/Application Support/Cursor/User/settings.json`
-  : process.platform === 'win32'
-  ? `${process.env.APPDATA}/Cursor/User/settings.json`
-  : `${process.env.HOME}/.config/Cursor/User/settings.json`;
+// 1. 检测当前使用的 IDE 平台
+function detectCurrentIDE() {
+  // 检查环境变量
+  const termProgram = process.env.TERM_PROGRAM;
+  if (termProgram === 'cursor') return 'cursor';
+  if (termProgram === 'claude') return 'claude';
+  if (termProgram === 'trae') return 'trae';
 
-const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
+  // 检查会话变量
+  if (process.env.CLAUDE_SESSION) return 'claude';
+  if (process.env.TRAE_SESSION) return 'trae';
+  if (process.env.ANTIGRAVITY_SESSION) return 'antigravity';
 
-// 2. 查找 HAP MCP 配置
-const mcpServers = settings.mcpServers || {};
+  // 检查已安装的 IDE（降级检查）
+  const homeDir = process.env.HOME || process.env.USERPROFILE;
+  if (fs.existsSync(path.join(homeDir, '.cursor', 'mcp.json'))) return 'cursor';
+  if (fs.existsSync(path.join(homeDir, '.claude', 'config.json'))) return 'claude';
+  if (fs.existsSync(path.join(homeDir, '.trae', 'mcp.json'))) return 'trae';
+
+  // 默认使用 Cursor（最流行）
+  return 'cursor';
+}
+
+// 2. 根据 IDE 获取配置文件路径
+function getConfigPath(ide) {
+  const homeDir = process.env.HOME || process.env.USERPROFILE;
+
+  const configPaths = {
+    'cursor': path.join(homeDir, '.cursor', 'mcp.json'),
+    'claude': path.join(homeDir, '.claude', 'config.json'),
+    'trae': path.join(homeDir, '.trae', 'mcp.json'),
+    'copilot': path.join(homeDir, '.copilot', 'mcp.json'),
+    'antigravity': path.join(homeDir, '.gemini', 'antigravity', 'config.json'),
+    'opencode': path.join(homeDir, '.config', 'opencode', 'mcp.json'),
+    'windsurf': path.join(homeDir, '.codeium', 'windsurf', 'mcp.json'),
+    'gemini': path.join(homeDir, '.gemini', 'config.json'),
+    'codex': path.join(homeDir, '.codex', 'config.toml'),
+    'manus': path.join(homeDir, '.manus', 'mcp.json'),
+    'coze': path.join(homeDir, '.coze', 'mcp_config.json')
+  };
+
+  return configPaths[ide];
+}
+
+// 3. 读取并解析配置
+const currentIDE = detectCurrentIDE();
+const configPath = getConfigPath(currentIDE);
+
+if (!fs.existsSync(configPath)) {
+  console.log(`未找到 ${currentIDE} 的 MCP 配置文件`);
+  return;
+}
+
+const configContent = fs.readFileSync(configPath, 'utf8');
+const config = JSON.parse(configContent);
+
+// 4. 查找 HAP MCP 配置
+const mcpServers = config.mcpServers || {};
 const hapMcpConfig = Object.entries(mcpServers).find(
   ([name, config]) => name.startsWith('hap-mcp-') && config.url
 );
 
 if (hapMcpConfig) {
-  const [, config] = hapMcpConfig;
-  const url = new URL(config.url);
-  
-  // 3. 提取 Appkey 和 Sign
+  const [mcpName, mcpConfig] = hapMcpConfig;
+  const url = new URL(mcpConfig.url);
+
+  // 5. 提取 Appkey 和 Sign
   const appkey = url.searchParams.get('HAP-Appkey');
   const sign = url.searchParams.get('HAP-Sign');
-  
-  // 4. 使用提取的密钥
+
+  console.log(`✅ 从 ${currentIDE} 的 MCP 配置中提取到鉴权信息`);
+  console.log('MCP 名称:', mcpName);
   console.log('Appkey:', appkey);
   console.log('Sign:', sign);
+} else {
+  console.log(`未找到 HAP MCP 配置，请先配置 MCP 或手动输入鉴权信息`);
 }
 ```
 
