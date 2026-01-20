@@ -86,74 +86,189 @@ HAP 提供两种不同类型的 MCP，**作用和使用场景完全不同**：
 
 **自动识别方法**（按优先级）:
 
-1. **检查环境变量和工具命令**
-   ```bash
-   # Claude Code
-   which claude && echo "Claude Code"
+**⚠️ 关键原则**: 优先检测用户**当前正在使用**的 IDE,而不是仅检查已安装的 IDE。
 
-   # Cursor - 检查配置目录
-   [ -d ~/.cursor ] && echo "Cursor"
+#### 优先级 0: 检测当前运行的 IDE 工具（最高优先级）
 
-   # TRAE - 检查配置目录
-   [ -d ~/.trae ] && echo "TRAE"
+**方法**: 通过环境变量、进程信息、上下文标识来判断用户当前正在使用的工具。
 
-   # Antigravity - 检查配置目录
-   [ -d ~/.gemini/antigravity ] && echo "Antigravity"
+```bash
+# 检测 Cursor（通过环境变量或进程）
+if [ "$TERM_PROGRAM" = "cursor" ] || pgrep -x "Cursor" > /dev/null 2>&1; then
+  echo "Cursor"
+  exit 0
+fi
 
-   # Windsurf - 检查配置目录
-   [ -d ~/.codeium/windsurf ] && echo "Windsurf"
+# 检测 Claude Code（通过会话环境）
+if [ -n "$CLAUDE_SESSION" ] || [ "$TERM_PROGRAM" = "claude" ]; then
+  echo "Claude Code"
+  exit 0
+fi
 
-   # OpenCode - 检查配置目录
-   [ -d ~/.config/opencode ] && echo "OpenCode"
+# 检测 TRAE（通过环境变量）
+if [ -n "$TRAE_SESSION" ] || [ "$TERM_PROGRAM" = "trae" ]; then
+  echo "TRAE"
+  exit 0
+fi
 
-   # Copilot - 检查配置目录
-   [ -d ~/.copilot ] && echo "GitHub Copilot"
+# 检测 Windsurf（通过环境变量或进程）
+if [ "$TERM_PROGRAM" = "windsurf" ] || pgrep -x "Windsurf" > /dev/null 2>&1; then
+  echo "Windsurf"
+  exit 0
+fi
 
-   # Gemini CLI
-   which gemini && echo "Gemini CLI"
+# 检测 Antigravity（通过环境变量）
+if [ -n "$ANTIGRAVITY_SESSION" ] || [ "$TERM_PROGRAM" = "antigravity" ]; then
+  echo "Google Antigravity"
+  exit 0
+fi
 
-   # Codex - 检查配置目录
-   [ -d ~/.codex ] && echo "Codex"
-   ```
+# 检测 Copilot（通过 VSCode 环境）
+if [ "$TERM_PROGRAM" = "vscode" ] && pgrep -f "github.copilot" > /dev/null 2>&1; then
+  echo "GitHub Copilot"
+  exit 0
+fi
 
-2. **检查项目级配置目录**（如果全局检测失败）
-   ```bash
-   # 检查当前项目目录
-   [ -d .cursor ] && echo "Cursor (项目级)"
-   [ -d .trae ] && echo "TRAE (项目级)"
-   [ -d .agent ] && echo "Antigravity (项目级)"
-   ```
+# 检测 OpenCode
+if [ "$TERM_PROGRAM" = "opencode" ] || pgrep -x "OpenCode" > /dev/null 2>&1; then
+  echo "OpenCode"
+  exit 0
+fi
 
-3. **如果自动识别失败**
-   - 尝试多个平台的配置（从最流行的开始：Cursor → Claude → TRAE）
-   - 如果所有平台都失败，告知用户：
-   ```
-   ⚠️ 无法自动识别您使用的 AI 工具平台
+# 检测 Gemini CLI（通过命令行上下文）
+if [ -n "$GEMINI_CLI_SESSION" ]; then
+  echo "Gemini CLI"
+  exit 0
+fi
 
-   已尝试的平台：
-   - Cursor
-   - Claude Code
-   - TRAE
-   - Antigravity
+# 检测 Codex（通过命令行上下文）
+if [ -n "$CODEX_SESSION" ]; then
+  echo "OpenAI Codex"
+  exit 0
+fi
+```
 
-   可能原因：
-   1. 您使用的平台尚未被本技能支持
-   2. 配置目录不在默认位置
+**识别逻辑**:
+1. 检查 `$TERM_PROGRAM` 环境变量（许多 IDE 会设置此变量）
+2. 检查 IDE 特定的会话环境变量
+3. 检查是否有对应的 IDE 进程正在运行
+4. 检查项目目录中的 IDE 特定文件（如 `.cursor/`、`.trae/`）
 
-   📋 请手动配置：
-   [根据用户工具提供手动配置步骤]
+**重要提示**:
+- ✅ **如果检测到当前运行的 IDE**,立即使用该平台的全局配置路径
+- ✅ 即使其他 IDE 的配置目录存在,也优先使用当前 IDE
+- ⚠️ 只有在无法检测当前 IDE 时,才进入下一优先级（检查已安装的 IDE）
 
-   💡 反馈建议：
-   如果您使用的是上述 9 个平台之一但仍无法识别，
-   请将此信息反馈给 HAP Skills 开发团队：
-   https://github.com/garfield-bb/hap-skills-collection/issues
-   ```
+#### 优先级 1: 检查已安装的 IDE（仅在优先级 0 失败时使用）
+
+**⚠️ 警告**: 此方法只能检测**已安装**的 IDE,不能确定**当前使用**的 IDE。
+
+```bash
+# 检查配置目录是否存在（不推荐作为首选方法）
+
+# Claude Code
+[ -d ~/.claude ] && echo "Claude Code (已安装)"
+
+# Cursor
+[ -d ~/.cursor ] && echo "Cursor (已安装)"
+
+# TRAE
+[ -d ~/.trae ] && echo "TRAE (已安装)"
+
+# Antigravity
+[ -d ~/.gemini/antigravity ] && echo "Antigravity (已安装)"
+
+# Windsurf
+[ -d ~/.codeium/windsurf ] && echo "Windsurf (已安装)"
+
+# OpenCode
+[ -d ~/.config/opencode ] && echo "OpenCode (已安装)"
+
+# Copilot
+[ -d ~/.copilot ] && echo "GitHub Copilot (已安装)"
+
+# Gemini CLI
+which gemini && echo "Gemini CLI (已安装)"
+
+# Codex
+[ -d ~/.codex ] && echo "Codex (已安装)"
+```
+
+**使用策略**:
+- 如果检测到**多个已安装的 IDE**,按以下优先级选择:
+  1. Cursor（最流行）
+  2. Claude Code（官方工具）
+  3. TRAE（标准化）
+  4. 其他平台
+- ⚠️ 提示用户可能配置到了非当前使用的 IDE
+
+#### 优先级 2: 检查项目级配置目录
+
+```bash
+# 检查当前项目目录
+[ -d .cursor ] && echo "Cursor (项目级)"
+[ -d .trae ] && echo "TRAE (项目级)"
+[ -d .agent ] && echo "Antigravity (项目级)"
+[ -d .claude ] && echo "Claude Code (项目级)"
+```
+
+#### 优先级 3: 如果所有检测都失败
+
+- 尝试多个平台的配置（按流行度：Cursor → Claude Code → TRAE）
+- 如果所有平台都失败，告知用户：
+```
+⚠️ 无法自动识别您使用的 AI 工具平台
+
+已尝试的检测方法：
+1. 检测当前运行的 IDE（环境变量、进程）
+2. 检查已安装的 IDE（配置目录）
+3. 检查项目级配置
+
+可能原因：
+1. 您使用的平台尚未被本技能支持
+2. 配置目录不在默认位置
+3. 环境变量未正确设置
+
+📋 请手动配置：
+[根据用户工具提供手动配置步骤]
+
+💡 反馈建议：
+如果您使用的是上述 9 个平台之一但仍无法识别，
+请将以下信息反馈给 HAP Skills 开发团队：
+
+- 您使用的工具名称和版本
+- $TERM_PROGRAM 环境变量的值（如果有）
+- 配置目录位置
+
+反馈地址：
+https://github.com/garfield-bb/hap-skills-collection/issues
+```
 
 **识别结果示例**:
+
+**示例 1: 成功检测到当前运行的 IDE**
 ```
-✅ 已识别平台：Cursor
+✅ 已识别当前使用的平台：Cursor
 📁 配置目录：~/.cursor/
 📄 配置文件：~/.cursor/mcp.json
+🔍 检测方法：环境变量 $TERM_PROGRAM=cursor
+```
+
+**示例 2: 检测到多个已安装 IDE,选择最优**
+```
+✅ 已识别平台：Cursor（优先选择）
+📁 配置目录：~/.cursor/
+📄 配置文件：~/.cursor/mcp.json
+⚠️ 注意：同时检测到 Claude Code、TRAE 已安装
+💡 如果您当前使用的不是 Cursor,请手动指定平台
+```
+
+**示例 3: 无法确定当前 IDE,使用项目级配置**
+```
+✅ 已识别平台：Cursor（项目级）
+📁 配置目录：.cursor/
+📄 配置文件：.cursor/mcp.json
+🔍 检测方法：发现项目目录中的 .cursor/ 文件夹
 ```
 
 ### Step 2: 解析 MCP 配置信息
@@ -674,9 +789,16 @@ https://github.com/garfield-bb/hap-skills-collection/issues
 #### ✅ 必须做到
 
 1. **🔍 自动识别平台** - 不要询问用户，直接检测当前平台
-   - 检查配置目录（~/.cursor, ~/.trae, ~/.claude 等）
-   - 检查命令行工具（claude, gemini 等）
-   - 如果识别失败，尝试多个平台配置
+   - **优先级 0（最高）**: 检测**当前正在运行**的 IDE 工具
+     - 检查环境变量（$TERM_PROGRAM 等）
+     - 检查 IDE 特定的会话变量
+     - 检查是否有对应的进程正在运行
+   - **优先级 1**: 检查已安装的 IDE（仅在优先级 0 失败时）
+     - 检查配置目录（~/.cursor, ~/.trae, ~/.claude 等）
+     - 检查命令行工具（claude, gemini 等）
+   - **优先级 2**: 检查项目级配置目录
+   - **关键原则**: 优先使用用户**当前正在使用**的 IDE,而不是仅检查已安装的 IDE
+   - 如果识别失败，尝试多个平台配置（Cursor → Claude Code → TRAE）
 
 2. **🤖 自动化执行** - 直接完成配置，不要只告诉步骤
    - 读取现有配置
@@ -716,6 +838,8 @@ https://github.com/garfield-bb/hap-skills-collection/issues
 5. **❌ 不要覆盖配置** - 禁止清空或删除用户已有的 MCP 服务器（致命错误！）
 
 6. **❌ 不要忘记反馈** - 兼容性问题时，必须引导用户反馈
+
+7. **❌ 不要误判平台** - 即使检测到多个 IDE 已安装,也要优先使用当前运行的 IDE
 
 #### 📊 成功报告（简洁版）
 
