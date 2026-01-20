@@ -180,12 +180,58 @@ claude mcp list
 **配置文件**: `~/.gemini/antigravity/config.json`
 
 **自动化步骤**:
-1. 检查并创建目录
-2. 读取或创建配置文件
-3. 在 `mcpServers` 部分添加配置
-4. 保存文件
+1. 检查并创建 `~/.gemini/antigravity` 目录（如果不存在）
+2. **读取现有配置文件**（如果存在）- **重要：保留所有已有配置**
+3. **增量添加或更新** MCP 配置（不删除其他 MCP）
+4. 保存到 `~/.gemini/antigravity/config.json`
+5. **启用 MCP 服务器**（需要重启 Antigravity）
 
-**配置格式**: 同 Cursor
+**配置格式** (JSON):
+```json
+{
+  "mcpServers": {
+    // 保留用户已有的 MCP 配置
+    "existing-mcp-server": {
+      "url": "https://example.com/mcp"
+    },
+    // 新增 HAP MCP 配置
+    "hap-mcp-应用名": {
+      "url": "https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx"
+    }
+  }
+}
+```
+
+**增量更新示例（Bash 脚本）**:
+```bash
+#!/bin/bash
+
+# 1. 检查并创建配置目录
+mkdir -p ~/.gemini/antigravity
+
+# 2. 读取现有配置（如果不存在则创建默认结构）
+if [ -f ~/.gemini/antigravity/config.json ]; then
+  EXISTING_CONFIG=$(cat ~/.gemini/antigravity/config.json)
+else
+  EXISTING_CONFIG='{"mcpServers":{}}'
+fi
+
+# 3. 使用 jq 增量添加 MCP 配置（保留其他配置）
+echo "$EXISTING_CONFIG" | jq --arg name "hap-mcp-客户管理" \
+  --arg url "https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx" \
+  '.mcpServers[$name] = {"url": $url}' > ~/.gemini/antigravity/config.json.tmp
+
+# 4. 替换配置文件
+mv ~/.gemini/antigravity/config.json.tmp ~/.gemini/antigravity/config.json
+
+# 5. 验证配置
+cat ~/.gemini/antigravity/config.json | jq '.mcpServers["hap-mcp-客户管理"]'
+```
+
+**⚠️ 关键原则**:
+- ✅ **增量更新**: 只添加或更新指定的 MCP，保留其他所有配置
+- ❌ **禁止覆盖**: 不要清空或删除用户已有的 MCP 服务器
+- ✅ **重启工具**: 配置完成后需要重启 Antigravity 使配置生效
 
 #### 🔧 OpenCode
 
