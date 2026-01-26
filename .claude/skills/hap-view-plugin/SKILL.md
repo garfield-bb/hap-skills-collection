@@ -124,6 +124,26 @@ mdye start
 - 将调试地址 `http://localhost:3000/bundle.js` 粘贴到明道云视图配置开发调试输入框
 - 支持实时编辑和热重载
 
+## HAP 产品线说明
+
+### 🌐 多产品线支持
+
+HAP 支持多个产品线和私有部署，在视图插件中调用 API 时需要注意 **host 配置**：
+
+| 产品线 | API Host | 说明 |
+|--------|----------|------|
+| **明道云 HAP** | `https://api.mingdao.com` | 官方 SaaS 服务 |
+| **Nocoly HAP** | `https://www.nocoly.com` | Nocoly SaaS 服务 |
+| **私有部署 HAP** | `https://your-domain.com/api` | ⚠️ **注意：私有部署需要在域名后加 `/api`** |
+
+**示例**：
+- 明道云：`https://api.mingdao.com/v3/open/worksheet/getFilterRows`
+- 私有部署：`https://p-demo.mingdaoyun.cn/api/v3/open/worksheet/getFilterRows` ← 注意 `/api`
+
+**建议**：视图插件应该从 `window.mdye.env` 中获取 host 配置，而不是硬编码。
+
+---
+
 ## API 使用指南
 
 ### 1. 环境变量及配置获取

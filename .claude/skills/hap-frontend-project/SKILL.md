@@ -51,6 +51,29 @@ description: Use when user mentions "building website with HAP", "HAP frontend p
 
 ---
 
+## HAP 产品线说明
+
+### 🌐 多产品线支持
+
+HAP 支持多个产品线和私有部署，在前端项目中调用 API 时需要配置正确的 **API Host**：
+
+| 产品线 | API Host | 说明 |
+|--------|----------|------|
+| **明道云 HAP** | `https://api.mingdao.com` | 官方 SaaS 服务 |
+| **Nocoly HAP** | `https://www.nocoly.com` | Nocoly SaaS 服务 |
+| **私有部署 HAP** | `https://your-domain.com/api` | ⚠️ **注意：私有部署需要在域名后加 `/api`** |
+
+**示例**：
+- 明道云：`https://api.mingdao.com/v3/open/worksheet/getFilterRows`
+- 私有部署：`https://p-demo.mingdaoyun.cn/api/v3/open/worksheet/getFilterRows` ← 注意 `/api`
+
+**配置建议**：
+- 在项目配置文件中设置 `API_BASE_URL`
+- 根据用户的 MCP 配置自动判断使用哪个 host
+- 如果用户未提供，需询问使用哪个产品线
+
+---
+
 ## 工作流程
 
 ### 阶段 1: 需求理解与结构评估

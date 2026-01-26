@@ -20,9 +20,23 @@ license: MIT
 
 ## 关于 HAP MCP
 
+### 🌐 HAP 产品线说明
+
+HAP 支持多个产品线和私有部署，**MCP URL 的 host 不同**：
+
+| 产品线 | MCP URL 格式 | 说明 |
+|--------|-------------|------|
+| **明道云 HAP** | `https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx` | 官方 SaaS 服务 |
+| **Nocoly HAP** | `https://www.nocoly.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx` | Nocoly SaaS 服务 |
+| **私有部署 HAP** | `https://your-domain.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx` | ⚠️ **注意：调用 API 时需要在域名后加 `/api`** |
+
+---
+
+### 🔷 MCP 类型说明
+
 HAP 提供两种不同类型的 MCP，**作用和使用场景完全不同**：
 
-### 🔷 类型 1: HAP API 文档 MCP
+### 类型 1: HAP API 文档 MCP
 
 **作用**: 让 AI 读懂 HAP 接口文档（只读，不执行操作）
 

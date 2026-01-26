@@ -97,6 +97,25 @@ const records = await mcpClient.call('get_record_list', {
 
 ## 快速开始
 
+### 0. HAP 产品线说明 ⚠️
+
+HAP 支持多个产品线和私有部署，**API Host 配置不同**：
+
+| 产品线 | API Host | 说明 |
+|--------|----------|------|
+| **明道云 HAP** | `https://api.mingdao.com` | 官方 SaaS 服务 |
+| **Nocoly HAP** | `https://www.nocoly.com` | Nocoly SaaS 服务 |
+| **私有部署 HAP** | `https://your-domain.com/api` | ⚠️ **注意：私有部署需要在域名后加 `/api`** |
+
+**示例**：
+- 明道云：`https://api.mingdao.com/v3/open/worksheet/getFilterRows`
+- Nocoly：`https://www.nocoly.com/v3/open/worksheet/getFilterRows`
+- 私有部署：`https://p-demo.mingdaoyun.cn/api/v3/open/worksheet/getFilterRows` ← 注意 `/api`
+
+**AI 必须根据用户的 MCP 配置自动判断使用哪个 host**。如果用户未提供 MCP 配置，需询问使用哪个产品线。
+
+---
+
 ### 1. 获取 API 凭证
 
 **方法一: 从 MCP 配置中提取（推荐）**
