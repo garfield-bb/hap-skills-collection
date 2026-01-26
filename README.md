@@ -439,6 +439,27 @@ hap-skills-collection/
 
 ## 📋 更新日志
 
+### v2.1.0 (2026-01-26)
+
+**🌐 多产品线支持**
+
+- ✨ **新增 HAP 产品线支持说明** - 覆盖明道云、Nocoly、私有部署
+  - 更新：HAP V3 API 使用技能
+  - 更新：HAP MCP 使用指南
+  - 更新：HAP 视图插件开发技能
+  - 更新：HAP 前端项目搭建技能
+
+- 🔧 **关键改进**
+  - 明确三种产品线的 API Host 配置差异
+  - 强调私有部署 HAP 需要在域名后加 `/api` 路径
+  - 提供清晰的示例和配置指导
+  - 确保所有 skill 支持多产品线环境
+
+- 📖 **配置说明**
+  - 明道云 HAP: `https://api.mingdao.com`
+  - Nocoly HAP: `https://www.nocoly.com`
+  - 私有部署 HAP: `https://your-domain.com/api` (注意 `/api`)
+
 ### v2.0.0 (2026-01-18)
 
 **🎉 重大更新 - 通用安装系统**
