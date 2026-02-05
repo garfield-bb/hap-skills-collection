@@ -52,11 +52,14 @@ HAP 提供两种不同类型的 MCP，**作用和使用场景完全不同**：
 {
   "mcpServers": {
     "hap-mcp-应用名": {
-      "url": "https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx"
+      "url": "https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx",
+      "type": "streamable"
     }
   }
 }
 ```
+
+**⚠️ 重要**: HAP MCP 必须指定 `"type": "streamable"`，这是 HAP MCP 的特殊要求
 
 **适用场景**:
 - 🔍 查询应用真实数据
@@ -122,14 +125,15 @@ claude mcp list
 
 #### 🔧 Cursor
 
-**配置文件**: `.cursor/mcp.json`（项目级，推荐）或 `~/.cursor/mcp.json`（全局）
+**MCP 配置文件**: `.cursor/mcp.json`（项目级，推荐）或 `~/.cursor/mcp.json`（全局）
+**Skills 安装位置**: `~/.cursor/skills/` 或 `~/.cursor/skills-cursor/`
 
 **自动化步骤**:
 1. 检查并创建 `.cursor` 目录（如果不存在）
 2. **读取现有配置文件**（如果存在）- **重要：保留所有已有配置**
-3. **增量添加或更新** MCP 配置（不删除其他 MCP）
+3. **增量添加或更新** MCP 配置（只更新同名 MCP，保留其他所有 MCP）
 4. 保存到 `.cursor/mcp.json`
-5. **启用 MCP 服务器**（确保配置生效）
+5. **启用 MCP 服务器**（配置后自动生效，无需重启）
 
 **配置格式**:
 ```json
@@ -139,19 +143,22 @@ claude mcp list
     "existing-mcp-server": {
       "url": "https://example.com/mcp"
     },
-    // 新增 HAP MCP 配置
+    // 新增 HAP MCP 配置（必须指定 type: streamable）
     "hap-mcp-应用名": {
-      "url": "https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx"
+      "url": "https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx",
+      "type": "streamable"
     }
   }
 }
 ```
 
 **⚠️ 关键原则**:
-- ✅ **增量更新**: 只添加或更新指定的 MCP，保留其他所有配置
+- ✅ **增量更新**: 只添加或更新同名 MCP，保留其他所有配置
 - ❌ **禁止覆盖**: 不要清空或删除用户已有的 MCP 服务器
+- ✅ **streamable 类型**: HAP MCP 必须指定 `"type": "streamable"`
+- ✅ **启用并验证**: 配置后立即启用并验证连通性（无需重启）
 
-**注意**: 不需要 `"type": "http"` 字段（旧格式）
+**注意**: 不需要 `"type": "http"` 字段（旧格式），HAP MCP 使用 `"type": "streamable"`
 
 #### 🔧 TRAE
 
@@ -271,18 +278,15 @@ url = "https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx"
 
 ### Step 4: 启用并验证 MCP 连通性
 
-**重要**: 配置完成后，必须**启用 MCP 服务器并验证**是否可以正常连接。
+**重要**: 配置完成后，必须**立即启用 MCP 服务器并验证**是否可以正常连接。
 
 #### 4.1 启用 MCP 服务器
 
-**大多数平台**需要重启工具才能使 MCP 配置生效：
-- Claude Code: 命令行添加后自动生效
-- Cursor / TRAE / Copilot 等: 需要重启工具
+**配置后自动生效**，无需重启工具：
+- 配置文件保存后，MCP 服务器会自动加载
+- 可以立即开始使用 MCP 工具
 
-**提示用户**:
-```
-⚠️ 请重启 [工具名称] 使 MCP 配置生效
-```
+**注意**: 如果 MCP 未自动启用，可能需要手动刷新或重新加载配置
 
 #### 4.2 验证连通性
 
@@ -311,18 +315,20 @@ if (result.success) {
 如果 MCP 连接失败，按以下步骤诊断：
 
 **诊断清单**:
-1. **检查工具是否重启**: 大多数平台需要重启才能加载新配置
+1. **检查配置文件**:
+   - 配置文件路径是否正确
+   - JSON/TOML 格式是否正确
+   - `"type": "streamable"` 是否已添加（HAP MCP 必需）
 2. **检查鉴权信息**:
    - `HAP-Appkey` 和 `HAP-Sign` 是否正确
    - URL 是否完整且格式正确
 3. **检查应用状态**:
    - 应用是否已启用 MCP 功能
    - 应用是否可以正常访问
-4. **检查网络连接**: 确认可以访问 `api.mingdao.com`
-5. **检查配置格式**:
-   - JSON 格式是否正确（Cursor/TRAE 等）
-   - TOML 格式是否正确（Codex）
-   - 中文名称是否已转换（Codex）
+4. **检查网络连接**: 确认可以访问 `api.mingdao.com` 或 `www.nocoly.com`
+5. **检查 MCP 服务器状态**:
+   - MCP 服务器是否已启用
+   - 是否需要手动刷新配置
 
 **常见错误及解决方案**:
 
@@ -330,29 +336,33 @@ if (result.success) {
 |---------|---------|---------|
 | 鉴权失败 | Appkey/Sign 错误 | 重新从 HAP 获取正确的鉴权信息 |
 | 连接超时 | 网络问题 | 检查网络连接，尝试访问 api.mingdao.com |
-| MCP 未找到 | 工具未重启 | 重启 AI 工具使配置生效 |
+| MCP 未找到 | 配置未生效 | 检查配置文件路径和格式，手动刷新配置 |
 | 配置格式错误 | JSON/TOML 语法错误 | 检查并修正配置文件格式 |
+| 缺少 streamable | 未指定 type | 添加 `"type": "streamable"` 到配置中 |
 | 中文 key 错误 | Codex 使用了中文名称 | 将服务器名称转换为英文 |
 
 **提供给用户的诊断步骤**:
 ```
 ❌ MCP 连接失败，请按以下步骤排查：
 
-1. 确认已重启 [工具名称]
-   → 大多数工具需要重启才能加载新的 MCP 配置
+1. 检查配置文件
+   → 位置: [配置文件路径]
+   → 格式: [JSON/TOML]
+   → 打开文件检查是否有语法错误
+   → 确认已添加 "type": "streamable"（HAP MCP 必需）
 
 2. 检查鉴权信息
    → HAP-Appkey: [显示前5位]...
    → HAP-Sign: [显示前5位]...
    → 如果不确定，请重新从 HAP 应用获取
 
-3. 验证配置文件
-   → 位置: [配置文件路径]
-   → 格式: [JSON/TOML]
-   → 打开文件检查是否有语法错误
+3. 验证 URL 格式
+   → 确认 URL 完整且无多余空格
+   → 格式: https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx
+   → 或: https://www.nocoly.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx
 
 4. 测试网络连接
-   → 尝试访问: https://api.mingdao.com
+   → 在浏览器访问: https://api.mingdao.com
    → 确认网络可以访问明道云 API
 
 5. 检查应用设置
@@ -360,7 +370,11 @@ if (result.success) {
    → 确认 MCP 功能已启用
    → 检查 API 权限设置
 
-如果以上步骤都无法解决，请提供错误信息以便进一步诊断。
+6. 手动刷新配置
+   → 如果配置未自动生效，尝试手动刷新
+   → 或重启 AI 工具使配置重新加载
+
+如果以上步骤都无法解决，请提供完整错误信息以便进一步诊断。
 ```
 
 ### Step 5: 向用户报告结果
@@ -401,18 +415,20 @@ if (result.success) {
 
 🔧 诊断步骤：
 
-1️⃣ 确认已重启工具
-   → 请完全关闭并重新打开 Cursor
+1️⃣ 检查配置文件
+   → 打开文件: .cursor/mcp.json
+   → 检查 JSON 格式是否正确
+   → 确认已添加 "type": "streamable"
+   → 确认 URL 完整且无多余空格
 
 2️⃣ 检查鉴权信息
    → HAP-Appkey: abc12... (前5位)
    → HAP-Sign: xyz78... (前5位)
    → 如果不确定，请从 HAP 应用重新获取
 
-3️⃣ 验证配置文件
-   → 打开文件: .cursor/mcp.json
-   → 检查 JSON 格式是否正确
-   → 确认 URL 完整且无多余空格
+3️⃣ 验证 URL 格式
+   → 格式: https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx
+   → 或: https://www.nocoly.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx
 
 4️⃣ 测试网络
    → 在浏览器访问: https://api.mingdao.com
@@ -423,6 +439,10 @@ if (result.success) {
    → 确认 MCP 功能已启用
    → 检查 API 访问权限
 
+6️⃣ 手动刷新配置
+   → 如果配置未自动生效，尝试手动刷新
+   → 或重启 AI 工具使配置重新加载
+
 📞 需要帮助？
 - 提供完整错误信息以便进一步诊断
 - 或访问 HAP 帮助中心查看 MCP 配置文档
@@ -430,23 +450,39 @@ if (result.success) {
 
 ---
 
-## 📋 配置文件位置速查表
+## 📋 MCP 配置文件和 Skills 安装位置速查表
 
-| 平台 | 项目级配置 | 全局配置 | 格式 |
-|------|-----------|---------|------|
-| **Claude Code** | - | 命令行配置 | 命令 |
-| **Cursor** | `.cursor/mcp.json` | `~/.cursor/mcp.json` | JSON |
-| **TRAE** | `.trae/mcp.json` | `~/.trae/mcp.json` | JSON |
-| **GitHub Copilot** | - | `~/.copilot/mcp-config.json` | JSON |
-| **Antigravity** | - | `~/.gemini/antigravity/mcp_config.json` | JSON |
-| **OpenCode** | - | `~/.config/opencode/opencode.json` | JSON |
-| **Windsurf** | - | `~/.codeium/windsurf/mcp_config.json` | JSON |
-| **Gemini CLI** | - | `settings.json` (工具管理) | JSON |
-| **Codex** | - | `~/.codex/config.toml` | TOML |
+### MCP 配置文件位置
 
-**推荐策略**:
+| 平台 | 项目级配置 | 全局配置 | 格式 | Skills 位置 |
+|------|-----------|---------|------|------------|
+| **Claude Code** | - | 命令行配置 | 命令 | `~/.claude/skills/` |
+| **Cursor** | `.cursor/mcp.json` | `~/.cursor/mcp.json` | JSON | `~/.cursor/skills/` 或 `~/.cursor/skills-cursor/` |
+| **TRAE** | `.trae/mcp.json` | `~/.trae/mcp.json` | JSON | `~/.trae/skills/` |
+| **GitHub Copilot** | - | `~/.copilot/mcp-config.json` | JSON | `~/.copilot/skills/` |
+| **Antigravity** | - | `~/.gemini/antigravity/mcp_config.json` | JSON | `~/.gemini/antigravity/skills/` |
+| **OpenCode** | - | `~/.config/opencode/opencode.json` | JSON | `~/.config/opencode/skills/` |
+| **Windsurf** | - | `~/.codeium/windsurf/mcp_config.json` | JSON | `~/.codeium/windsurf/skills/` |
+| **Gemini CLI** | - | `settings.json` (工具管理) | JSON | 工具管理 |
+| **Codex** | - | `~/.codex/config.toml` | TOML | `~/.codex/skills/` |
+
+### 重要说明
+
+**MCP 配置策略**:
 - 支持项目级配置的平台（Cursor, TRAE）：优先使用项目级
 - 其他平台：使用全局配置
+- **HAP MCP 必须指定 `"type": "streamable"`**
+
+**Skills 安装**:
+- Skills 通常安装在对应工具的 `skills/` 目录下
+- Cursor 可能有 `skills/` 或 `skills-cursor/` 两个目录
+- 安装 skills 后需要重启工具使其生效
+
+**配置后必须操作**:
+1. ✅ 保存配置文件
+2. ✅ **启用 MCP 服务器**（配置后自动生效，无需重启）
+3. ✅ **立即验证连通性**（调用 get_app_info 测试）
+4. ✅ 如果失败，提供详细诊断步骤给用户
 
 ---
 
@@ -456,23 +492,25 @@ if (result.success) {
 
 - ✅ **自动化执行**: 直接帮用户配置，不要只告诉步骤
 - ✅ **平台识别**: 准确识别用户使用的工具
+- ✅ **streamable 类型**: HAP MCP 必须指定 `"type": "streamable"`（关键！）
 - ✅ **中文转换**: Codex 平台必须将中文服务器名称转换为英文
-- ✅ **增量更新**: **只添加或更新指定的 MCP，保留用户所有已有配置**
+- ✅ **增量更新**: **只添加或更新同名 MCP，保留用户所有已有配置**
 - ✅ **格式检查**: 确保 JSON/TOML 格式正确
-- ✅ **启用配置**: 提示用户重启工具使配置生效
-- ✅ **验证连通**: 配置后验证 MCP 是否可用
+- ✅ **启用配置**: 配置后立即启用（无需重启）
+- ✅ **验证连通**: 配置后**立即验证** MCP 是否可用
 - ✅ **失败诊断**: 连接失败时提供详细诊断步骤和解决方案
 - ✅ **错误处理**: 如果配置或验证失败，提供清晰的错误信息
 
 ### 配置时不要做
 
 - ❌ **不要覆盖配置**: 禁止清空或删除用户已有的 MCP 服务器（致命错误！）
+- ❌ **只更新同名 MCP**: 如果 MCP 名称相同才覆盖，否则保留
+- ❌ **不要忘记 streamable**: HAP MCP 必须指定 `"type": "streamable"`，否则无法正常工作
 - ❌ 不要只告诉用户如何配置，要直接执行
 - ❌ 不要跳过连通性验证步骤
 - ❌ 不要在验证失败时直接放弃，要提供诊断步骤
 - ❌ 不要在 Codex 中使用中文服务器名称（必须转换为英文）
-- ❌ 不要使用错误的配置格式（如 Cursor 添加 `type: http`）
-- ❌ 不要忘记提示用户重启工具
+- ❌ 不要使用错误的配置格式（如添加 `"type": "http"`，应该是 `"type": "streamable"`）
 
 ### 配置优先级
 
@@ -506,16 +544,17 @@ if (result.success) {
     // 保留所有已有的 MCP 配置
     "existing-server-1": { "url": "..." },
     "existing-server-2": { "url": "..." },
-    // 新增 HAP MCP
+    // 新增 HAP MCP（必须指定 type: streamable）
     "hap-mcp-客户管理": {
-      "url": "https://api.mingdao.com/mcp?HAP-Appkey=abc123&HAP-Sign=xyz789"
+      "url": "https://api.mingdao.com/mcp?HAP-Appkey=abc123&HAP-Sign=xyz789",
+      "type": "streamable"
     }
   }
 }
 ```
 4. 保存文件
-5. 提示用户重启 Cursor
-6. 等待用户重启后，调用 `get_app_info` 验证连通性
+5. **启用 MCP 服务器**（配置后自动生效，无需重启）
+6. **立即验证连通性**（调用 get_app_info 测试）
 7. 如果失败，提供详细的诊断步骤
 8. 报告结果给用户
 
@@ -574,9 +613,10 @@ url = "https://api.mingdao.com/mcp?HAP-Appkey=abc123&HAP-Sign=xyz789"
 6. **错误处理** - 清晰的错误信息和用户指导
 
 **关键原则**:
-- ✅ 增量更新，不覆盖已有配置
-- ✅ 配置后必须启用并验证
+- ✅ **增量更新**，只更新同名 MCP，保留其他所有配置
+- ✅ 配置后**立即启用并验证**（无需重启）
 - ✅ 失败时提供诊断步骤，不直接放弃
 - ✅ Codex 平台自动转换中文名称
+- ✅ HAP MCP 必须指定 `"type": "streamable"`
 
 **记住**: 用户说"配置 MCP"时，不要问"需要我帮您配置吗？"，而是立即执行配置流程！
