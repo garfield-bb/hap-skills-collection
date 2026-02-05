@@ -1,6 +1,6 @@
 ---
 name: hap-v3-api
-description: 使用明道云 HAP V3 接口搭建页面和操作数据的专业技能。当用户提到"HAP V3 接口"、"HAP API"、"接口调用"、"数据接口"、"Appkey"、"Sign"、"接口鉴权"等需求时,必须使用此技能。此技能提供完整的 HAP V3 接口使用指南:鉴权配置、接口调用、筛选器使用、数据操作等。如果用户已配置 HAP MCP，AI 应该自动从 MCP 配置中提取鉴权密钥。
+description: 使用明道云 HAP V3 接口搭建页面和操作数据的专业技能。**立即触发条件**：用户提到"HAP V3"、"HAP API"、"接口调用"、"数据接口"、"Appkey"、"Sign"、"接口鉴权"、"Filter 筛选"、"查询数据"、"创建记录"。提供完整的 API 使用指南：鉴权配置、接口调用、筛选器使用、数据操作等。如果用户已配置 HAP MCP，AI 应该自动从 MCP 配置中提取鉴权密钥。
 license: MIT
 ---
 
@@ -38,14 +38,12 @@ license: MIT
 
 #### 自动化提取步骤
 
-1. **确定 MCP 配置文件位置**（按优先级）
-   - **优先项目级配置**: `项目根目录/.cursor/mcp.json`
-   - **全局配置**: `~/.cursor/mcp.json`（macOS/Linux）或 `%USERPROFILE%\.cursor\mcp.json`（Windows）
-   - ⚠️ **重要**: MCP 配置存储在 `.cursor/mcp.json`，**不是** `settings.json` 文件中
+1. **读取 Cursor 全局设置文件**
+   - **macOS**: `~/Library/Application Support/Cursor/User/settings.json`
+   - **Windows**: `%APPDATA%\Cursor\User\settings.json`
+   - **Linux**: `~/.config/Cursor/User/settings.json`
 
 2. **查找 MCP 配置**
-   - 优先读取项目级配置 `.cursor/mcp.json`
-   - 如果不存在，读取全局配置 `~/.cursor/mcp.json`
    - 在 `mcpServers` 对象中查找以 `hap-mcp-` 开头的服务器配置
    - 识别应用执行 MCP（包含 `url` 字段且 URL 指向 `api.mingdao.com/mcp`）
 
@@ -70,32 +68,17 @@ license: MIT
 #### 代码示例（AI 助手操作）
 
 ```javascript
-// 1. 确定配置文件位置（优先项目级配置）
-const fs = require('fs');
-const path = require('path');
-
-// 优先使用项目级配置
-const projectConfig = path.join(process.cwd(), '.cursor', 'mcp.json');
-const globalConfig = process.platform === 'darwin'
-  ? path.join(process.env.HOME, '.cursor', 'mcp.json')
+// 1. 读取配置文件
+const settingsPath = process.platform === 'darwin' 
+  ? `${process.env.HOME}/Library/Application Support/Cursor/User/settings.json`
   : process.platform === 'win32'
-  ? path.join(process.env.USERPROFILE || process.env.APPDATA, '.cursor', 'mcp.json')
-  : path.join(process.env.HOME, '.cursor', 'mcp.json');
+  ? `${process.env.APPDATA}/Cursor/User/settings.json`
+  : `${process.env.HOME}/.config/Cursor/User/settings.json`;
 
-// 优先读取项目级配置
-let configPath = projectConfig;
-if (!fs.existsSync(configPath)) {
-  configPath = globalConfig;
-}
+const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
 
-// 2. 读取配置文件
-let mcpServers = {};
-if (fs.existsSync(configPath)) {
-  const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
-  mcpServers = config.mcpServers || {};
-}
-
-// 3. 查找 HAP MCP 配置
+// 2. 查找 HAP MCP 配置
+const mcpServers = settings.mcpServers || {};
 const hapMcpConfig = Object.entries(mcpServers).find(
   ([name, config]) => name.startsWith('hap-mcp-') && config.url
 );
@@ -770,11 +753,7 @@ const headers = {
 **场景**: 用户说"帮我调用 HAP API 查询数据"
 
 **AI 操作流程**:
-1. **确定 MCP 配置文件位置**（优先项目级配置）
-   - 优先读取项目级配置：`项目根目录/.cursor/mcp.json`
-   - 如果不存在，读取全局配置：`~/.cursor/mcp.json`
-   - ⚠️ **重要**: MCP 配置存储在 `.cursor/mcp.json`，**不是** `settings.json`
-
+1. 读取 Cursor 全局设置文件 `~/Library/Application Support/Cursor/User/settings.json`
 2. 查找 `mcpServers` 中的 `hap-mcp-*` 配置
 3. 如果找到配置，从 URL 中提取 Appkey 和 Sign
 4. 如果找到多个配置，询问用户使用哪个应用
