@@ -165,15 +165,17 @@ claude mcp list
 
 #### 🔧 GitHub Copilot
 
-**配置文件**: `~/.copilot/mcp.json`
+**配置文件**: `~/.copilot/mcp-config.json`
 
 **自动化步骤**:
 1. 检查并创建 `~/.copilot` 目录
-2. 读取或创建 `mcp.json`
+2. 读取或创建 `mcp-config.json` 文件
 3. 添加 MCP 配置
 4. 保存文件
 
 **配置格式**: 同 Cursor
+
+**⚠️ 注意**: GitHub Copilot 使用 `mcp-config.json` 而不是 `mcp.json`
 
 #### 🔧 Google Antigravity
 
@@ -191,31 +193,35 @@ claude mcp list
 
 #### 🔧 OpenCode
 
-**配置文件**: `~/.config/opencode/mcp.json`
+**配置文件**: `~/.config/opencode/opencode.json`
 
 **自动化步骤**:
-1. 检查并创建目录
-2. 读取或创建配置文件
-3. 添加 MCP 配置
+1. 检查并创建目录 `~/.config/opencode/`
+2. 读取或创建 `opencode.json` 文件
+3. 在 `mcp` 部分添加配置
 4. 保存文件
 
 **配置格式**: 同 Cursor
+
+**⚠️ 注意**: OpenCode 使用 `opencode.json` 而不是 `mcp.json`
 
 #### 🔧 Windsurf
 
-**配置文件**: `~/.codeium/windsurf/mcp.json`
+**配置文件**: `~/.codeium/windsurf/mcp_config.json`
 
 **自动化步骤**:
-1. 检查并创建目录
-2. 读取或创建配置文件
+1. 检查并创建目录 `~/.codeium/windsurf/`
+2. 读取或创建 `mcp_config.json` 文件
 3. 添加 MCP 配置
 4. 保存文件
 
 **配置格式**: 同 Cursor
 
+**⚠️ 注意**: Windsurf 使用 `mcp_config.json` 而不是 `mcp.json`
+
 #### 🔧 Gemini CLI
 
-**配置文件**: `~/.gemini/config.json`
+**配置文件**: `settings.json`（位置由 Gemini CLI 管理）
 
 **配置方式**: 命令行或配置文件
 
@@ -224,7 +230,11 @@ claude mcp list
 gemini mcp add <server-name> --url "<server-url>"
 ```
 
-**配置文件方式**: 同 Cursor，在 `mcpServers` 中添加
+**配置文件方式**:
+- 使用 `/mcp` 命令打开配置文件
+- 在 `mcpServers` 中添加配置
+
+**⚠️ 注意**: Gemini CLI 使用 `settings.json`，具体路径由工具管理
 
 **参考文档**: https://github.com/google-gemini/gemini-cli/blob/main/docs/tools/mcp-server.md
 
@@ -427,11 +437,11 @@ if (result.success) {
 | **Claude Code** | - | 命令行配置 | 命令 |
 | **Cursor** | `.cursor/mcp.json` | `~/.cursor/mcp.json` | JSON |
 | **TRAE** | `.trae/mcp.json` | `~/.trae/mcp.json` | JSON |
-| **GitHub Copilot** | - | `~/.copilot/mcp.json` | JSON |
+| **GitHub Copilot** | - | `~/.copilot/mcp-config.json` | JSON |
 | **Antigravity** | - | `~/.gemini/antigravity/mcp_config.json` | JSON |
-| **OpenCode** | - | `~/.config/opencode/mcp.json` | JSON |
-| **Windsurf** | - | `~/.codeium/windsurf/mcp.json` | JSON |
-| **Gemini CLI** | - | `~/.gemini/config.json` | JSON |
+| **OpenCode** | - | `~/.config/opencode/opencode.json` | JSON |
+| **Windsurf** | - | `~/.codeium/windsurf/mcp_config.json` | JSON |
+| **Gemini CLI** | - | `settings.json` (工具管理) | JSON |
 | **Codex** | - | `~/.codex/config.toml` | TOML |
 
 **推荐策略**:
