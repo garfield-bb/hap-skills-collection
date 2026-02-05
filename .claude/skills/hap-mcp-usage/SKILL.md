@@ -1,6 +1,6 @@
 ---
 name: hap-mcp-usage
-description: 明道云 HAP MCP 自动化配置技能。当用户提到"配置 MCP"、"HAP MCP"、"MCP 配置"、"添加 MCP"、"MCP 连接"等需求时**立即触发**。支持 9 种 AI 工具的自动化配置，配置完成后自动验证连通性。
+description: 明道云 HAP MCP 自动化配置技能。**立即触发条件**：用户提到"配置 MCP"、"添加 MCP"、"MCP 配置"、"MCP 连接"、"设置 MCP"、提供包含"hap-mcp-"的配置、提供包含"HAP-Appkey"和"HAP-Sign"的 URL。支持 9 种 AI 工具的自动化配置，配置完成后自动验证连通性。
 license: MIT
 ---
 
@@ -20,23 +20,9 @@ license: MIT
 
 ## 关于 HAP MCP
 
-### 🌐 HAP 产品线说明
-
-HAP 支持多个产品线和私有部署，**MCP URL 的 host 不同**：
-
-| 产品线 | MCP URL 格式 | 说明 |
-|--------|-------------|------|
-| **明道云 HAP** | `https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx` | 官方 SaaS 服务 |
-| **Nocoly HAP** | `https://www.nocoly.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx` | Nocoly SaaS 服务 |
-| **私有部署 HAP** | `https://your-domain.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx` | ⚠️ **注意：调用 API 时需要在域名后加 `/api`** |
-
----
-
-### 🔷 MCP 类型说明
-
 HAP 提供两种不同类型的 MCP，**作用和使用场景完全不同**：
 
-### 类型 1: HAP API 文档 MCP
+### 🔷 类型 1: HAP API 文档 MCP
 
 **作用**: 让 AI 读懂 HAP 接口文档（只读，不执行操作）
 
@@ -84,9 +70,9 @@ HAP 提供两种不同类型的 MCP，**作用和使用场景完全不同**：
 
 当用户提供 MCP 配置时，AI 必须按以下步骤自动化完成配置：
 
-### Step 1: 自动识别当前 AI 工具平台
+### Step 1: 识别当前 AI 工具平台
 
-**AI 必须自动检测**用户当前使用的是哪个 AI 工具（从以下 9 个平台中识别）：
+首先确定用户当前使用的是哪个 AI 工具（从以下 9 个平台中识别）：
 
 1. **Claude Code** - Anthropic 官方 CLI
 2. **TRAE** - 标准化 `.trae/` 目录
@@ -98,192 +84,9 @@ HAP 提供两种不同类型的 MCP，**作用和使用场景完全不同**：
 8. **Gemini CLI** - Google Gemini 命令行
 9. **Codex** - OpenAI 编程助手
 
-**自动识别方法**（按优先级）:
-
-**⚠️ 关键原则**: 优先检测用户**当前正在使用**的 IDE,而不是仅检查已安装的 IDE。
-
-#### 优先级 0: 检测当前运行的 IDE 工具（最高优先级）
-
-**方法**: 通过环境变量、进程信息、上下文标识来判断用户当前正在使用的工具。
-
-```bash
-# 检测 Cursor（通过环境变量或进程）
-if [ "$TERM_PROGRAM" = "cursor" ] || pgrep -x "Cursor" > /dev/null 2>&1; then
-  echo "Cursor"
-  exit 0
-fi
-
-# 检测 Claude Code（通过会话环境）
-if [ -n "$CLAUDE_SESSION" ] || [ "$TERM_PROGRAM" = "claude" ]; then
-  echo "Claude Code"
-  exit 0
-fi
-
-# 检测 TRAE（通过环境变量）
-if [ -n "$TRAE_SESSION" ] || [ "$TERM_PROGRAM" = "trae" ]; then
-  echo "TRAE"
-  exit 0
-fi
-
-# 检测 Windsurf（通过环境变量或进程）
-if [ "$TERM_PROGRAM" = "windsurf" ] || pgrep -x "Windsurf" > /dev/null 2>&1; then
-  echo "Windsurf"
-  exit 0
-fi
-
-# 检测 Antigravity（通过环境变量）
-if [ -n "$ANTIGRAVITY_SESSION" ] || [ "$TERM_PROGRAM" = "antigravity" ]; then
-  echo "Google Antigravity"
-  exit 0
-fi
-
-# 检测 Copilot（通过 VSCode 环境）
-if [ "$TERM_PROGRAM" = "vscode" ] && pgrep -f "github.copilot" > /dev/null 2>&1; then
-  echo "GitHub Copilot"
-  exit 0
-fi
-
-# 检测 OpenCode
-if [ "$TERM_PROGRAM" = "opencode" ] || pgrep -x "OpenCode" > /dev/null 2>&1; then
-  echo "OpenCode"
-  exit 0
-fi
-
-# 检测 Gemini CLI（通过命令行上下文）
-if [ -n "$GEMINI_CLI_SESSION" ]; then
-  echo "Gemini CLI"
-  exit 0
-fi
-
-# 检测 Codex（通过命令行上下文）
-if [ -n "$CODEX_SESSION" ]; then
-  echo "OpenAI Codex"
-  exit 0
-fi
-```
-
-**识别逻辑**:
-1. 检查 `$TERM_PROGRAM` 环境变量（许多 IDE 会设置此变量）
-2. 检查 IDE 特定的会话环境变量
-3. 检查是否有对应的 IDE 进程正在运行
-4. 检查项目目录中的 IDE 特定文件（如 `.cursor/`、`.trae/`）
-
-**重要提示**:
-- ✅ **如果检测到当前运行的 IDE**,立即使用该平台的全局配置路径
-- ✅ 即使其他 IDE 的配置目录存在,也优先使用当前 IDE
-- ⚠️ 只有在无法检测当前 IDE 时,才进入下一优先级（检查已安装的 IDE）
-
-#### 优先级 1: 检查已安装的 IDE（仅在优先级 0 失败时使用）
-
-**⚠️ 警告**: 此方法只能检测**已安装**的 IDE,不能确定**当前使用**的 IDE。
-
-```bash
-# 检查配置目录是否存在（不推荐作为首选方法）
-
-# Claude Code
-[ -d ~/.claude ] && echo "Claude Code (已安装)"
-
-# Cursor
-[ -d ~/.cursor ] && echo "Cursor (已安装)"
-
-# TRAE
-[ -d ~/.trae ] && echo "TRAE (已安装)"
-
-# Antigravity
-[ -d ~/.gemini/antigravity ] && echo "Antigravity (已安装)"
-
-# Windsurf
-[ -d ~/.codeium/windsurf ] && echo "Windsurf (已安装)"
-
-# OpenCode
-[ -d ~/.config/opencode ] && echo "OpenCode (已安装)"
-
-# Copilot
-[ -d ~/.copilot ] && echo "GitHub Copilot (已安装)"
-
-# Gemini CLI
-which gemini && echo "Gemini CLI (已安装)"
-
-# Codex
-[ -d ~/.codex ] && echo "Codex (已安装)"
-```
-
-**使用策略**:
-- 如果检测到**多个已安装的 IDE**,按以下优先级选择:
-  1. Cursor（最流行）
-  2. Claude Code（官方工具）
-  3. TRAE（标准化）
-  4. 其他平台
-- ⚠️ 提示用户可能配置到了非当前使用的 IDE
-
-#### 优先级 2: 检查项目级配置目录
-
-```bash
-# 检查当前项目目录
-[ -d .cursor ] && echo "Cursor (项目级)"
-[ -d .trae ] && echo "TRAE (项目级)"
-[ -d .agent ] && echo "Antigravity (项目级)"
-[ -d .claude ] && echo "Claude Code (项目级)"
-```
-
-#### 优先级 3: 如果所有检测都失败
-
-- 尝试多个平台的配置（按流行度：Cursor → Claude Code → TRAE）
-- 如果所有平台都失败，告知用户：
-```
-⚠️ 无法自动识别您使用的 AI 工具平台
-
-已尝试的检测方法：
-1. 检测当前运行的 IDE（环境变量、进程）
-2. 检查已安装的 IDE（配置目录）
-3. 检查项目级配置
-
-可能原因：
-1. 您使用的平台尚未被本技能支持
-2. 配置目录不在默认位置
-3. 环境变量未正确设置
-
-📋 请手动配置：
-[根据用户工具提供手动配置步骤]
-
-💡 反馈建议：
-如果您使用的是上述 9 个平台之一但仍无法识别，
-请将以下信息反馈给 HAP Skills 开发团队：
-
-- 您使用的工具名称和版本
-- $TERM_PROGRAM 环境变量的值（如果有）
-- 配置目录位置
-
-反馈地址：
-https://github.com/garfield-bb/hap-skills-collection/issues
-```
-
-**识别结果示例**:
-
-**示例 1: 成功检测到当前运行的 IDE**
-```
-✅ 已识别当前使用的平台：Cursor
-📁 配置目录：~/.cursor/
-📄 配置文件：~/.cursor/mcp.json
-🔍 检测方法：环境变量 $TERM_PROGRAM=cursor
-```
-
-**示例 2: 检测到多个已安装 IDE,选择最优**
-```
-✅ 已识别平台：Cursor（优先选择）
-📁 配置目录：~/.cursor/
-📄 配置文件：~/.cursor/mcp.json
-⚠️ 注意：同时检测到 Claude Code、TRAE 已安装
-💡 如果您当前使用的不是 Cursor,请手动指定平台
-```
-
-**示例 3: 无法确定当前 IDE,使用项目级配置**
-```
-✅ 已识别平台：Cursor（项目级）
-📁 配置目录：.cursor/
-📄 配置文件：.cursor/mcp.json
-🔍 检测方法：发现项目目录中的 .cursor/ 文件夹
-```
+**识别方法**:
+- 如果用户明确提到工具名称，使用该工具
+- 否则，询问用户："您当前使用的是哪个 AI 工具？（Claude Code / Cursor / TRAE / 其他）"
 
 ### Step 2: 解析 MCP 配置信息
 
@@ -362,101 +165,63 @@ claude mcp list
 
 #### 🔧 GitHub Copilot
 
-**配置文件**: `~/.copilot/mcp.json`
+**配置文件**: `~/.copilot/mcp-config.json`
 
 **自动化步骤**:
 1. 检查并创建 `~/.copilot` 目录
-2. 读取或创建 `mcp.json`
+2. 读取或创建 `mcp-config.json` 文件
 3. 添加 MCP 配置
 4. 保存文件
 
 **配置格式**: 同 Cursor
+
+**⚠️ 注意**: GitHub Copilot 使用 `mcp-config.json` 而不是 `mcp.json`
 
 #### 🔧 Google Antigravity
 
-**配置文件**: `~/.gemini/antigravity/config.json`
+**配置文件**: `~/.gemini/antigravity/mcp_config.json`
 
 **自动化步骤**:
-1. 检查并创建 `~/.gemini/antigravity` 目录（如果不存在）
-2. **读取现有配置文件**（如果存在）- **重要：保留所有已有配置**
-3. **增量添加或更新** MCP 配置（不删除其他 MCP）
-4. 保存到 `~/.gemini/antigravity/config.json`
-5. **启用 MCP 服务器**（需要重启 Antigravity）
+1. 检查并创建目录 `~/.gemini/antigravity/`
+2. 读取或创建 `mcp_config.json` 文件
+3. 在 `mcpServers` 部分添加配置
+4. 保存文件
 
-**配置格式** (JSON):
-```json
-{
-  "mcpServers": {
-    // 保留用户已有的 MCP 配置
-    "existing-mcp-server": {
-      "url": "https://example.com/mcp"
-    },
-    // 新增 HAP MCP 配置
-    "hap-mcp-应用名": {
-      "url": "https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx"
-    }
-  }
-}
-```
+**配置格式**: 同 Cursor
 
-**增量更新示例（Bash 脚本）**:
-```bash
-#!/bin/bash
-
-# 1. 检查并创建配置目录
-mkdir -p ~/.gemini/antigravity
-
-# 2. 读取现有配置（如果不存在则创建默认结构）
-if [ -f ~/.gemini/antigravity/config.json ]; then
-  EXISTING_CONFIG=$(cat ~/.gemini/antigravity/config.json)
-else
-  EXISTING_CONFIG='{"mcpServers":{}}'
-fi
-
-# 3. 使用 jq 增量添加 MCP 配置（保留其他配置）
-echo "$EXISTING_CONFIG" | jq --arg name "hap-mcp-客户管理" \
-  --arg url "https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx" \
-  '.mcpServers[$name] = {"url": $url}' > ~/.gemini/antigravity/config.json.tmp
-
-# 4. 替换配置文件
-mv ~/.gemini/antigravity/config.json.tmp ~/.gemini/antigravity/config.json
-
-# 5. 验证配置
-cat ~/.gemini/antigravity/config.json | jq '.mcpServers["hap-mcp-客户管理"]'
-```
-
-**⚠️ 关键原则**:
-- ✅ **增量更新**: 只添加或更新指定的 MCP，保留其他所有配置
-- ❌ **禁止覆盖**: 不要清空或删除用户已有的 MCP 服务器
-- ✅ **重启工具**: 配置完成后需要重启 Antigravity 使配置生效
+**⚠️ 注意**: Antigravity 使用 `mcp_config.json` 而不是 `config.json`
 
 #### 🔧 OpenCode
 
-**配置文件**: `~/.config/opencode/mcp.json`
+**配置文件**: `~/.config/opencode/opencode.json`
 
 **自动化步骤**:
-1. 检查并创建目录
-2. 读取或创建配置文件
-3. 添加 MCP 配置
+1. 检查并创建目录 `~/.config/opencode/`
+2. 读取或创建 `opencode.json` 文件
+3. 在 `mcp` 部分添加配置
 4. 保存文件
 
 **配置格式**: 同 Cursor
+
+**⚠️ 注意**: OpenCode 使用 `opencode.json` 而不是 `mcp.json`
 
 #### 🔧 Windsurf
 
-**配置文件**: `~/.codeium/windsurf/mcp.json`
+**配置文件**: `~/.codeium/windsurf/mcp_config.json`
 
 **自动化步骤**:
-1. 检查并创建目录
-2. 读取或创建配置文件
+1. 检查并创建目录 `~/.codeium/windsurf/`
+2. 读取或创建 `mcp_config.json` 文件
 3. 添加 MCP 配置
 4. 保存文件
 
 **配置格式**: 同 Cursor
 
+**⚠️ 注意**: Windsurf 使用 `mcp_config.json` 而不是 `mcp.json`
+
 #### 🔧 Gemini CLI
 
-**配置文件**: `~/.gemini/config.json`
+**配置文件**: `settings.json`（位置由 Gemini CLI 管理）
 
 **配置方式**: 命令行或配置文件
 
@@ -465,7 +230,11 @@ cat ~/.gemini/antigravity/config.json | jq '.mcpServers["hap-mcp-客户管理"]'
 gemini mcp add <server-name> --url "<server-url>"
 ```
 
-**配置文件方式**: 同 Cursor，在 `mcpServers` 中添加
+**配置文件方式**:
+- 使用 `/mcp` 命令打开配置文件
+- 在 `mcpServers` 中添加配置
+
+**⚠️ 注意**: Gemini CLI 使用 `settings.json`，具体路径由工具管理
 
 **参考文档**: https://github.com/google-gemini/gemini-cli/blob/main/docs/tools/mcp-server.md
 
@@ -515,65 +284,31 @@ url = "https://api.mingdao.com/mcp?HAP-Appkey=xxx&HAP-Sign=xxx"
 ⚠️ 请重启 [工具名称] 使 MCP 配置生效
 ```
 
-#### 4.2 验证连通性（必须执行）
+#### 4.2 验证连通性
 
-**⚠️ 关键要求**: 配置完成后，AI **必须自动验证** MCP 是否可以正常连接。
+**验证方法**:
+1. 调用 MCP 工具：`get_app_info`（获取应用信息）
+2. 检查返回结果：
+   - ✅ 成功：返回应用信息（应用名称、工作表列表等）
+   - ❌ 失败：返回错误信息（鉴权失败、网络错误等）
 
-**验证流程**:
-
-1. **等待用户重启工具**（如果需要）
-   ```
-   ⚠️ 配置已保存，请重启 [工具名称] 使配置生效
-
-   重启完成后，我将自动验证 MCP 连接...
-   ```
-
-2. **调用 MCP 工具验证**
-   - 尝试调用：`get_app_info`（获取应用信息）
-   - 或调用：`get_app_worksheets_list`（获取工作表列表）
-
-3. **检查返回结果**
-   - ✅ **成功**：返回应用信息（应用名称、工作表列表等）
-     ```
-     ✅ MCP 配置成功！已验证连通性
-
-     📋 配置信息：
-     - 平台：[平台名称]
-     - 服务器名称：[MCP 名称]
-     - 配置文件：[配置文件路径]
-
-     ✅ 连通性验证通过：
-     - 应用名称：[应用名]
-     - 工作表数量：[数量] 个
-
-     💡 现在可以使用 MCP 工具操作数据了！
-     ```
-
-   - ❌ **失败**：返回错误信息 → 进入故障诊断流程（见 4.3）
-
-**验证示例代码**:
+**验证示例**:
 ```javascript
-// 尝试调用 MCP 工具
-try {
-  const result = await mcpClient.call('get_app_info');
+// 调用 MCP 工具验证连通性
+const result = await mcpClient.call('get_app_info');
 
-  if (result.success) {
-    console.log('✅ MCP 连接成功！');
-    console.log('应用名称：', result.appName);
-    console.log('工作表数量：', result.worksheets.length);
-    return { success: true, data: result };
-  }
-} catch (error) {
-  console.error('❌ MCP 连接失败：', error.message);
-  return { success: false, error: error };
+if (result.success) {
+  console.log('✅ MCP 连接成功！');
+  console.log('应用名称：', result.appName);
+  console.log('工作表数量：', result.worksheets.length);
+} else {
+  console.error('❌ MCP 连接失败：', result.error);
 }
 ```
 
-#### 4.3 连接失败诊断与兼容性检测
+#### 4.3 连接失败诊断
 
-**如果 MCP 连接失败**，AI 必须按以下步骤诊断并向用户报告：
-
-##### 第一步：基础检查
+如果 MCP 连接失败，按以下步骤诊断：
 
 **诊断清单**:
 1. **检查工具是否重启**: 大多数平台需要重启才能加载新配置
@@ -589,76 +324,6 @@ try {
    - TOML 格式是否正确（Codex）
    - 中文名称是否已转换（Codex）
 
-##### 第二步：平台兼容性检测
-
-**如果基础检查都通过，仍然连接失败**，可能是平台兼容性问题：
-
-**兼容性检测标准**:
-- ✅ **已验证兼容**: Claude Code, Cursor, TRAE（这 3 个平台已经过充分测试）
-- ⚠️ **理论兼容**: Antigravity, OpenCode, Windsurf, Copilot, Gemini CLI, Codex（配置格式相同，但可能需要额外步骤）
-- ❌ **可能不兼容**: 如果所有检查都通过但仍无法连接，该平台可能尚未完全支持
-
-**向用户报告兼容性问题**:
-```
-❌ MCP 配置已保存，但连通性验证失败
-
-📋 配置信息：
-- 平台：[平台名称]
-- 配置文件：[配置文件路径]
-- 配置格式：已验证正确
-- 鉴权信息：已验证正确
-
-⚠️ 可能的原因：
-
-1️⃣ 平台兼容性问题
-   → 您使用的 [平台名称] 可能需要额外的配置步骤
-   → 当前已验证兼容的平台：Claude Code, Cursor, TRAE
-
-2️⃣ 需要手动启用
-   → 某些平台需要在工具设置中手动启用 MCP 服务器
-   → 请检查 [平台名称] 的 MCP 设置选项
-
-3️⃣ 平台版本问题
-   → 请确保您使用的是最新版本的 [平台名称]
-   → MCP 功能可能需要特定版本支持
-
-🔧 建议操作：
-
-1. **手动配置验证**
-   → 打开配置文件：[配置文件路径]
-   → 确认配置已正确保存
-   → 手动检查 [平台名称] 的 MCP 设置
-
-2. **查看平台文档**
-   → 访问 [平台名称] 官方文档
-   → 查找 MCP Server 配置说明
-   → 可能需要额外的启用步骤
-
-3. **反馈给开发团队**（重要！）
-   → 您的反馈将帮助我们改进兼容性
-   → 请将以下信息反馈到 GitHub:
-
-   ---
-   平台：[平台名称]
-   版本：[平台版本]
-   错误信息：[详细错误]
-   配置文件：[配置文件路径]
-   MCP 服务器：[MCP 名称]
-
-   反馈地址：
-   https://github.com/garfield-bb/hap-skills-collection/issues
-   ---
-
-💡 临时解决方案：
-
-如果您急需使用 MCP 功能，建议：
-- 尝试在 Claude Code 或 Cursor 中配置（已验证兼容）
-- 或按照上述手动配置步骤操作
-- 等待开发团队针对 [平台名称] 的兼容性更新
-```
-
-##### 第三步：常见错误速查
-
 **常见错误及解决方案**:
 
 | 错误类型 | 可能原因 | 解决方案 |
@@ -668,7 +333,6 @@ try {
 | MCP 未找到 | 工具未重启 | 重启 AI 工具使配置生效 |
 | 配置格式错误 | JSON/TOML 语法错误 | 检查并修正配置文件格式 |
 | 中文 key 错误 | Codex 使用了中文名称 | 将服务器名称转换为英文 |
-| **平台不兼容** | **平台尚未完全支持 MCP** | **手动配置 + 反馈开发团队** |
 
 **提供给用户的诊断步骤**:
 ```
@@ -699,79 +363,69 @@ try {
 如果以上步骤都无法解决，请提供错误信息以便进一步诊断。
 ```
 
-### Step 5: 向用户报告结果（简洁版）
+### Step 5: 向用户报告结果
 
-配置完成并验证后，AI 应该**直接告知结果**，不要过度详细。
+配置完成后，向用户报告：
 
-#### ✅ 成功时（简洁报告）:
-
+**成功时**:
 ```
-✅ 已安装好 MCP！连通性验证通过。
-
-📋 基本信息：
-- 应用：[应用名称]
-- 工作表：[数量] 个
-
-💡 现在可以使用 MCP 工具操作数据了
-```
-
-**详细版本**（如果用户需要）:
-```
-✅ MCP 配置成功！已验证连通性
+✅ MCP 配置成功！
 
 📋 配置信息：
-- 平台：[平台名称]（自动识别）
-- 服务器名称：[MCP 名称]
-- 配置文件：[配置文件路径]
+- 平台：Cursor
+- 服务器名称：hap-mcp-客户管理
+- 配置文件：.cursor/mcp.json
 - 已保留其他 MCP 配置
 
 ✅ 连通性验证通过：
-- 应用名称：[应用名]
-- 工作表数量：[数量] 个
+- 应用名称：客户管理系统
+- 工作表数量：5 个
 
-💡 MCP 已启用并可正常使用
+💡 下一步：
+- MCP 已启用并可正常使用
+- 现在可以使用 MCP 工具操作数据了
 ```
 
-#### ❌ 失败时（提供诊断和反馈）:
-
-**如果是常见错误**（鉴权、网络等）:
+**失败时**:
 ```
-❌ MCP 配置已保存，但连接验证失败
+❌ MCP 配置已保存，但连通性验证失败
 
-错误原因：[错误类型]
-[诊断步骤 - 见 Step 4.3]
-```
+📋 配置信息：
+- 平台：Cursor
+- 配置文件：.cursor/mcp.json
+- 已保留其他 MCP 配置
 
-**如果是兼容性问题**:
-```
-⚠️ MCP 配置已保存，但在您的平台上可能需要手动启用
+❌ 连接错误：
+- 错误类型：鉴权失败
+- 错误信息：Invalid HAP-Appkey or HAP-Sign
 
-📋 已完成：
-- 配置文件：[路径]
-- 配置格式：已验证正确
-- 鉴权信息：已验证正确
+🔧 诊断步骤：
 
-⚠️ 可能原因：
-您使用的 [平台名称] 可能需要额外配置步骤
+1️⃣ 确认已重启工具
+   → 请完全关闭并重新打开 Cursor
 
-🔧 建议操作：
-1. 检查 [平台名称] 的 MCP 设置
-2. 手动启用 MCP 服务器
-3. 参考平台官方文档
+2️⃣ 检查鉴权信息
+   → HAP-Appkey: abc12... (前5位)
+   → HAP-Sign: xyz78... (前5位)
+   → 如果不确定，请从 HAP 应用重新获取
 
-📞 重要：请反馈此问题
-如果您按照上述步骤操作仍无法使用，请将以下信息反馈到：
-https://github.com/garfield-bb/hap-skills-collection/issues
+3️⃣ 验证配置文件
+   → 打开文件: .cursor/mcp.json
+   → 检查 JSON 格式是否正确
+   → 确认 URL 完整且无多余空格
 
-反馈信息模板：
----
-平台：[平台名称]
-版本：[平台版本]
-错误：无法连接 MCP
-配置文件：[路径]
----
+4️⃣ 测试网络
+   → 在浏览器访问: https://api.mingdao.com
+   → 确认网络可以连接明道云
 
-您的反馈将帮助我们改进对 [平台名称] 的支持！
+5️⃣ 检查应用设置
+   → 登录 HAP 应用后台
+   → 确认 MCP 功能已启用
+   → 检查 API 访问权限
+
+📞 需要帮助？
+- 提供完整错误信息以便进一步诊断
+- 或访问 HAP 帮助中心查看 MCP 配置文档
 ```
 
 ---
@@ -783,11 +437,11 @@ https://github.com/garfield-bb/hap-skills-collection/issues
 | **Claude Code** | - | 命令行配置 | 命令 |
 | **Cursor** | `.cursor/mcp.json` | `~/.cursor/mcp.json` | JSON |
 | **TRAE** | `.trae/mcp.json` | `~/.trae/mcp.json` | JSON |
-| **GitHub Copilot** | - | `~/.copilot/mcp.json` | JSON |
-| **Antigravity** | - | `~/.gemini/antigravity/config.json` | JSON |
-| **OpenCode** | - | `~/.config/opencode/mcp.json` | JSON |
-| **Windsurf** | - | `~/.codeium/windsurf/mcp.json` | JSON |
-| **Gemini CLI** | - | `~/.gemini/config.json` | JSON |
+| **GitHub Copilot** | - | `~/.copilot/mcp-config.json` | JSON |
+| **Antigravity** | - | `~/.gemini/antigravity/mcp_config.json` | JSON |
+| **OpenCode** | - | `~/.config/opencode/opencode.json` | JSON |
+| **Windsurf** | - | `~/.codeium/windsurf/mcp_config.json` | JSON |
+| **Gemini CLI** | - | `settings.json` (工具管理) | JSON |
 | **Codex** | - | `~/.codex/config.toml` | TOML |
 
 **推荐策略**:
@@ -798,90 +452,27 @@ https://github.com/garfield-bb/hap-skills-collection/issues
 
 ## ⚠️ 重要注意事项
 
-### AI 执行原则（核心要求）
+### 配置时必须做到
 
-#### ✅ 必须做到
+- ✅ **自动化执行**: 直接帮用户配置，不要只告诉步骤
+- ✅ **平台识别**: 准确识别用户使用的工具
+- ✅ **中文转换**: Codex 平台必须将中文服务器名称转换为英文
+- ✅ **增量更新**: **只添加或更新指定的 MCP，保留用户所有已有配置**
+- ✅ **格式检查**: 确保 JSON/TOML 格式正确
+- ✅ **启用配置**: 提示用户重启工具使配置生效
+- ✅ **验证连通**: 配置后验证 MCP 是否可用
+- ✅ **失败诊断**: 连接失败时提供详细诊断步骤和解决方案
+- ✅ **错误处理**: 如果配置或验证失败，提供清晰的错误信息
 
-1. **🔍 自动识别平台** - 不要询问用户，直接检测当前平台
-   - **优先级 0（最高）**: 检测**当前正在运行**的 IDE 工具
-     - 检查环境变量（$TERM_PROGRAM 等）
-     - 检查 IDE 特定的会话变量
-     - 检查是否有对应的进程正在运行
-   - **优先级 1**: 检查已安装的 IDE（仅在优先级 0 失败时）
-     - 检查配置目录（~/.cursor, ~/.trae, ~/.claude 等）
-     - 检查命令行工具（claude, gemini 等）
-   - **优先级 2**: 检查项目级配置目录
-   - **关键原则**: 优先使用用户**当前正在使用**的 IDE,而不是仅检查已安装的 IDE
-   - 如果识别失败，尝试多个平台配置（Cursor → Claude Code → TRAE）
+### 配置时不要做
 
-2. **🤖 自动化执行** - 直接完成配置，不要只告诉步骤
-   - 读取现有配置
-   - 增量添加新配置
-   - 保存文件
-   - 不需要询问"是否需要我帮您配置"
-
-3. **✅ 必须验证连通性** - 配置后自动调用 MCP 工具验证
-   - 调用 `get_app_info` 或 `get_app_worksheets_list`
-   - 成功：简洁告知"已安装好"
-   - 失败：进入诊断流程
-
-4. **🔧 兼容性检测** - 如果验证失败且基础检查通过
-   - 判断可能是平台兼容性问题
-   - 提示用户手动配置
-   - **重要：告知用户反馈给开发团队**
-   - 提供 GitHub Issues 链接
-
-5. **📋 增量更新** - 只添加或更新指定的 MCP，保留用户所有已有配置
-
-6. **🔠 中文转换** - Codex 平台必须将中文服务器名称转换为英文
-
-7. **📝 格式检查** - 确保 JSON/TOML 格式正确
-
-8. **🔄 提示重启** - 提示用户重启工具使配置生效（大多数平台需要）
-
-#### ❌ 不要做
-
-1. **❌ 不要询问用户平台** - 必须自动识别，不要问"您使用的是哪个工具？"
-
-2. **❌ 不要只告诉步骤** - 不要说"您可以这样配置..."，要直接执行
-
-3. **❌ 不要跳过验证** - 配置后必须验证连通性
-
-4. **❌ 不要直接放弃** - 验证失败时提供诊断，检测兼容性问题
-
-5. **❌ 不要覆盖配置** - 禁止清空或删除用户已有的 MCP 服务器（致命错误！）
-
-6. **❌ 不要忘记反馈** - 兼容性问题时，必须引导用户反馈
-
-7. **❌ 不要误判平台** - 即使检测到多个 IDE 已安装,也要优先使用当前运行的 IDE
-
-#### 📊 成功报告（简洁版）
-
-配置成功后，直接说：
-```
-✅ 已安装好 MCP！连通性验证通过。
-
-应用：[应用名]
-工作表：[数量] 个
-
-现在可以使用 MCP 工具操作数据了
-```
-
-**不要**说太多技术细节，除非用户主动询问。
-
-#### ⚠️ 失败报告（提供反馈）
-
-如果是兼容性问题：
-```
-⚠️ 配置已保存，但可能需要手动启用
-
-您使用的 [平台] 可能需要额外配置步骤。
-
-请手动检查 MCP 设置，或反馈此问题：
-https://github.com/garfield-bb/hap-skills-collection/issues
-
-您的反馈将帮助我们改进兼容性！
-```
+- ❌ **不要覆盖配置**: 禁止清空或删除用户已有的 MCP 服务器（致命错误！）
+- ❌ 不要只告诉用户如何配置，要直接执行
+- ❌ 不要跳过连通性验证步骤
+- ❌ 不要在验证失败时直接放弃，要提供诊断步骤
+- ❌ 不要在 Codex 中使用中文服务器名称（必须转换为英文）
+- ❌ 不要使用错误的配置格式（如 Cursor 添加 `type: http`）
+- ❌ 不要忘记提示用户重启工具
 
 ### 配置优先级
 

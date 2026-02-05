@@ -1,8 +1,3 @@
----
-name: hap-view-plugin
-description: 创建和开发明道云 HAP 自定义视图插件的技能。**立即触发条件**：用户提到"HAP 视图插件"、"自定义视图"、"mdye"、"视图开发"、"插件开发"、"初始化视图项目"、"启动视图调试"。提供完整的开发工作流程、API 使用指南和最佳实践。
-license: MIT
----
 
 # HAP 自定义视图插件开发技能
 
@@ -11,6 +6,134 @@ license: MIT
 ## 关于此技能
 
 此技能专门用于开发明道云 HAP（High-performance Application Platform）自定义视图插件。通过集成的脚手架工具，可以快速创建 React 基础示例模板项目，安装依赖并启动开发环境。
+
+## 🤖 AI 执行步骤（思考 Todo List）
+
+**当用户需要开发 HAP 自定义视图插件时，AI 应按照以下步骤思考和执行：**
+
+### 步骤 1: 理解用户需求
+- [ ] 明确用户要开发什么类型的视图插件？（列表、图表、自定义展示等）
+- [ ] 确定插件的功能需求（数据展示、交互、筛选等）
+- [ ] 了解目标数据表结构（如果需要）
+
+### 步骤 2: 创建项目（如需要）
+- [ ] 检查当前目录是否已有视图插件项目
+- [ ] 如果没有，使用 `mdye init` 创建新项目
+- [ ] 安装依赖（`npm install` 或 `mdye install`）
+- [ ] 确认项目结构正确
+
+### 步骤 3: 启动开发服务器
+- [ ] 使用 `mdye start` 启动开发服务器
+- [ ] **必须使用 `run_in_background: true`**，让服务器持续运行
+- [ ] 获取开发调试地址（`http://localhost:3000/bundle.js`）
+- [ ] **只告诉用户调试地址**，不要展示其他技术细节
+
+### 步骤 4: 开发功能
+- [ ] 根据用户需求编写代码
+- [ ] 使用 HAP 提供的 API（`utils`、`getData`、`setData` 等）
+- [ ] 实现数据获取和展示逻辑
+- [ ] 实现用户交互功能（如果需要）
+
+### 步骤 5: 修改代码后必须发布
+- [ ] 每次修改代码后，**立即执行 `mdye build && mdye push`**
+- [ ] **不要等用户提醒**，这是必须的流程
+- [ ] 发布成功后告知用户"已更新并发布到明道云"
+
+### 步骤 6: 维护开发服务器
+- [ ] **永远不要主动关闭开发服务器**
+- [ ] 只有在用户明确要求停止时才关闭
+- [ ] 开发服务器应该一直运行直到调试完成
+
+**关键原则：**
+- ✅ 开发服务器必须后台运行，不能关闭
+- ✅ 每次代码修改后必须发布（`mdye build && mdye push`）
+- ✅ 只告诉用户调试地址，不要展示其他信息
+- ✅ 主动完成所有流程，不需要用户额外操作
+
+---
+
+### 🎯 用户反馈规则
+
+**当完成视图插件创建和启动后，只需简洁地告诉用户：**
+
+1. **只显示调试地址**：提供 `http://localhost:3000/bundle.js` 让用户复制到明道云视图配置中
+2. **不要展示其他信息**：不需要说明项目结构、常用命令、后续步骤等内容
+3. **内部掌握即可**：这些技术细节 AI 自己知道就好，无需向用户展示
+
+**简洁响应示例：**
+```
+## 🎯 下一步操作
+
+将以下调试地址复制到明道云视图配置的开发调试输入框中：
+
+​```
+http://localhost:3000/bundle.js
+​```
+```
+
+### 🚨 关键行为准则（必须严格遵守）
+
+#### 1. 开发服务器管理
+
+**❌ 禁止行为：**
+- 永远不要主动关闭开发服务器（mdye start）
+- 不要在用户没有明确要求的情况下执行 Ctrl+C 或 kill 命令
+- 不要假设用户已经完成调试而自动关闭服务
+
+**✅ 正确行为：**
+- 使用 `run_in_background: true` 启动开发服务器，让它持续运行
+- 开发服务器应该一直保持运行状态，直到用户明确要求停止
+- 只有当用户说"停止服务器"、"关闭服务"等明确指令时才关闭
+
+**启动服务器的正确方式：**
+```bash
+# ✅ 正确：后台运行，不会自动关闭
+mdye start  # 使用 run_in_background: true
+
+# ❌ 错误：同步运行会阻塞，或者主动关闭
+```
+
+#### 2. 构建和发布流程
+
+**❌ 禁止行为：**
+- 修改代码后不执行 `mdye build && mdye push`
+- 等用户提醒才发布
+- 告诉用户"您可以自己发布"
+
+**✅ 正确行为：**
+- 每次修改代码后，立即执行 `mdye build && mdye push`
+- 主动完成发布，不需要用户额外操作
+- 发布成功后明确告知用户"已发布到明道云"
+
+### ⚠️ 关键提醒：每次修改代码后必须重新发布！
+
+**重要行为准则：**
+
+1. **用户每次要求修改代码后**，必须主动执行 `mdye build && mdye push` 发布更新
+2. **不要等用户提醒**，这是你的责任！代码修改完成后立即发布
+3. **本地开发服务器的热重载只用于预览**，线上环境必须通过 `mdye push` 才能生效
+4. **用户说"更新"、"修改"、"添加功能"时**，完成代码修改后，自动执行发布流程
+
+**标准工作流程（每次修改代码）：**
+```bash
+# 第1步：修改代码（Edit/Write工具）
+# 第2步：构建项目
+cd <项目目录>
+mdye build
+
+# 第3步：提交发布（必须！）
+mdye push -m "更新说明：具体修改了什么功能"
+```
+
+**错误示例（禁止）：**
+- ❌ 修改代码后说"完成了"，但没有执行发布
+- ❌ 等用户说"发布"才去执行 mdye push
+- ❌ 告诉用户"您可以运行 mdye push 发布"（应该直接帮用户执行）
+
+**正确示例（必须遵守）：**
+- ✅ 修改完代码后，立即执行 `mdye build && mdye push`
+- ✅ 发布成功后告诉用户"已更新并发布到明道云"
+- ✅ 主动完成整个流程，不需要用户额外操作
 
 ### 前置条件
 
@@ -28,6 +151,28 @@ license: MIT
 #### 教学 DEMO
 
 请下载明道云视图插件开发教学 DEMO，此插件为开发者提供直观、可交互的 API 使用实例。
+
+### ⚠️ 重要提醒：完整开发流程
+
+**插件开发完成后，必须执行构建和发布步骤！**
+
+完整的开发流程包括：
+1. 本地开发（mdye start）
+2. **构建项目（mdye build）** ⭐
+3. **提交发布（mdye push）** ⭐
+
+**常见错误**：只完成了本地开发和调试，忘记执行 `mdye build` 和 `mdye push` 将插件发布到明道云平台。
+
+**正确做法**：每次开发完成或功能更新后，都需要执行：
+```bash
+# 1. 构建项目
+mdye build
+
+# 2. 提交发布
+mdye push -m "功能说明"
+```
+
+只有发布后，插件才能在组织内所有应用中使用。详见下方"插件发布流程"章节。
 
 ### 核心功能
 
@@ -48,6 +193,11 @@ license: MIT
 - 启动本地开发服务器
 - 支持热重载和实时预览
 - 提供线上调试能力
+
+#### 5. 构建和发布（必须！）⭐
+- 构建生产版本的 bundle.js
+- 提交插件到明道云平台
+- 使插件在组织内可用
 
 ## 开发工作流程
 
@@ -124,25 +274,40 @@ mdye start
 - 将调试地址 `http://localhost:3000/bundle.js` 粘贴到明道云视图配置开发调试输入框
 - 支持实时编辑和热重载
 
-## HAP 产品线说明
+### 步骤 5：构建和发布插件（必须！）⭐
 
-### 🌐 多产品线支持
+**⚠️ 重要：开发完成后必须执行此步骤，否则插件无法在组织内使用！**
 
-HAP 支持多个产品线和私有部署，在视图插件中调用 API 时需要注意 **host 配置**：
+**构建项目：**
+```bash
+cd your_plugin_project
+mdye build
+```
 
-| 产品线 | API Host | 说明 |
-|--------|----------|------|
-| **明道云 HAP** | `https://api.mingdao.com` | 官方 SaaS 服务 |
-| **Nocoly HAP** | `https://www.nocoly.com` | Nocoly SaaS 服务 |
-| **私有部署 HAP** | `https://your-domain.com/api` | ⚠️ **注意：私有部署需要在域名后加 `/api`** |
+**提交发布：**
+```bash
+mdye push -m "订单状态视图插件 - 新增产品图片展示功能
 
-**示例**：
-- 明道云：`https://api.mingdao.com/v3/open/worksheet/getFilterRows`
-- 私有部署：`https://p-demo.mingdaoyun.cn/api/v3/open/worksheet/getFilterRows` ← 注意 `/api`
+功能特性:
+- 按订单状态分类展示
+- 完整订单信息展示
+- 多条关联产品信息展示(含图片)
+- 点击订单卡片打开原生行记录弹窗
+- 支持编辑/删除订单并自动刷新列表
 
-**建议**：视图插件应该从 `window.mdye.env` 中获取 host 配置，而不是硬编码。
+技术实现:
+- 正确处理单选字段(type 9)和关联记录字段(type 29)
+- 正确处理附件字段(type 14)解析产品图片
+- 使用 utils.openRecordInfo 实现原生交互
+- Promise.all 并行加载提升性能"
+```
 
----
+**发布成功标志：**
+- 显示 "push成功" 消息
+- 返回插件信息和视图地址
+- 插件可在组织内所有应用中使用
+
+详细发布流程请参见下方"插件发布流程"章节。
 
 ## API 使用指南
 
@@ -258,6 +423,612 @@ async function addRecord(fieldsData) {
   });
   return response;
 }
+```
+
+#### ⚠️ 重要：addWorksheetRow 字段值格式规范
+
+**使用 `addWorksheetRow` 和 `updateWorksheetRow` API 时,不同类型的字段必须使用正确的数据格式,否则会导致保存失败或数据错误。**
+
+##### 1. 关联字段 (type 29) 的正确格式
+
+关联字段必须传递 **包含 `name` 和 `sid` 属性的对象数组的 JSON 字符串**,而不是简单的 ID 数组。
+
+❌ **错误写法:**
+```javascript
+// 错误:只传递 ID 数组
+{
+  controlId: "relationFieldId",
+  type: 29,
+  value: JSON.stringify(["2cd79f0d-9f05-4b63-b3fa-89f661eeb05d"])
+}
+```
+
+✅ **正确写法:**
+```javascript
+// 正确:传递包含 name 和 sid 的对象数组
+{
+  controlId: "relationFieldId",
+  type: 29,
+  value: JSON.stringify([{
+    name: "大连海洋医疗健康发展有限公司",
+    sid: "2ccd8ec3-c2c9-4b7c-8331-a4241b2743a0"
+  }])
+}
+```
+
+**单条关联示例:**
+```javascript
+// 关联客户字段
+if (formData.customer) {
+  controls.push({
+    controlId: '692ed1d0f34d7ea4df717c67',
+    type: 29,
+    value: JSON.stringify([{
+      name: formData.customer.name,  // 必须:记录名称
+      sid: formData.customer.sid      // 必须:记录 sid
+    }])
+  });
+}
+```
+
+**多条关联示例:**
+```javascript
+// 关联产品字段(可关联多个产品)
+if (formData.products.length > 0) {
+  controls.push({
+    controlId: '692ed1d0f34d7ea4df717c6e',
+    type: 29,
+    value: JSON.stringify(formData.products.map(product => ({
+      name: product.name,  // 必须:记录名称
+      sid: product.sid      // 必须:记录 sid
+    })))
+  });
+}
+```
+
+##### 2. 成员字段 (type 26) 的正确格式
+
+成员字段必须传递 **包含 `accountId`、`avatar` 和 `fullname` 属性的对象数组的 JSON 字符串**。
+
+❌ **错误写法:**
+```javascript
+// 错误:只传递用户 ID 数组
+{
+  controlId: "ownerFieldId",
+  type: 26,
+  value: JSON.stringify(["e2453de8-1a6a-4d4f-ba36-87fdff880a20"])
+}
+```
+
+✅ **正确写法:**
+```javascript
+// 正确:传递完整的用户对象数组
+{
+  controlId: "ownerFieldId",
+  type: 26,
+  value: JSON.stringify([{
+    accountId: "e2453de8-1a6a-4d4f-ba36-87fdff880a20",
+    avatar: "https://pd.mingdao.com/UserAvatar/e2453de8-1a6a-4d4f-ba36-87fdff880a20.jpg?imageView2/1/w/100/h/100/q/90",
+    fullname: "卜佳菲"
+  }])
+}
+```
+
+**完整示例:**
+```javascript
+// 负责人字段
+if (formData.owner) {
+  controls.push({
+    controlId: '692ed1d0f34d7ea4df717c70',
+    type: 26,
+    value: JSON.stringify([{
+      accountId: formData.owner.accountId,  // 必须:用户账号 ID
+      avatar: formData.owner.avatar,        // 必须:用户头像 URL
+      fullname: formData.owner.fullname     // 必须:用户全名
+    }])
+  });
+}
+```
+
+##### 3. 子表字段 (type 34) 的正确格式
+
+子表字段也需要传递 **包含完整字段结构的对象数组的 JSON 字符串**,每个子表行记录是一个对象,包含该行的所有字段值。
+
+**子表字段数据结构:**
+```javascript
+// 子表字段格式
+{
+  controlId: "subtableFieldId",
+  type: 34,
+  value: JSON.stringify([
+    {
+      // 第一行记录
+      "fieldId1": "值1",
+      "fieldId2": "值2",
+      // ... 其他字段
+    },
+    {
+      // 第二行记录
+      "fieldId1": "值3",
+      "fieldId2": "值4",
+      // ... 其他字段
+    }
+  ])
+}
+```
+
+**完整示例 - 订单明细子表:**
+```javascript
+// 假设订单明细子表包含:产品、数量、单价、小计等字段
+if (formData.orderDetails && formData.orderDetails.length > 0) {
+  controls.push({
+    controlId: '692ed1d0f34d7ea4df717c6f', // 订单明细子表字段ID
+    type: 34,
+    value: JSON.stringify(formData.orderDetails.map(detail => ({
+      // 子表中的产品关联字段(type 29)
+      '692ed1d0f34d7ea4df717c80': JSON.stringify([{
+        name: detail.product.name,
+        sid: detail.product.sid
+      }]),
+      // 子表中的数量字段(type 6)
+      '692ed1d0f34d7ea4df717c81': detail.quantity,
+      // 子表中的单价字段(type 6)
+      '692ed1d0f34d7ea4df717c82': detail.price,
+      // 子表中的小计字段(type 31 公式字段,通常不需要传值)
+      // '692ed1d0f34d7ea4df717c83': detail.subtotal
+    })))
+  });
+}
+```
+
+**注意事项:**
+1. 子表中的关联字段仍然需要使用 `{name, sid}` 格式
+2. 子表中的成员字段仍然需要使用 `{accountId, avatar, fullname}` 格式
+3. 公式字段、汇总字段等自动计算的字段通常不需要传值
+4. 子表字段值是 **双重 JSON 字符串**:外层是整个子表数组,内层的关联字段等也需要 JSON.stringify
+
+##### 3. 表单数据结构设计建议
+
+为了正确使用 API,建议在表单数据结构中直接存储完整的对象信息:
+
+```javascript
+// ✅ 推荐的 formData 结构
+const [formData, setFormData] = useState({
+  orderNumber: '',
+  customer: null,    // 存储完整对象 {name, sid, rowid}
+  contact: null,     // 存储完整对象 {name, sid, rowid}
+  products: [],      // 存储完整对象数组 [{name, sid, rowid}, ...]
+  owner: null,       // 存储完整对象 {accountId, avatar, fullname}
+  // 其他字段...
+});
+
+// ❌ 不推荐:只存储 ID
+const [formData, setFormData] = useState({
+  orderNumber: '',
+  customerId: '',     // 只有 ID,调用 API 时还需要查找 name
+  contactId: '',      // 只有 ID,调用 API 时还需要查找 name
+  productIds: [],     // 只有 ID 数组,调用 API 时还需要查找 name
+  ownerId: '',        // 只有 ID,调用 API 时还需要查找 fullname 和 avatar
+  // 其他字段...
+});
+```
+
+##### 4. 使用 utils.selectRecord 和 utils.selectUsers 获取完整对象
+
+在选择记录或用户时,应存储完整的对象信息:
+
+```javascript
+// 选择关联记录
+const handleSelectCustomer = async () => {
+  try {
+    // 获取关联字段的 dataSource (目标工作表 ID)
+    const customerControl = controls?.find(ctrl => ctrl.controlId === 'customerFieldId');
+
+    const records = await utils.selectRecord({
+      projectId: appId,
+      relateSheetId: customerControl?.dataSource,  // ✅ 使用 dataSource,不要硬编码
+      multiple: false
+    });
+
+    if (records && records.length > 0) {
+      const record = records[0];
+      // ✅ 存储完整的记录对象信息
+      setFormData(prev => ({
+        ...prev,
+        customer: {
+          name: record.name || record.title || '',
+          sid: record.sid || record.rowid,
+          rowid: record.rowid
+        }
+      }));
+    }
+  } catch (error) {
+    console.error('选择客户失败:', error);
+  }
+};
+
+// 选择成员
+const handleSelectOwner = async () => {
+  try {
+    const users = await utils.selectUsers({
+      projectId: appId,
+      unique: true  // 单选
+    });
+
+    if (users && users.length > 0) {
+      const user = users[0];
+      // ✅ 存储完整的用户对象信息
+      setFormData(prev => ({
+        ...prev,
+        owner: {
+          accountId: user.accountId,
+          avatar: user.avatar || '',
+          fullname: user.fullname || user.name || ''
+        }
+      }));
+    }
+  } catch (error) {
+    console.error('选择负责人失败:', error);
+  }
+};
+```
+
+##### 4.1 自定义选择界面的样式设计指南
+
+当使用 `utils.selectRecord` 和 `utils.selectUsers` 时,需要设计用户友好的选择按钮界面。
+
+**选择前的样式（空状态）:**
+
+```javascript
+// styled-components 示例
+const SelectButton = styled.button`
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  background: #fff;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.3s;
+  color: #999; // 空状态使用灰色文本
+
+  &:hover {
+    border-color: #2196f3;
+    background: #f5f9ff;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  // 空状态占位符样式
+  &.empty {
+    color: #999;
+  }
+
+  // 已选择状态
+  &.selected {
+    color: #333;
+    font-weight: 500;
+  }
+`;
+
+// React 组件使用示例
+<div className="form-group">
+  <label>客户</label>
+  <SelectButton
+    onClick={handleSelectCustomer}
+    className={formData.customer ? 'selected' : 'empty'}
+  >
+    {formData.customer ? formData.customer.name : '选择客户'}
+  </SelectButton>
+</div>
+```
+
+**选择后的样式（已选择状态）:**
+
+```javascript
+// 显示已选择项的完整信息
+<div className="form-group">
+  <label>负责人</label>
+  <SelectButton
+    onClick={handleSelectOwner}
+    className={formData.owner ? 'selected' : 'empty'}
+  >
+    {formData.owner ? (
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        {/* 可选:显示用户头像 */}
+        {formData.owner.avatar && (
+          <img
+            src={formData.owner.avatar}
+            alt={formData.owner.fullname}
+            style={{ width: '24px', height: '24px', borderRadius: '50%' }}
+          />
+        )}
+        <span>{formData.owner.fullname}</span>
+        {/* 可选:添加清除按钮 */}
+        <span
+          onClick={(e) => {
+            e.stopPropagation();
+            setFormData(prev => ({ ...prev, owner: null }));
+          }}
+          style={{ marginLeft: 'auto', color: '#999', cursor: 'pointer' }}
+        >
+          ×
+        </span>
+      </div>
+    ) : (
+      '选择负责人'
+    )}
+  </SelectButton>
+</div>
+```
+
+**多选字段的展示示例:**
+
+```javascript
+<div className="form-group">
+  <label>关联产品</label>
+  <SelectButton
+    onClick={handleSelectProducts}
+    className={formData.products.length > 0 ? 'selected' : 'empty'}
+  >
+    {formData.products.length > 0 ? (
+      <div>
+        <div style={{ fontWeight: '500', marginBottom: '4px' }}>
+          已选择 {formData.products.length} 个产品
+        </div>
+        <div style={{ fontSize: '12px', color: '#666' }}>
+          {formData.products.map(p => p.name).join(', ')}
+        </div>
+      </div>
+    ) : (
+      '选择产品'
+    )}
+  </SelectButton>
+</div>
+```
+
+**完整的样式示例（使用 styled-components）:**
+
+```javascript
+const SelectButton = styled.button`
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  background: #fff;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.3s;
+  color: #333;
+
+  &:hover {
+    border-color: #2196f3;
+    background: #f5f9ff;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  // 空状态样式
+  &.empty {
+    color: #999;
+
+    &::after {
+      content: '▼';
+      float: right;
+      color: #ccc;
+    }
+  }
+
+  // 已选择状态样式
+  &.selected {
+    border-color: #2196f3;
+    background: #f5f9ff;
+
+    .selected-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .avatar {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .name {
+        flex: 1;
+        font-weight: 500;
+        color: #333;
+      }
+
+      .clear-btn {
+        margin-left: auto;
+        color: #999;
+        font-size: 18px;
+        padding: 0 4px;
+        transition: color 0.2s;
+
+        &:hover {
+          color: #f44336;
+        }
+      }
+    }
+  }
+`;
+```
+
+**最佳实践建议:**
+
+1. **视觉反馈清晰**: 使用不同的颜色、字体粗细区分空状态和已选择状态
+2. **显示选中内容**: 选择后显示实际的名称,而不是"已选择"这样的模糊文本
+3. **支持快速清除**: 为已选择项提供清除按钮,无需重新打开选择对话框
+4. **多选计数提示**: 多选字段显示已选择的数量和简要列表
+5. **交互动画**: 使用过渡动画提升用户体验
+6. **响应式设计**: 确保在不同屏幕尺寸下都有良好的显示效果
+
+##### 5. 完整的创建记录示例
+
+```javascript
+async function handleSubmitCreate() {
+  try {
+    // 验证必填字段
+    if (!formData.orderNumber) {
+      alert('请输入订单编号');
+      return;
+    }
+
+    // 构建字段数据
+    const controls = [
+      // 文本字段
+      {
+        controlId: '692ed1d0f34d7ea4df717c66',
+        type: 2,
+        value: formData.orderNumber
+      }
+    ];
+
+    // 单条关联字段 - 客户
+    if (formData.customer) {
+      controls.push({
+        controlId: '692ed1d0f34d7ea4df717c67',
+        type: 29,
+        value: JSON.stringify([{
+          name: formData.customer.name,
+          sid: formData.customer.sid
+        }])
+      });
+    }
+
+    // 单条关联字段 - 联系人
+    if (formData.contact) {
+      controls.push({
+        controlId: '692ed1d0f34d7ea4df717c69',
+        type: 29,
+        value: JSON.stringify([{
+          name: formData.contact.name,
+          sid: formData.contact.sid
+        }])
+      });
+    }
+
+    // 日期字段
+    if (formData.orderDate) {
+      controls.push({
+        controlId: '692ed1d0f34d7ea4df717c6b',
+        type: 15,
+        value: formData.orderDate
+      });
+    }
+
+    // 数值字段
+    if (formData.amount) {
+      controls.push({
+        controlId: '692ed1d0f34d7ea4df717c6c',
+        type: 6,
+        value: formData.amount
+      });
+    }
+
+    // 单选字段
+    if (formData.status) {
+      controls.push({
+        controlId: '692ed1d0f34d7ea4df717c6d',
+        type: 9,
+        value: JSON.stringify([formData.status])
+      });
+    }
+
+    // 多条关联字段 - 产品
+    if (formData.products.length > 0) {
+      controls.push({
+        controlId: '692ed1d0f34d7ea4df717c6e',
+        type: 29,
+        value: JSON.stringify(formData.products.map(product => ({
+          name: product.name,
+          sid: product.sid
+        })))
+      });
+    }
+
+    // 成员字段 - 负责人
+    if (formData.owner) {
+      controls.push({
+        controlId: '692ed1d0f34d7ea4df717c70',
+        type: 26,
+        value: JSON.stringify([{
+          accountId: formData.owner.accountId,
+          avatar: formData.owner.avatar,
+          fullname: formData.owner.fullname
+        }])
+      });
+    }
+
+    // 文本字段 - 备注
+    if (formData.notes) {
+      controls.push({
+        controlId: '692ed1d0f34d7ea4df717c71',
+        type: 2,
+        value: formData.notes
+      });
+    }
+
+    // 调用创建记录 API
+    const result = await api.addWorksheetRow({
+      appId,
+      worksheetId,
+      receiveControls: controls
+    });
+
+    if (result && result.data) {
+      console.log('订单创建成功:', result.data);
+      // 关闭弹窗并刷新列表
+      setShowCreateDialog(false);
+      loadOrders();
+    }
+  } catch (error) {
+    console.error('创建订单失败:', error);
+    alert('创建订单失败: ' + error.message);
+  }
+}
+```
+
+##### 6. 常见错误及排查
+
+**错误1: 关联字段保存失败或保存后为空**
+- 原因: 只传递了 ID,未传递 `{name, sid}` 对象
+- 解决: 确保传递完整的对象结构
+
+**错误2: 成员字段保存失败或显示异常**
+- 原因: 只传递了 accountId,未传递 `{accountId, avatar, fullname}` 对象
+- 解决: 确保传递完整的用户对象
+
+**错误3: utils.selectRecord 获取不到记录**
+- 原因: 使用了硬编码的 worksheetId 而非字段配置中的 dataSource
+- 解决: 从关联字段控件的 `dataSource` 属性获取正确的工作表 ID
+
+**调试技巧:**
+```javascript
+// 在调用 API 前,打印完整的 controls 数组
+console.log('准备创建记录,字段数据:', JSON.stringify(controls, null, 2));
+
+// 检查关联字段配置
+const customerControl = controls?.find(ctrl => ctrl.controlId === 'customerFieldId');
+console.log('客户关联字段配置:', customerControl);
+console.log('目标工作表 ID:', customerControl?.dataSource);
+
+// 检查选择的记录结构
+console.log('选中的客户记录:', record);
+console.log('提取的数据:', {
+  name: record.name || record.title,
+  sid: record.sid || record.rowid
+});
 ```
 
 #### 3.2 更新记录 (updateWorksheetRow)
@@ -1329,154 +2100,335 @@ if (typeof value === 'number' || !isNaN(value)) {
 - 删除旧的冲突项目
 - 重新初始化项目
 
-## 🤖 AI 助手执行指南
+## BI 驾驶舱设计最佳实践
 
-当用户请求开发明道云视图插件时,AI 必须按照以下流程执行:
+### 什么是 BI 驾驶舱？
 
-### 1. 前置环境检查(必须执行)
+BI 驾驶舱（Business Intelligence Dashboard）是从**业务分析师视角**设计的数据可视化界面，而不是简单的数据列表展示。
 
-**Step 1.1: 检查 Node.js 版本**
+### BI 驾驶舱 vs 普通视图的区别
 
-```bash
-node --version
+**❌ 错误的驾驶舱设计（普通视图思维）：**
+- 只显示当前工作表的记录列表
+- 简单统计总数、今日新增
+- 没有业务逻辑，只是数据展示
+
+**✅ 正确的 BI 驾驶舱设计（分析师思维）：**
+- 展示跨表汇总的业务指标
+- 显示业务转化漏斗（如销售漏斗）
+- 提供多维度趋势分析
+- 按业务模块组织数据
+
+### CRM BI 驾驶舱设计案例
+
+以 CRM 应用为例，BI 驾驶舱应该包含：
+
+#### 1. 核心业务指标卡片
+```javascript
+- 客户总数（包含活跃客户、本月新增）
+- 成交机会（总数、已赢单、赢单率）
+- 订单金额（总金额、订单数、本月订单）
+- 线索转化率（总线索、已转化、转化率）
 ```
 
-- ✅ 如果版本 >= 16.20: 继续下一步
-- ❌ 如果版本 < 16.20 或未安装:
-  - 告知用户需要安装 Node.js 16.20 或更高版本
-  - 提供安装链接: https://nodejs.org/
-  - 等待用户安装完成后再继续
+**设计原则：**
+- 每个指标卡片包含：主指标 + 辅助指标 + 趋势
+- 使用不同颜色的渐变图标区分类别
+- 显示同比/环比变化
 
-**Step 1.2: 检查 mdye-cli 是否已安装**
+#### 2. 销售漏斗分析
+```javascript
+// 展示完整的销售转化流程
+线索 → 成交机会 → 报价 → 订单 → 回款
 
-```bash
-mdye --version
+// 可视化方式
+- 横向柱状图：展示各阶段数量
+- 饼图：展示各阶段占比
+- 转化率标注：显示每个阶段的转化率
 ```
 
-- ✅ 如果显示版本号: mdye-cli 已安装,跳过安装步骤
-- ❌ 如果命令不存在: **自动帮用户安装 mdye-cli**
+**关键点：**
+- 漏斗图必须反映真实的业务流程
+- 显示各阶段的转化率和流失率
+- 帮助识别业务瓶颈
 
-**Step 1.3: 自动安装 mdye-cli(如果未安装)**
+#### 3. 业务模块统计
+```javascript
+// 按 CRM 业务模块分类
+客户管理模块（👥）
+销售管理模块（💰）
+产品管理模块（📦）
+帐务管理模块（💳）
 
-**Mac OS 用户:**
-```bash
-sudo npm install -g mdye-cli
+// 每个模块显示
+- 总数
+- 今日
+- 本周
+- 本月
 ```
 
-**Windows/Linux 用户:**
-```bash
-npm install -g mdye-cli
+**设计原则：**
+- 模块划分要符合业务逻辑
+- 使用图标快速识别模块类型
+- 提供多时间维度统计
+
+#### 4. 业务趋势分析
+```javascript
+// 30天趋势图
+- 面积图：新增 vs 累计
+- 折线图：线索 vs 订单
+- 柱状图：各产品线对比
 ```
 
-**安装后验证:**
-```bash
-mdye --version
+**可视化选择：**
+- 趋势用折线图/面积图
+- 对比用柱状图
+- 占比用饼图
+- 分布用散点图
+
+### 实现 BI 驾驶舱的技术要点
+
+#### 1. 数据获取策略
+
+```javascript
+// ❌ 错误：只获取当前工作表
+const records = await api.getFilterRows({ worksheetId, viewId });
+
+// ✅ 正确：获取应用结构，跨表汇总
+async function loadBIMetrics() {
+  // 1. 获取应用结构（通过 MCP 或 API）
+  const appInfo = await getAppStructure();
+
+  // 2. 提取所有业务相关的工作表
+  const worksheets = extractBusinessWorksheets(appInfo);
+
+  // 3. 并行加载各表数据
+  const metricsData = await Promise.all(
+    worksheets.map(ws => loadWorksheetMetrics(ws))
+  );
+
+  // 4. 汇总计算业务指标
+  return calculateBusinessMetrics(metricsData);
+}
 ```
 
-**告知用户:**
-```
-✅ mdye-cli 工具已安装
+#### 2. 指标计算逻辑
 
-📋 安装信息:
-- 工具名称: mdye-cli
-- 版本: [显示版本号]
-- 用途: 明道云视图插件开发专用命令行工具
-
-💡 下一步:
-- 现在可以开始创建视图插件项目了
-```
-
-### 2. 模板选择(根据需求自动选择)
-
-根据用户需求选择合适的模板:
-
-| 用户需求 | 推荐模板 | 说明 |
-|---------|---------|------|
-| 简单展示、学习示例 | `--template React` | React 基础模板,适合快速上手 |
-| 需要 UI 组件库 | `--template React-Tailwind` | 包含 Tailwind CSS,适合快速构建界面 |
-| 复杂业务逻辑 | `--template React` | 基础模板,可自行添加需要的库 |
-| Vue 技术栈 | `--template Vue` | Vue 模板(如果可用) |
-
-**默认推荐**: `--template React-Tailwind`(适合大多数场景)
-
-### 3. 项目初始化(自动执行)
-
-**Step 3.1: 询问或生成插件 ID**
-
-- 如果用户提供了插件 ID: 直接使用
-- 如果用户未提供: 使用示例 ID 或询问用户
-
-**Step 3.2: 初始化项目**
-
-```bash
-mdye init view --id [插件ID] --template React-Tailwind
+```javascript
+// BI 指标应该基于业务逻辑计算
+function calculateBusinessMetrics(data) {
+  return {
+    customers: {
+      total: data.customerSheet.total,
+      active: data.customerSheet.records.filter(r =>
+        r.lastContactDate > thirtyDaysAgo
+      ).length,
+      newThisMonth: data.customerSheet.records.filter(r =>
+        r.ctime >= monthStart
+      ).length
+    },
+    opportunities: {
+      total: data.opportunitySheet.total,
+      wonCount: data.opportunitySheet.records.filter(r =>
+        r.status === '已赢单'
+      ).length,
+      totalAmount: data.opportunitySheet.records.reduce((sum, r) =>
+        sum + (r.amount || 0), 0
+      )
+    }
+    // ... 其他指标
+  };
+}
 ```
 
-**Step 3.3: 进入项目目录并安装依赖**
+#### 3. 图表选择指南
 
-```bash
-cd mdye_view_[插件后缀]/
-npm i
+| 业务场景 | 推荐图表 | recharts 组件 |
+|---------|---------|--------------|
+| 销售漏斗 | 横向柱状图 | BarChart (layout="vertical") |
+| 转化率 | 饼图 | PieChart |
+| 趋势分析 | 面积图/折线图 | AreaChart / LineChart |
+| 对比分析 | 柱状图 | BarChart |
+| 占比分析 | 饼图/环形图 | PieChart / RadialBarChart |
+| 多维分析 | 雷达图 | RadarChart |
+
+#### 4. 响应式布局
+
+```javascript
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const ChartCard = styled(Card)`
+  grid-column: span 2;  // 图表卡片占两列
+
+  @media (max-width: 768px) {
+    grid-column: span 1;  // 移动端占一列
+  }
+`;
 ```
 
-**如果 npm 安装失败:**
-- 建议使用淘宝镜像: `npm config set registry https://registry.npmmirror.com`
-- 清理缓存: `npm cache clean --force`
-- 重新安装: `npm i`
+### 设计 BI 驾驶舱的思维流程
 
-### 4. 启动开发环境(自动执行)
+当用户要求创建 BI 驾驶舱时，按以下步骤思考：
 
-```bash
-mdye start
+1. **分析业务场景**
+   - 这是什么类型的应用？（CRM/ERP/项目管理等）
+   - 核心业务流程是什么？
+   - 管理层最关心哪些指标？
+
+2. **确定指标维度**
+   - 什么是核心 KPI？（客户数、销售额、转化率等）
+   - 需要哪些时间维度？（今日/本周/本月/本季度）
+   - 需要哪些分类维度？（按产品/按地区/按团队等）
+
+3. **设计数据展示**
+   - 顶部：核心 KPI 卡片（4-6个）
+   - 中部：业务流程分析（漏斗图、趋势图）
+   - 底部：详细模块统计
+
+4. **选择可视化方式**
+   - 根据数据类型选择合适的图表
+   - 保持视觉一致性（配色、字体、间距）
+   - 突出重点数据
+
+### 常见错误及解决方案
+
+#### 错误1：只展示原始数据
+
+**❌ 错误示例：**
+```javascript
+// 只显示记录列表
+<table>
+  {records.map(r => <tr><td>{r.name}</td></tr>)}
+</table>
 ```
 
-**启动后告知用户:**
-```
-✅ 视图插件开发环境已启动！
-
-📋 项目信息:
-- 项目目录: mdye_view_[插件后缀]/
-- 开发服务器: http://localhost:3000/
-- 调试地址: http://localhost:3000/bundle.js
-
-💡 下一步:
-1. 将调试地址粘贴到明道云视图配置的开发调试输入框
-2. 在项目中编辑代码,支持热重载
-3. 开发完成后运行 `npm run build` 生成发布包
-
-📖 开发指南:
-- 主入口文件: src/index.jsx
-- 样式文件: src/styles.less
-- API 使用: 参考技能文档中的 API 使用指南
+**✅ 正确示例：**
+```javascript
+// 计算业务指标后展示
+<Card>
+  <h3>客户转化率</h3>
+  <div className="value">
+    {(convertedCount / totalLeads * 100).toFixed(1)}%
+  </div>
+  <div className="trend">
+    较上月 +5.2%
+  </div>
+</Card>
 ```
 
-### 5. 开发过程中的辅助
+#### 错误2：忽略业务逻辑
 
-**用户请求数据查询时:**
-- 使用 `api.getFilterRows()` 获取工作表数据
-- 正确处理关联字段(参考"常见问题"部分)
-- 处理选项字段(使用 key 值而非 value)
+**❌ 错误示例：**
+```javascript
+// 简单统计总数
+stats: {
+  total: records.length
+}
+```
 
-**用户请求数据操作时:**
-- 使用 `api.addWorksheetRow()` 新增记录
-- 使用 `api.updateWorksheetRow()` 更新记录
-- 使用 `api.deleteWorksheetRows()` 删除记录
+**✅ 正确示例：**
+```javascript
+// 按业务状态分类统计
+stats: {
+  total: records.length,
+  activeCustomers: records.filter(r => isActive(r)).length,
+  churnedCustomers: records.filter(r => isChurned(r)).length,
+  averageLifetimeValue: calculateLTV(records)
+}
+```
 
-**用户遇到问题时:**
-- 参考"常见问题与解决方案"部分
-- 提供详细的诊断步骤和解决方案
+#### 错误3：图表选择不当
 
-### 6. AI 执行原则
+**❌ 错误示例：**
+```javascript
+// 用饼图展示趋势（错误）
+<PieChart data={last30DaysTrend} />
+```
 
-- ✅ **主动检查**: 开发前必须检查 Node.js 和 mdye-cli
-- ✅ **自动安装**: 检测到工具未安装时,自动帮用户安装
-- ✅ **选择模板**: 根据用户需求自动选择合适的模板
-- ✅ **完整流程**: 从环境检查到启动开发环境,一气呵成
-- ✅ **错误处理**: 遇到错误时提供详细诊断和解决方案
-- ❌ **不要跳过**: 不要跳过前置环境检查步骤
-- ❌ **不要假设**: 不要假设用户已安装所有工具
+**✅ 正确示例：**
+```javascript
+// 用折线图展示趋势（正确）
+<LineChart data={last30DaysTrend}>
+  <Line dataKey="newCustomers" stroke="#667eea" />
+</LineChart>
+```
 
----
+### 完整的 BI 驾驶舱模板结构
+
+```javascript
+export default function BIDashboard() {
+  // 1. 状态管理
+  const [biMetrics, setBiMetrics] = useState({});
+  const [funnel, setFunnel] = useState([]);
+  const [trends, setTrends] = useState([]);
+
+  // 2. 数据加载
+  useEffect(() => {
+    loadBIDashboard();
+  }, []);
+
+  async function loadBIDashboard() {
+    // 步骤1：获取应用结构
+    const appInfo = await getAppStructure();
+
+    // 步骤2：提取工作表
+    const worksheets = extractWorksheets(appInfo);
+
+    // 步骤3：计算 BI 指标
+    const metrics = await calculateMetrics(worksheets);
+
+    // 步骤4：构建业务分析
+    const funnelData = buildSalesFunnel(metrics);
+    const trendData = buildTrends(metrics);
+
+    // 步骤5：更新状态
+    setBiMetrics(metrics);
+    setFunnel(funnelData);
+    setTrends(trendData);
+  }
+
+  return (
+    <DashboardContainer>
+      {/* 1. 核心指标 */}
+      <Section>
+        <KPICards data={biMetrics} />
+      </Section>
+
+      {/* 2. 业务漏斗 */}
+      <Section>
+        <FunnelChart data={funnel} />
+      </Section>
+
+      {/* 3. 趋势分析 */}
+      <Section>
+        <TrendCharts data={trends} />
+      </Section>
+
+      {/* 4. 模块统计 */}
+      <Section>
+        <ModuleStats data={biMetrics.modules} />
+      </Section>
+    </DashboardContainer>
+  );
+}
+```
+
+### 总结
+
+设计 BI 驾驶舱的核心是：**从业务分析师的视角思考**，而不是从技术视角简单展示数据。
+
+- ✅ 展示业务指标，而不是原始数据
+- ✅ 提供业务洞察，而不是数据列表
+- ✅ 关注业务流程，而不是单表统计
+- ✅ 支持决策分析，而不是查询检索
 
 ## 参考资源
 
@@ -1484,6 +2436,7 @@ mdye start
 - React 官方文档
 - Node.js 官方文档
 - 明道云开发者社区
+- Recharts 图表库文档
 
 ---
 

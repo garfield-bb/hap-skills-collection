@@ -81,18 +81,6 @@ cat ~/.trae/mcp.json | grep "应用 API - API 文档"
 cat .trae/mcp.json | grep "应用 API - API 文档"
 ```
 
-**Manus**:
-```bash
-# 检查配置文件
-cat ~/.manus/mcp.json | grep "应用 API - API 文档"
-```
-
-**Coze**:
-```bash
-# 检查配置文件（注意配置文件名为 mcp_config.json）
-cat ~/.coze/mcp_config.json | grep "应用 API - API 文档"
-```
-
 **其他平台**: 同理检查对应平台的配置文件
 
 #### 如果未安装，自动安装 API 文档 MCP
@@ -111,16 +99,13 @@ cat ~/.coze/mcp_config.json | grep "应用 API - API 文档"
 
 **自动安装步骤**:
 
-1. **识别平台**: 确定用户使用的 AI 工具（Claude Code / Cursor / TRAE / Manus / Coze 等）
+1. **识别平台**: 确定用户使用的 AI 工具（Claude Code / Cursor / TRAE 等）
 
 2. **读取现有配置**: 增量更新，保留用户已有的 MCP 配置
 
 3. **添加 API 文档 MCP**:
-   - **Claude Code**: `claude mcp add "应用 API - API 文档" --command npx --args "-y,apifox-mcp-server@latest,--site-id=5442569"`
-   - **Cursor/TRAE/Copilot/Antigravity/OpenCode**: 编辑 `mcp.json` 文件添加配置
-   - **Manus**: 编辑 `~/.manus/mcp.json` 文件添加配置（JSON 格式，同 Cursor）
-   - **Coze**: 编辑 `~/.coze/mcp_config.json` 文件添加配置（JSON 格式，可能使用不同的配置结构）
-   - **Windsurf/Gemini CLI/Codex**: 软链接平台，自动同步 Claude 配置
+   - Claude Code: `claude mcp add "应用 API - API 文档" --command npx --args "-y,apifox-mcp-server@latest,--site-id=5442569"`
+   - Cursor/TRAE 等: 编辑 `mcp.json` 文件添加配置
 
 4. **验证安装**: 检查配置文件是否包含 "应用 API - API 文档"
 
@@ -148,69 +133,18 @@ EOF
 cat ~/.cursor/mcp.json | grep "应用 API - API 文档"
 ```
 
-**示例 - Manus 平台**:
-```bash
-# 检查并创建 Manus 配置目录
-mkdir -p ~/.manus
-
-# 读取现有配置
-EXISTING_CONFIG=$(cat ~/.manus/mcp.json 2>/dev/null || echo '{"mcpServers":{}}')
-
-# 添加 API 文档 MCP（增量更新）
-cat > ~/.manus/mcp.json <<EOF
-{
-  "mcpServers": {
-    $(echo "$EXISTING_CONFIG" | jq -r '.mcpServers | to_entries | map("\"\(.key)\": \(.value|tojson)") | join(",")'),
-    "应用 API - API 文档": {
-      "command": "npx",
-      "args": ["-y", "apifox-mcp-server@latest", "--site-id=5442569"]
-    }
-  }
-}
-EOF
-
-# 验证安装
-cat ~/.manus/mcp.json | grep "应用 API - API 文档"
-```
-
-**示例 - Coze 平台**:
-```bash
-# 检查并创建 Coze 配置目录
-mkdir -p ~/.coze
-
-# 读取现有配置
-EXISTING_CONFIG=$(cat ~/.coze/mcp_config.json 2>/dev/null || echo '{"mcpServers":{}}')
-
-# 添加 API 文档 MCP（增量更新）
-# 注意: Coze 可能使用 mcp_config.json 而不是 mcp.json
-cat > ~/.coze/mcp_config.json <<EOF
-{
-  "mcpServers": {
-    $(echo "$EXISTING_CONFIG" | jq -r '.mcpServers | to_entries | map("\"\(.key)\": \(.value|tojson)") | join(",")'),
-    "应用 API - API 文档": {
-      "command": "npx",
-      "args": ["-y", "apifox-mcp-server@latest", "--site-id=5442569"]
-    }
-  }
-}
-EOF
-
-# 验证安装
-cat ~/.coze/mcp_config.json | grep "应用 API - API 文档"
-```
-
-**告知用户**（以 Cursor 为例，其他平台类似）:
+**告知用户**:
 ```
 ✅ HAP API 文档 MCP 已安装
 
 📋 配置信息：
-- 平台：Cursor / Manus / Coze / [平台名称]
+- 平台：Cursor
 - MCP 名称：应用 API - API 文档
-- 配置文件：~/.cursor/mcp.json / ~/.manus/mcp.json / ~/.coze/mcp_config.json
+- 配置文件：~/.cursor/mcp.json
 - 已保留其他 MCP 配置
 
 💡 下一步：
-- 重启 [工具名称] 使配置生效
+- 重启 Cursor 使配置生效
 - 现在可以使用 MCP 查询 HAP API 文档了
 
 📖 用途说明：

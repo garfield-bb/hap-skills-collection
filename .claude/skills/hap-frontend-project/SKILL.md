@@ -1,6 +1,6 @@
 ---
 name: hap-frontend-project
-description: Use when user mentions "building website with HAP", "HAP frontend project", "HAP as database", "enterprise website", "官网", "通过 HAP 搭建", "用 HAP 做网站", "HAP 网站", "搭建官网", "企业官网", "前后端分离", "内容管理系统", "HAP 前端", "HAP 官网" - provides complete HAP + frontend project setup guide including HAP backend configuration, frontend project structure, API integration, and data rendering.
+description: **立即触发条件**：用户提到"HAP 搭建网站"、"HAP 前端项目"、"HAP 作为数据库"、"企业官网"、"官网"、"通过 HAP 搭建"、"用 HAP 做网站"、"HAP 网站"、"搭建官网"、"前后端分离"、"内容管理系统"、"HAP 前端"、"HAP 官网"。提供完整的 HAP + 前端项目搭建指南，包括 HAP 后台配置、前端项目结构、API 集成和数据渲染。
 ---
 
 # HAP 前后端项目搭建指南
@@ -48,29 +48,6 @@ description: Use when user mentions "building website with HAP", "HAP frontend p
 - 数据展示平台（数据看板、报表展示）
 - 表单收集系统（在线预约、问卷调查、询价订单）
 - 营销落地页（活动页面、促销页面）
-
----
-
-## HAP 产品线说明
-
-### 🌐 多产品线支持
-
-HAP 支持多个产品线和私有部署，在前端项目中调用 API 时需要配置正确的 **API Host**：
-
-| 产品线 | API Host | 说明 |
-|--------|----------|------|
-| **明道云 HAP** | `https://api.mingdao.com` | 官方 SaaS 服务 |
-| **Nocoly HAP** | `https://www.nocoly.com` | Nocoly SaaS 服务 |
-| **私有部署 HAP** | `https://your-domain.com/api` | ⚠️ **注意：私有部署需要在域名后加 `/api`** |
-
-**示例**：
-- 明道云：`https://api.mingdao.com/v3/open/worksheet/getFilterRows`
-- 私有部署：`https://p-demo.mingdaoyun.cn/api/v3/open/worksheet/getFilterRows` ← 注意 `/api`
-
-**配置建议**：
-- 在项目配置文件中设置 `API_BASE_URL`
-- 根据用户的 MCP 配置自动判断使用哪个 host
-- 如果用户未提供，需询问使用哪个产品线
 
 ---
 
